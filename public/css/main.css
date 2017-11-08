@@ -31,44 +31,48 @@ a:hover {
   #header .dropdown:hover > .dropdown-menu {
     display: block; }
 
-#main .block {
+.wp63-home #main .block {
   padding-top: 2rem;
   padding-bottom: 2rem; }
 
-#main #news-block {
+.wp63-home #main #news-block {
   background: #f9f9f9; }
-  #main #news-block h2 {
+  .wp63-home #main #news-block h2 {
     padding-bottom: 1rem; }
-  #main #news-block .news-item {
+  .wp63-home #main #news-block .news-item {
     margin-bottom: 1rem; }
-    #main #news-block .news-item .card {
+    .wp63-home #main #news-block .news-item .card {
       border-radius: 2px;
       border: none;
       -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
       box-shadow: 0 0 2px rgba(0, 0, 0, 0.2); }
-    #main #news-block .news-item .card-img-top {
+    .wp63-home #main #news-block .news-item .card-img-top {
       border-radius: 1px 1px 0px 0px; }
-    #main #news-block .news-item .card-block {
+    .wp63-home #main #news-block .news-item .card-block {
       padding: 0.5rem; }
-      #main #news-block .news-item .card-block p {
+      .wp63-home #main #news-block .news-item .card-block p {
         font-size: 0.9rem;
         line-height: 1.2rem;
         min-height: 3.6rem;
         max-height: 3.6rem;
         overflow: hidden; }
-  #main #news-block .event-list {
+  .wp63-home #main #news-block .event-list {
     margin-bottom: 1rem; }
-  #main #news-block .event-item .fa {
+  .wp63-home #main #news-block .event-item .fa {
     width: 1rem;
     text-align: center; }
-  #main #news-block .event-item .event-title {
+  .wp63-home #main #news-block .event-item .event-title {
     margin-bottom: 0.5rem; }
-  #main #news-block .event-item .event-date {
+  .wp63-home #main #news-block .event-item .event-date {
     font-size: 0.8rem;
     margin-bottom: 0; }
-  #main #news-block .event-item .event-location {
+  .wp63-home #main #news-block .event-item .event-location {
     font-size: 0.8rem;
     margin-bottom: 0; }
+
+.wp63-home #main #congratulate-block {
+  background: #86af49;
+  color: #fff; }
 
 body.wp63-page #main {
   background: #f9f9f9;

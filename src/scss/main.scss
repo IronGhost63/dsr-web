@@ -54,69 +54,75 @@ a:hover {
 		display: block;
 	}
 }
-
-#main {
-	.block {
-		padding-top:2rem;
-		padding-bottom:2rem;
-	}
-
-	#news-block {
-		background: $bg-gray;
-
-		h2 {
-			padding-bottom:1rem;
+.wp63-home {
+	#main {
+		.block {
+			padding-top:2rem;
+			padding-bottom:2rem;
 		}
-
-		.news-item {
-			margin-bottom: 1rem;
-
-			.card {
-				border-radius: 2px;
-				border:none;
-				box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+	
+		#news-block {
+			background: $bg-gray;
+	
+			h2 {
+				padding-bottom:1rem;
 			}
-
-			.card-img-top {
-				border-radius: 1px 1px 0px 0px;
+	
+			.news-item {
+				margin-bottom: 1rem;
+	
+				.card {
+					border-radius: 2px;
+					border:none;
+					box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+				}
+	
+				.card-img-top {
+					border-radius: 1px 1px 0px 0px;
+				}
+	
+				.card-block {
+					padding: 0.5rem;
+	
+					p {
+						font-size: 0.9rem;
+						line-height: 1.2rem;
+						min-height: 3.6rem;
+						max-height: 3.6rem;
+						overflow:hidden;
+					}
+				}
 			}
-
-			.card-block {
-				padding: 0.5rem;
-
-				p {
-					font-size: 0.9rem;
-					line-height: 1.2rem;
-					min-height: 3.6rem;
-					max-height: 3.6rem;
-					overflow:hidden;
+			
+			.event-list {
+				margin-bottom: 1rem;
+			}
+	
+			.event-item {
+				.fa {
+					width:1rem;
+					text-align: center;
+				}
+	
+				.event-title {
+					margin-bottom:0.5rem;
+				}
+	
+				.event-date {
+					font-size: 0.8rem;
+					margin-bottom: 0;
+				}
+	
+				.event-location {
+					font-size: 0.8rem;
+					margin-bottom: 0;
 				}
 			}
 		}
-		
-		.event-list {
-			margin-bottom: 1rem;
-		}
 
-		.event-item {
-			.fa {
-				width:1rem;
-				text-align: center;
-			}
-
-			.event-title {
-				margin-bottom:0.5rem;
-			}
-
-			.event-date {
-				font-size: 0.8rem;
-				margin-bottom: 0;
-			}
-
-			.event-location {
-				font-size: 0.8rem;
-				margin-bottom: 0;
-			}
+		#congratulate-block {
+			background: $greenery;
+			color: $white;
 		}
 	}
 }

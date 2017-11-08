@@ -6,7 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<?php wp_head();?>
 </head>
-<body <?php body_class();?>>
+<body <?php body_class("wp63-home");?>>
 	<?php get_template_part("template-parts/global", "header"); ?>
 	<div id="home-slider">
 		<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
@@ -113,6 +113,68 @@
 						<div class="row">
 							<div class="col text-right">
 								<a href="<?php get_post_type_archive_link( 'calendar' ); ?>"><?php _e("กิจกรรมทั้งหมด"); ?> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="congratulate-block" class="block">
+			<div class="container">
+				<div class="row">
+					<div class="col text-center">
+						<h2><?php _e("ทำเนียบคนเก่ง", "dsr");?></h2>
+					</div>
+				</div>
+				<div class="row justify-content-center align-items-stretch">
+					<div class="col-md-3">1</div>
+					<div class="col-md-3">2</div>
+					<div class="col-md-3">3</div>
+					<div class="col-md-3">4</div>
+				</div>
+				<div class="row">
+					<div class="col text-right">
+						<a href="<?php get_post_type_archive_link( 'calendar' ); ?>"><?php _e("คนเก่งทั้งหมด"); ?> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="activity-block" class="block">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8">
+						<h2><i class="fa fa-star-o" aria-hidden="true"></i> <?php _e("ภาพกิจกรรม", "dsr");?></h2>
+					</div>
+					<div class="col-md-4">
+						<h2><i class="fa fa-file-text-o" aria-hidden="true"></i> <?php _e("คำสั่งโรงเรียน", "dsr");?></h2>
+						<div class="row">
+						<?php
+						$home_document = new WP_Query(array(
+							'post_type' => "document",
+							'posts_per_page' => 5
+						));
+						?>
+						<?php if($home_document->have_posts()) : ?>
+							<div class="col">
+								<ul class="document-list list-group">
+								<?php while($home_document->have_posts()) : $home_document->the_post(); ?>
+									<li class="document-item list-group-item" id="document-<?php the_ID();?>">
+										<a href="<?php echo document_link(get_the_ID()); ?>"><?php the_title(); ?></a>
+									</li>
+								<?php endwhile; ?>
+								</ul>
+							</div>
+						<?php else: ?>
+							<div class="col text-center">
+								<div class="alert alert-warning" role="alert">
+									<?php _e("ไม่มีเอกสารเผยแพร่"); ?>
+								</div>
+							</div>	
+						<?php endif;?>
+						</div>
+						<div class="row">
+							<div class="col text-right">
+								<a href="<?php get_post_type_archive_link( 'document' ); ?>"><?php _e("เอกสารทั้งหมด"); ?> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></a>
 							</div>
 						</div>
 					</div>

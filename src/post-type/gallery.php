@@ -1,11 +1,11 @@
 <?php
-function wp63_cpt_documents() {
+function wp63_cpt_gallery() {
 	
 		$labels = array(
-			'name'                  => _x( 'เอกสารเผยแพร่', 'Post Type General Name', 'dsr' ),
-			'singular_name'         => _x( 'เอกสารเผยแพร่', 'Post Type Singular Name', 'dsr' ),
-			'menu_name'             => __( 'เอกสารเผยแพร่', 'dsr' ),
-			'name_admin_bar'        => __( 'เอกสารเผยแพร่', 'dsr' ),
+			'name'                  => _x( 'ภาพกิจกรรม', 'Post Type General Name', 'dsr' ),
+			'singular_name'         => _x( 'ภาพกิจกรรม', 'Post Type Singular Name', 'dsr' ),
+			'menu_name'             => __( 'ภาพกิจกรรม', 'dsr' ),
+			'name_admin_bar'        => __( 'ภาพกิจกรรม', 'dsr' ),
 			'archives'              => __( 'Item Archives', 'dsr' ),
 			'attributes'            => __( 'Item Attributes', 'dsr' ),
 			'parent_item_colon'     => __( 'Parent Item:', 'dsr' ),
@@ -31,16 +31,16 @@ function wp63_cpt_documents() {
 			'filter_items_list'     => __( 'Filter items list', 'dsr' ),
 		);
 		$rewrite = array(
-			'slug'                  => 'document',
+			'slug'                  => 'gallery',
 			'with_front'            => false,
 			'pages'                 => true,
 			'feeds'                 => true,
 		);
 		$args = array(
-			'label'                 => __( 'เอกสารเผยแพร่', 'dsr' ),
-			'description'           => __( 'Public Documents', 'dsr' ),
+			'label'                 => __( 'ภาพกิจกรรม', 'dsr' ),
+			'description'           => __( 'Post Type Description', 'dsr' ),
 			'labels'                => $labels,
-			'supports'              => array( 'title', 'thumbnail', ),
+			'supports'              => array( 'title', 'editor', 'thumbnail', ),
 			'hierarchical'          => false,
 			'public'                => true,
 			'show_ui'               => true,
@@ -55,6 +55,7 @@ function wp63_cpt_documents() {
 			'rewrite'               => $rewrite,
 			'capability_type'       => 'page',
 		);
-		register_post_type( 'documents', $args );
+		register_post_type( 'gallery', $args );
 	
 	}
+?>

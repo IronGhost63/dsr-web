@@ -26,8 +26,9 @@ function wp63_theme_init() {
 	register_nav_menus( $locations );
 
 	// Register Custom Post Types
-	wp63_cpt_documents();
+	wp63_cpt_gallery();
 	wp63_cpt_calendar();
+	wp63_cpt_documents();
 }
 
 function wp63_enqueue(){
