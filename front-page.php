@@ -127,10 +127,23 @@
 					</div>
 				</div>
 				<div class="row justify-content-center align-items-stretch">
-					<div class="col-md-3">1</div>
-					<div class="col-md-3">2</div>
-					<div class="col-md-3">3</div>
-					<div class="col-md-3">4</div>
+				<?php
+				$home_congrat = new WP_Query(array(
+					'post_type' => 'congratulate',
+					'posts_per_page' => 4
+				));
+				?>
+				<?php if($home_congrat->have_posts()) : while($home_congrat->have_posts()) : $home_congrat->the_post();?>
+					<div class="col-md-3">
+						
+					</div>
+				<?php endwhile; else : ?>
+					<div class="col text-center">
+						<div class="alert alert-warning" role="alert">
+							<?php _e("ไม่พบข้อมูล"); ?>
+						</div>
+					</div>	
+				<?php endif;?>
 				</div>
 				<div class="row">
 					<div class="col text-right">

@@ -8,6 +8,7 @@ require 'src/helpers/wp_bootstrap_navwalker.php';
 require 'src/post-type/documents.php';
 require 'src/post-type/calendar.php';
 require 'src/post-type/gallery.php';
+require 'src/post-type/congratulate.php';
 
 require 'src/sidebar.php';
 
