@@ -19,78 +19,12 @@ body {
 	font-weight: 300;
 }
 
-#page {
-	max-width: $max-width;
-	margin:20px auto;
-	background: $white;
-	border-radius: 5px;
-	box-shadow: 0 0 12px rgba(0, 0, 0, 0.14);
-}
-
 #header {
+	background-color: $white;
+
 	.logo {
 		max-width:100%;
 	}
-}
 
-#main-nav {
-	padding: 0.5rem 0;
-	background-color:$greenery;
-	font-family: $font-heading;
-	font-weight: 300;
-
-	.nav-link {
-		padding:0.2rem 1.5rem;
-		color: $almost-white;
-	}
-
-	.nav-link:hover {
-		color:$white;
-	}
-
-	.active {
-		.nav-link {
-			color:$white;
-		}
-	}
-
-	.dropdown-menu {
-		background-color:$greenery;
-		border-radius:0px;
-
-
-		.nav-link {
-			padding:0.5rem 1rem;
-		}
-	}
-
-	.dropdown:hover>.dropdown-menu {
-		display: block;
-	}
-}
-
-#main {
-	padding-top:1.5rem;
-	padding-bottom:1.5rem;
-
-	.post-item {
-		padding-left:1.5rem;
 	
-		.post-meta {
-			color:$darkgreen;
-			font-size:0.8rem;
-			margin-bottom:1rem;
-		}
-	}
-}
-
-#footer {
-	background: $darkgreen;
-	color:$almost-white;
-	font-family: $font-heading;
-	font-weight: 100;
-	font-size: 0.8rem;
-	padding:1.5rem;
-	text-align: center;
-	border-radius:0px 0px 5px 5px;
 }

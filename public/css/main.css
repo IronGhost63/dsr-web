@@ -4,53 +4,7 @@ body {
   font-family: "Prompt", sans-serif;
   font-weight: 300; }
 
-#page {
-  max-width: 992px;
-  margin: 20px auto;
-  background: #fff;
-  border-radius: 5px;
-  -webkit-box-shadow: 0 0 12px rgba(0, 0, 0, 0.14);
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.14); }
-
-#header .logo {
-  max-width: 100%; }
-
-#main-nav {
-  padding: 0.5rem 0;
-  background-color: #86af49;
-  font-family: "Prompt", sans-serif;
-  font-weight: 300; }
-  #main-nav .nav-link {
-    padding: 0.2rem 1.5rem;
-    color: rgba(255, 255, 255, 0.8); }
-  #main-nav .nav-link:hover {
-    color: #fff; }
-  #main-nav .active .nav-link {
-    color: #fff; }
-  #main-nav .dropdown-menu {
-    background-color: #86af49;
-    border-radius: 0px; }
-    #main-nav .dropdown-menu .nav-link {
-      padding: 0.5rem 1rem; }
-  #main-nav .dropdown:hover > .dropdown-menu {
-    display: block; }
-
-#main {
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem; }
-  #main .post-item {
-    padding-left: 1.5rem; }
-    #main .post-item .post-meta {
-      color: #24330a;
-      font-size: 0.8rem;
-      margin-bottom: 1rem; }
-
-#footer {
-  background: #24330a;
-  color: rgba(255, 255, 255, 0.8);
-  font-family: "Prompt", sans-serif;
-  font-weight: 100;
-  font-size: 0.8rem;
-  padding: 1.5rem;
-  text-align: center;
-  border-radius: 0px 0px 5px 5px; }
+#header {
+  background-color: #fff; }
+  #header .logo {
+    max-width: 100%; }

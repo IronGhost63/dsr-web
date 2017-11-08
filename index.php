@@ -7,37 +7,32 @@
 	<?php wp_head();?>
 </head>
 <body>
-	<div id="page">
-		<?php get_template_part( "template-parts/global", "header" );?>
-		<div id="main" class="container">
+	<header id="header">
+		<div class="container">
 			<div class="row">
-				<div class="col-md-8">
-					<?php if(have_posts()) : while(have_posts()) : the_post();?>
-						<div class="post-item">
-							<div class="post-head">
-								<a href="<?php the_permalink(); ?>"><h2><?php the_title(); ?></h2></a>
-							</div>
-							<div class="post-meta">
-								<i class="fa fa-calendar-o" aria-hidden="true"></i> <span class="post-date"><?php the_time("F j, Y g:i a"); ?></span>
-							</div>
-							<?php if(has_post_thumbnail()): ?>
-							<div class="post-thumbnail">
-								<?php the_post_thumbnail("post-cover");?>
-							</div>
-							<?php endif; ?>
-							<div class="post-content">
-								<?php the_content();?>
-							</div>
+				<div class="col-md-6"><img src="<?php asset_path(); ?>/logo-main.jpg" alt="" class="logo"></div>
+				<div class="col-md-6">
+					<nav id="main-nav" class="navbar navbar-expand-lg navbar-light">
+						<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+							<ul class="navbar-nav mr-auto">
+							<?php
+								wp_nav_menu( array(
+									'menu'              => 'primary',
+									'theme_location'    => 'primary',
+									'depth'             => 2,
+									'container' => '',
+									'items_wrap' => '%3$s',
+									'fallback_cb'       => 'wp_bootstrap_navwalker::fallback',
+									'walker'            => new wp_bootstrap_navwalker())
+								);
+							?>
+							</ul>
 						</div>
-					<?php endwhile; else: ?>
-
-					<?php endif;?>
+					</nav>
 				</div>
-				<div class="col-md-4">Hello</div>
 			</div>
 		</div>
-		<?php get_template_part( "template-parts/global", "footer" );?>
-	</div>
+	</header>
 	<?php wp_footer(); ?>
 </body>
 </html>
