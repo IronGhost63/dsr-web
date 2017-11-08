@@ -63,54 +63,28 @@
 					<div class="col-md-8">
 						<h2><?php _e("ข่าวสาร", "dsr");?></h2>
 						<div class="row news-list">
-							<div class="col-md-4 news-item">
-								<a class="card" href="#">
-									<img class="card-img-top" src="http://via.placeholder.com/318x180" alt="Card image cap">
+						<?php
+						$home_news = new WP_Query(array(
+							'post_type' => 'post',
+							'posts_per_page' => 6
+						));
+						?>
+						<?php if($home_news->have_posts()) : while($home_news->have_posts()) : $home_news->the_post(); ?>
+							<div class="col-md-4 news-item" id="news-<?php the_ID();?>">
+								<a class="card" href="<?php the_permalink(); ?>">
+									<img class="card-img-top" src="<?php the_post_thumbnail_url( "news-thumbs" ); ?> " alt="<?php the_title();?>">
 									<div class="card-block">
-										<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+										<p class="card-text"><?php the_title(); ?></p>
 									</div>
 								</a>
 							</div>
-							<div class="col-md-4 news-item">
-								<a class="card" href="#">
-									<img class="card-img-top" src="http://via.placeholder.com/318x180" alt="Card image cap">
-									<div class="card-block">
-										<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-									</div>
-								</a>
-							</div>
-							<div class="col-md-4 news-item">
-								<a class="card" href="#">
-									<img class="card-img-top" src="http://via.placeholder.com/318x180" alt="Card image cap">
-									<div class="card-block">
-										<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-									</div>
-								</a>
-							</div>
-							<div class="col-md-4 news-item">
-								<a class="card" href="#">
-									<img class="card-img-top" src="http://via.placeholder.com/318x180" alt="Card image cap">
-									<div class="card-block">
-										<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-									</div>
-								</a>
-							</div>
-							<div class="col-md-4 news-item">
-								<a class="card" href="#">
-									<img class="card-img-top" src="http://via.placeholder.com/318x180" alt="Card image cap">
-									<div class="card-block">
-										<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-									</div>
-								</a>
-							</div>
-							<div class="col-md-4 news-item">
-								<a class="card" href="#">
-									<img class="card-img-top" src="http://via.placeholder.com/318x180" alt="Card image cap">
-									<div class="card-block">
-										<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-									</div>
-								</a>
-							</div>
+						<?php endwhile; else: ?>
+							<div class="col text-center">
+								<div class="alert alert-warning" role="alert">
+									<?php _e("ไม่พบข้อมูล"); ?>
+								</div>
+							</div>	
+						<?php endif;?>
 						</div>
 						<div class="row">
 							<div class="col text-right">
@@ -120,6 +94,52 @@
 					</div>
 					<div class="col-md-4">
 						<h2><?php _e("ปฏิทิน", "dsr");?></h2>
+						<div class="row">
+						<?php
+						$today = date("Ymd");
+						$home_event = new WP_Query(array(
+							'post_type' => 'calendar',
+							'posts_per_page' => 3,
+							'meta_query' => array(
+								array(
+									'meta_key' => "event_date",
+									'meta_value' => $today,
+									'meta_compare' => ">="
+								)
+							)
+						));
+						?>
+						<?php if($home_event->have_posts()) : ?>
+							<div class="col">
+								<ul class="event-list list-group">
+						<?php while($home_event->have_posts()) : $home_event->the_post(); ?>
+									<li class="event-item list-group-item" id="event-<?php the_ID();?>">
+										<p class="event-title">
+											<a href="<?php the_permalink(); ?>"><?php the_title();?></a>
+										</p>
+										<p class="event-date">
+											<i class="fa fa-calendar-o" aria-hidden="true"></i> <?php echo date("F j, Y", strtotime(get_field('event_date')));?>
+										</p>
+										<p class="event-location">
+											<i class="fa fa-map-marker" aria-hidden="true"></i> <?php the_field("event_location");?>
+										</p>
+									</li>
+						<?php endwhile; ?>
+								</ul>
+							</div>
+						<?php else : ?>
+							<div class="col text-center">
+								<div class="alert alert-warning" role="alert">
+									<?php _e("ไม่มีกิจกรรม"); ?>
+								</div>
+							</div>	
+						<?php endif;?>
+						</div>
+						<div class="row">
+							<div class="col text-right">
+								<a href="<?php get_post_type_archive_link( 'calendar' ); ?>"><?php _e("กิจกรรมทั้งหมด"); ?> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></a>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

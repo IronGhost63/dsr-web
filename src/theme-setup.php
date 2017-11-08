@@ -13,6 +13,8 @@ function wp63_theme_setup() {
 	add_image_size( 'partner-archive-thumbs', 200, 9999);
 	add_image_size( 'page-cover', 1280, 480, true );
 	*/
+
+	add_image_size( 'news-thumbs', 318, 180, true );
 }
 
 function wp63_theme_init() {
@@ -23,10 +25,11 @@ function wp63_theme_init() {
 
 	// Register Custom Post Types
 	wp63_cpt_documents();
+	wp63_cpt_calendar();
 }
 
 function wp63_enqueue(){
-	wp_enqueue_style( "google-fonts", "https://fonts.googleapis.com/css?family=Prompt:200,400,700&amp;subset=thai");
+	wp_enqueue_style( "google-fonts", "https://fonts.googleapis.com/css?family=Kanit:200,400,600|Prompt:200,400,700&amp;subset=thai");
 	wp_enqueue_style( "bootstrap", get_template_directory_uri() . '/vendor/twbs/bootstrap/dist/css/bootstrap.min.css');
 	wp_enqueue_style( "font-awesome", get_template_directory_uri() . '/vendor/fortawesome/font-awesome/css/font-awesome.min.css');
 	wp_enqueue_style( "main", get_template_directory_uri() . '/public/css/main.css');
