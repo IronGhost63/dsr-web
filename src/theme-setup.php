@@ -1,6 +1,7 @@
 <?php
 add_action( 'after_setup_theme', 'wp63_theme_setup' );
 add_action( 'init', 'wp63_theme_init' );
+add_action( 'widgets_init', 'wp63_register_sidebars' );
 add_action( "wp_enqueue_scripts", "wp63_enqueue" );
 add_filter( 'image_resize_dimensions', 'image_crop_dimensions', 10, 6 );
 
@@ -15,6 +16,7 @@ function wp63_theme_setup() {
 	*/
 
 	add_image_size( 'news-thumbs', 318, 180, true );
+	add_image_size( 'news-cover', 1200, 630, true );
 }
 
 function wp63_theme_init() {

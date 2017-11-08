@@ -6,38 +6,50 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<?php wp_head();?>
 </head>
-<body>
-	<div id="page">
-		<?php get_template_part( "template-parts/global", "header" );?>
-		<div id="main" class="container">
+<body <?php body_class("wp63-page");?>>
+	<?php get_template_part("template-parts/global", "header"); ?>
+	<div id="main">
+		<div class="container">
 			<div class="row">
-				<div class="col-md-8">
-					<?php if(have_posts()) : while(have_posts()) : the_post();?>
-						<div class="post-item">
+				<div class="col"></div>
+			</div>
+			<div class="row">
+				<div class="col-md-9">
+					<div class="post-item">
+					<?php if(have_posts()) : ?>
+						<?php if(has_post_thumbnail()) :?>
+						<div class="post-cover">
+							<?php the_post_thumbnail("news-cover"); ?>
+						</div>
+						<?php endif; ?>
+						<div class="post-container">
+							<?php while(have_posts()) : the_post(); ?>
 							<div class="post-head">
-								<h2><?php the_title(); ?></h2>
+								<h2 class="post-title"><?php the_title(); ?></h2>
 							</div>
 							<div class="post-meta">
 								<i class="fa fa-calendar-o" aria-hidden="true"></i> <span class="post-date"><?php the_time("F j, Y g:i a"); ?></span>
+								<i class="fa fa-folder-o" aria-hidden="true"></i> <span class="post-category"><?php the_category( ", ");?></span>
 							</div>
-							<?php if(has_post_thumbnail()): ?>
-							<div class="post-thumbnail">
-								<?php the_post_thumbnail("post-cover");?>
-							</div>
-							<?php endif; ?>
 							<div class="post-content">
-								<?php the_content();?>
+								<?php the_content(); ?>
 							</div>
+							<?php endwhile;?>
 						</div>
-					<?php endwhile; else: ?>
-
-					<?php endif;?>
+					<?php endif; ?>
+					</div>
 				</div>
-				<div class="col-md-4">Hello</div>
+				<div class="col-md-3">
+					<div class="sidebar-list">
+					<?php if ( is_active_sidebar( 'sidebar-single' ) ) : ?>
+						<?php dynamic_sidebar( 'sidebar-single' ); ?>
+					<?php endif; ?>
+					</div>
+				</div>
 			</div>
 		</div>
-		<?php get_template_part( "template-parts/global", "footer" );?>
 	</div>
+	<?php get_template_part("template-parts/global", "footer");?>
 	<?php wp_footer(); ?>
 </body>
 </html>

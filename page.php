@@ -15,32 +15,30 @@
 			</div>
 			<div class="row">
 				<div class="col-md-9">
-					<?php if(have_posts()) : while(have_posts()) : the_post();?>
 					<div class="post-item">
+					<?php if(have_posts()) : ?>
 						<?php if(has_post_thumbnail()) :?>
 						<div class="post-cover">
 							<?php the_post_thumbnail("news-cover"); ?>
 						</div>
 						<?php endif; ?>
 						<div class="post-container">
+							<?php while(have_posts()) : the_post(); ?>
 							<div class="post-head">
-								<a href="<?php the_permalink(); ?>"><h2 class="post-title"><?php the_title(); ?></h2></a>
-							</div>
-							<div class="post-meta">
-								<i class="fa fa-calendar-o" aria-hidden="true"></i> <span class="post-date"><?php the_time("F j, Y g:i a"); ?></span>
-								<i class="fa fa-folder-o" aria-hidden="true"></i> <span class="post-category"><?php the_category( ", ");?></span>
+								<h2 class="post-title"><?php the_title(); ?></h2>
 							</div>
 							<div class="post-content">
 								<?php the_content(); ?>
 							</div>
+							<?php endwhile;?>
 						</div>
+					<?php endif; ?>
 					</div>
-					<?php endwhile; endif; ?>
 				</div>
 				<div class="col-md-3">
 					<div class="sidebar-list">
-					<?php if ( is_active_sidebar( 'sidebar-single' ) ) : ?>
-						<?php dynamic_sidebar( 'sidebar-single' ); ?>
+					<?php if ( is_active_sidebar( 'sidebar-page' ) ) : ?>
+						<?php dynamic_sidebar( 'sidebar-page' ); ?>
 					<?php endif; ?>
 					</div>
 				</div>

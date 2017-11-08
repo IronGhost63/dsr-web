@@ -7,32 +7,7 @@
 	<?php wp_head();?>
 </head>
 <body <?php body_class();?>>
-	<header id="header">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-6"><img src="<?php asset_path(); ?>/logo-main.jpg" alt="" class="logo"></div>
-				<div class="col-md-6">
-					<nav id="main-nav" class="navbar navbar-expand-lg navbar-light">
-						<div class="collapse navbar-collapse" id="navbarsExampleDefault">
-							<ul class="navbar-nav mr-auto">
-							<?php
-								wp_nav_menu( array(
-									'menu'              => 'primary',
-									'theme_location'    => 'primary',
-									'depth'             => 2,
-									'container' => '',
-									'items_wrap' => '%3$s',
-									'fallback_cb'       => 'wp_bootstrap_navwalker::fallback',
-									'walker'            => new wp_bootstrap_navwalker())
-								);
-							?>
-							</ul>
-						</div>
-					</nav>
-				</div>
-			</div>
-		</div>
-	</header>
+	<?php get_template_part("template-parts/global", "header"); ?>
 	<div id="home-slider">
 		<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
 			<div class="carousel-inner" role="listbox">
@@ -61,7 +36,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-8">
-						<h2><?php _e("ข่าวสาร", "dsr");?></h2>
+						<h2><i class="fa fa-newspaper-o" aria-hidden="true"></i> <?php _e("ข่าวสาร", "dsr");?></h2>
 						<div class="row news-list">
 						<?php
 						$home_news = new WP_Query(array(
@@ -93,7 +68,7 @@
 						</div>
 					</div>
 					<div class="col-md-4">
-						<h2><?php _e("ปฏิทิน", "dsr");?></h2>
+						<h2><i class="fa fa-calendar" aria-hidden="true"></i> <?php _e("ปฏิทิน", "dsr");?></h2>
 						<div class="row">
 						<?php
 						$today = date("Ymd");
@@ -145,26 +120,7 @@
 			</div>
 		</div>
 	</div>
-	<footer id="footer">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-6"></div>
-				<div class="col-md-3"></div>
-				<div class="col-md-3">
-					<h6>ติดต่อโรงเรียน</h6>
-					<p class="address">
-					โรงเรียนเทพศิรินทร์ร่มเกล้า เลขที่ 2 ซอย ไอซีดี 8 แขวงคลองสามประเวศ เขตลาดกระบัง กรุงเทพมหานคร 10520
-					</p>
-					<p class="phone">
-						<i class="fa fa-phone" aria-hidden="true"></i> โทรศัพท์ 0 2737 8919 - 20
-					</p>
-					<p class="fax">
-						<i class="fa fa-fax" aria-hidden="true"></i> โทรสาร 0 2360 9287 
-					</p>
-				</div>
-			</div>
-		</div>
-	</footer>
+	<?php get_template_part("template-parts/global", "footer");?>
 	<?php wp_footer(); ?>
 </body>
 </html>
