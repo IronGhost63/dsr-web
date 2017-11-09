@@ -127,6 +127,17 @@ body.wp63-page .widget {
       padding: 0px;
       margin: 0px; }
 
+body.wp63-page .wp63-pagination {
+  padding: 1rem; }
+  body.wp63-page .wp63-pagination .page-link {
+    color: #44883d; }
+  body.wp63-page .wp63-pagination .page-link:hover {
+    color: #24330a; }
+  body.wp63-page .wp63-pagination .page-item.active .current {
+    color: #fff;
+    background: #86af49;
+    border-color: #86af49; }
+
 body.wp63-page .event-meta .event-icon {
   font-size: 5rem;
   text-align: right; }

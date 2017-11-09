@@ -66,7 +66,7 @@ a:hover {
 		h2 {
 			padding-bottom:1rem;
 		}
-		
+
 		.block {
 			padding-top:2rem;
 			padding-bottom:2rem;
@@ -203,6 +203,26 @@ body.wp63-page {
 				list-style:none;
 				padding:0px;
 				margin:0px;
+			}
+		}
+	}
+
+	.wp63-pagination {
+		padding:1rem;
+
+		.page-link {
+			color: $online-green;
+		}
+
+		.page-link:hover {
+			color: $darkgreen;
+		}
+
+		.page-item.active {
+			.current {
+				color: $white;
+				background: $greenery;
+				border-color: $greenery;
 			}
 		}
 	}

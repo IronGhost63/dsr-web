@@ -36,6 +36,11 @@
 						</div>
 					</div>
 					<?php endwhile; endif; ?>
+					<div class="row">
+						<div class="container wp63-pagination">
+							<?php wp_pagenavi(); ?>
+						</div>
+					</div>
 				</div>
 				<div class="col-md-3">
 					<div class="sidebar-list">
