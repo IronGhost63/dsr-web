@@ -8,29 +8,41 @@
 </head>
 <body <?php body_class("wp63-home");?>>
 	<?php get_template_part("template-parts/global", "header"); ?>
+	<?php if( have_rows("slides") ) : $active = "active"; ?>
 	<div id="home-slider">
-		<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+		<div id="home-slider-main" class="carousel slide" data-ride="carousel">
 			<div class="carousel-inner" role="listbox">
-				<div class="carousel-item active">
-					<img class="d-block img-fluid" src="<?php asset_path(); ?>/sample/stock-1.jpg" alt="First slide">
+			<?php while( have_rows("slides") ) : the_row(); ?>
+			<?php
+				$img = wp_get_attachment_image_url( get_sub_field("image"), "home-slide" );
+				$link_start = "";
+				$link_end = "";
+				if(get_sub_field("url")){
+					$link_start = "<a href=\"".get_sub_field("url")."\">";
+					$link_end = "</a>";
+				}
+			?>
+				<div class="carousel-item <?php echo $active;?>">
+					<?php echo $link_start; ?><img class="d-block img-fluid" src="<?php echo $img;?>" alt="First slide"><?php echo $link_end; ?>
+					<?php if(get_sub_field("caption")) : ?>
+					<div class="carousel-caption d-none d-md-block">
+						<h3><?php the_sub_field("caption"); ?></h3>
+					</div>
+					<?php endif; ?>
 				</div>
-				<div class="carousel-item">
-					<img class="d-block img-fluid" src="<?php asset_path(); ?>/sample/stock-2.jpg" alt="Second slide">
-				</div>
-				<div class="carousel-item">
-					<img class="d-block img-fluid" src="<?php asset_path(); ?>/sample/stock-3.jpg" alt="Third slide">
-				</div>
+			<?php $active = ""; endwhile; ?>
 			</div>
-			<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+			<a class="carousel-control-prev" href="#home-slider-main" role="button" data-slide="prev">
 				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 				<span class="sr-only">Previous</span>
 			</a>
-			<a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+			<a class="carousel-control-next" href="#home-slider-main" role="button" data-slide="next">
 				<span class="carousel-control-next-icon" aria-hidden="true"></span>
 				<span class="sr-only">Next</span>
 			</a>
 		</div>
 	</div>
+	<?php endif; ?>
 	<div id="main">
 		<div id="news-block" class="block">
 			<div class="container">
@@ -63,7 +75,7 @@
 						</div>
 						<div class="row">
 							<div class="col text-right">
-								<a href="<?php get_post_type_archive_link( 'post' ); ?>"><?php _e("ข่าวสารทั้งหมด"); ?> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></a>
+								<a href="<?php echo get_post_type_archive_link( 'post' ); ?>"><?php _e("ข่าวสารทั้งหมด"); ?> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></a>
 							</div>
 						</div>
 					</div>
@@ -112,7 +124,7 @@
 						</div>
 						<div class="row">
 							<div class="col text-right">
-								<a href="<?php get_post_type_archive_link( 'calendar' ); ?>"><?php _e("กิจกรรมทั้งหมด"); ?> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></a>
+								<a href="<?php echo get_post_type_archive_link( 'calendar' ); ?>"><?php _e("กิจกรรมทั้งหมด"); ?> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></a>
 							</div>
 						</div>
 					</div>
@@ -147,7 +159,7 @@
 				</div>
 				<div class="row">
 					<div class="col text-right">
-						<a href="<?php get_post_type_archive_link( 'calendar' ); ?>"><?php _e("คนเก่งทั้งหมด"); ?> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></a>
+						<a href="<?php echo get_post_type_archive_link( 'calendar' ); ?>"><?php _e("คนเก่งทั้งหมด"); ?> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></a>
 					</div>
 				</div>
 			</div>
@@ -157,13 +169,42 @@
 				<div class="row">
 					<div class="col-md-8">
 						<h2><i class="fa fa-star-o" aria-hidden="true"></i> <?php _e("ภาพกิจกรรม", "dsr");?></h2>
+						<div class="row gallery-list">
+						<?php
+						$home_news = new WP_Query(array(
+							'post_type' => 'gallery',
+							'posts_per_page' => 6
+						));
+						?>
+						<?php if($home_news->have_posts()) : while($home_news->have_posts()) : $home_news->the_post(); ?>
+							<div class="col-md-4 gallery-item" id="gallery-<?php the_ID();?>">
+								<a class="card" href="<?php echo gallery_link(get_the_ID()); ?>">
+									<img class="card-img-top" src="<?php the_post_thumbnail_url( "news-thumbs" ); ?> " alt="<?php the_title();?>">
+									<div class="card-block">
+										<p class="card-text"><?php the_title(); ?></p>
+									</div>
+								</a>
+							</div>
+						<?php endwhile; else: ?>
+							<div class="col text-center">
+								<div class="alert alert-warning" role="alert">
+									<?php _e("ไม่พบข้อมูล"); ?>
+								</div>
+							</div>	
+						<?php endif;?>
+						</div>
+						<div class="row">
+							<div class="col text-right">
+								<a href="<?php echo get_post_type_archive_link( 'gallery' ); ?>"><?php _e("ภาพกิจกรรมทั้งหมด"); ?> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></a>
+							</div>
+						</div>
 					</div>
 					<div class="col-md-4">
 						<h2><i class="fa fa-file-text-o" aria-hidden="true"></i> <?php _e("คำสั่งโรงเรียน", "dsr");?></h2>
 						<div class="row">
 						<?php
 						$home_document = new WP_Query(array(
-							'post_type' => "document",
+							'post_type' => "documents",
 							'posts_per_page' => 5
 						));
 						?>
@@ -187,7 +228,7 @@
 						</div>
 						<div class="row">
 							<div class="col text-right">
-								<a href="<?php get_post_type_archive_link( 'document' ); ?>"><?php _e("เอกสารทั้งหมด"); ?> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></a>
+								<a href="<?php echo get_post_type_archive_link( 'documents' ); ?>"><?php _e("เอกสารทั้งหมด"); ?> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></a>
 							</div>
 						</div>
 					</div>

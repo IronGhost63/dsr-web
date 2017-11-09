@@ -31,14 +31,18 @@ a:hover {
   #header .dropdown:hover > .dropdown-menu {
     display: block; }
 
+.wp63-home #home-slider .carousel-caption {
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.8); }
+
+.wp63-home #main h2 {
+  padding-bottom: 1rem; }
+
 .wp63-home #main .block {
   padding-top: 2rem;
   padding-bottom: 2rem; }
 
 .wp63-home #main #news-block {
   background: #f9f9f9; }
-  .wp63-home #main #news-block h2 {
-    padding-bottom: 1rem; }
   .wp63-home #main #news-block .news-item {
     margin-bottom: 1rem; }
     .wp63-home #main #news-block .news-item .card {
@@ -74,6 +78,24 @@ a:hover {
   background: #86af49;
   color: #fff; }
 
+.wp63-home #main #activity-block .gallery-item {
+  margin-bottom: 1rem; }
+  .wp63-home #main #activity-block .gallery-item .card {
+    border-radius: 2px;
+    border: none;
+    -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2); }
+  .wp63-home #main #activity-block .gallery-item .card-img-top {
+    border-radius: 1px 1px 0px 0px; }
+  .wp63-home #main #activity-block .gallery-item .card-block {
+    padding: 0.5rem; }
+    .wp63-home #main #activity-block .gallery-item .card-block p {
+      font-size: 0.9rem;
+      line-height: 1.2rem;
+      min-height: 3.6rem;
+      max-height: 3.6rem;
+      overflow: hidden; }
+
 body.wp63-page #main {
   background: #f9f9f9;
   padding-top: 1rem;
@@ -104,6 +126,40 @@ body.wp63-page .widget {
       list-style: none;
       padding: 0px;
       margin: 0px; }
+
+body.wp63-page .event-meta .event-icon {
+  font-size: 5rem;
+  text-align: right; }
+
+body.wp63-page .event-meta .event-detail {
+  color: #9c9c9c;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center; }
+  body.wp63-page .event-meta .event-detail .fa {
+    width: 1rem;
+    text-align: center; }
+  body.wp63-page .event-meta .event-detail .event-title {
+    margin-bottom: 0.5rem; }
+  body.wp63-page .event-meta .event-detail .event-date {
+    font-size: 0.8rem;
+    margin-bottom: 0; }
+  body.wp63-page .event-meta .event-detail .event-location {
+    font-size: 0.8rem;
+    margin-bottom: 0; }
+
+body.wp63-event .post-content {
+  margin-bottom: 3rem; }
 
 #footer {
   color: #fff;

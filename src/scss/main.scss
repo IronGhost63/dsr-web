@@ -8,6 +8,7 @@ $almost-white: rgba(255,255,255,0.8);
 $bg-gray: #f9f9f9;
 
 $text-color: #5a5a5a;
+$text-light: #9c9c9c;
 
 $max-width: 992px;
 
@@ -55,7 +56,17 @@ a:hover {
 	}
 }
 .wp63-home {
+	#home-slider {
+		.carousel-caption {
+			text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+		}
+	}
+	
 	#main {
+		h2 {
+			padding-bottom:1rem;
+		}
+		
 		.block {
 			padding-top:2rem;
 			padding-bottom:2rem;
@@ -63,11 +74,7 @@ a:hover {
 	
 		#news-block {
 			background: $bg-gray;
-	
-			h2 {
-				padding-bottom:1rem;
-			}
-	
+
 			.news-item {
 				margin-bottom: 1rem;
 	
@@ -124,6 +131,34 @@ a:hover {
 			background: $greenery;
 			color: $white;
 		}
+
+		#activity-block {
+			.gallery-item {
+				margin-bottom: 1rem;
+	
+				.card {
+					border-radius: 2px;
+					border:none;
+					box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+				}
+	
+				.card-img-top {
+					border-radius: 1px 1px 0px 0px;
+				}
+	
+				.card-block {
+					padding: 0.5rem;
+	
+					p {
+						font-size: 0.9rem;
+						line-height: 1.2rem;
+						min-height: 3.6rem;
+						max-height: 3.6rem;
+						overflow:hidden;
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -170,6 +205,45 @@ body.wp63-page {
 				margin:0px;
 			}
 		}
+	}
+
+	.event-meta {
+		.event-icon {
+			font-size:5rem;
+			text-align:right;
+		}
+
+		.event-detail {
+			color: $text-light;
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+
+			.fa {
+				width:1rem;
+				text-align: center;
+			}
+
+			.event-title {
+				margin-bottom:0.5rem;
+			}
+
+			.event-date {
+				font-size: 0.8rem;
+				margin-bottom: 0;
+			}
+
+			.event-location {
+				font-size: 0.8rem;
+				margin-bottom: 0;
+			}
+		}
+	}
+}
+
+body.wp63-event {
+	.post-content {
+		margin-bottom:3rem;
 	}
 }
 
