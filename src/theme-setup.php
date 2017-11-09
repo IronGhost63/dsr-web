@@ -24,6 +24,7 @@ function wp63_theme_init() {
 	wp63_cpt_calendar();
 	wp63_cpt_gallery();	
 	wp63_cpt_congratulate();
+	wp63_cpt_research();
 	wp63_cpt_documents();
 }
 
