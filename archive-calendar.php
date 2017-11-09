@@ -15,24 +15,9 @@
 			</div>
 			<div class="row">
 				<div class="col-md-9">
+					<?php if(have_posts()) : while(have_posts()) : the_post();?>
 					<div class="post-item">
-					<?php if(have_posts()) : ?>
-						<?php if(has_post_thumbnail()) :?>
-						<div class="post-cover">
-							<?php the_post_thumbnail("news-cover"); ?>
-						</div>
-						<?php endif; ?>
 						<div class="post-container">
-							<?php while(have_posts()) : the_post(); ?>
-							<div class="post-head">
-								<h2 class="post-title"><?php the_title(); ?></h2>
-							</div>
-							<div class="post-meta">
-								<i class="fa fa-calendar-o" aria-hidden="true"></i> <span class="post-date"><?php the_time("F j, Y g:i a"); ?></span>
-							</div>
-							<div class="post-content">
-								<?php the_content(); ?>
-							</div>
 							<div class="event-meta row">
 								<div class="col-2 event-icon">
 									<i class="fa fa-calendar-o" aria-hidden="true"></i>
@@ -40,7 +25,7 @@
 								<div class="col-10 event-detail">
 									<div class="event-detail-wrapper">
 										<h5 class="event-title">
-											<?php the_title();?>
+										<a href="<?php the_permalink(); ?>"><?php the_title();?></a>
 										</h5>
 										<p class="event-date">
 											<i class="fa fa-calendar-o" aria-hidden="true"></i> <?php echo date("F j, Y", strtotime(get_field('event_date')));?>
@@ -51,14 +36,13 @@
 									</div>
 								</div>
 							</div>
-							<?php if(function_exists("seed_social")) : ?>
-							<div class="post-share">
-								<?php seed_social(); ?>
-							</div>
-							<?php endif; ?>
-							<?php endwhile;?>
 						</div>
-					<?php endif; ?>
+					</div>
+					<?php endwhile; endif; ?>
+					<div class="row">
+						<div class="container wp63-pagination">
+							<?php wp_pagenavi(); ?>
+						</div>
 					</div>
 				</div>
 				<div class="col-md-3">
