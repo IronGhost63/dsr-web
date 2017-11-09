@@ -34,6 +34,11 @@
 							<div class="post-content">
 								<?php the_content(); ?>
 							</div>
+							<?php if(function_exists("seed_social")) : ?>
+							<div class="post-share">
+								<?php seed_social(); ?>
+							</div>
+							<?php endif; ?>
 							<?php endwhile;?>
 						</div>
 					<?php endif; ?>
