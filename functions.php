@@ -32,3 +32,18 @@ function document_link($doc_id) {
 		return false;
 	}
 }
+
+function gallery_link($gallery_id) {
+	$type = get_field("gallery_store", $gallery_id);
+	if(!$type){
+		return false;
+	}
+
+	if($type == "upload"){
+		return get_permalink($gallery_id);
+	}elseif($type == "link"){
+		return get_field("gallery_url", $gallery_id); 
+	}else{
+		return false;
+	}
+}

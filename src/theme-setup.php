@@ -9,14 +9,9 @@ function wp63_theme_setup() {
 	add_theme_support( 'title-tag' );
 	add_theme_support( 'post-thumbnails' );
 
-	/*
-	add_image_size( 'partner-thumbs', 200, 200, true );
-	add_image_size( 'partner-archive-thumbs', 200, 9999);
-	add_image_size( 'page-cover', 1280, 480, true );
-	*/
-
 	add_image_size( 'news-thumbs', 318, 180, true );
 	add_image_size( 'news-cover', 1200, 630, true );
+	add_image_size( 'home-slide', 1600, 680, true );
 }
 
 function wp63_theme_init() {
