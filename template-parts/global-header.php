@@ -1,8 +1,8 @@
 <header id="header">
 <div class="container">
 	<div class="row">
-		<div class="col-md-6"><img src="<?php asset_path(); ?>/logo-main.jpg" alt="" class="logo"></div>
-		<div class="col-md-6">
+		<div class="col-md-5"><img src="<?php asset_path(); ?>/logo-main.jpg" alt="" class="logo"></div>
+		<div class="col-md-7">
 			<nav id="main-nav" class="navbar navbar-expand-lg navbar-light">
 				<div class="collapse navbar-collapse" id="navbarsExampleDefault">
 					<ul class="navbar-nav mr-auto">
