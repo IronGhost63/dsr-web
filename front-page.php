@@ -142,12 +142,17 @@
 				<?php
 				$home_congrat = new WP_Query(array(
 					'post_type' => 'congratulate',
-					'posts_per_page' => 4
+					'posts_per_page' => 3
 				));
 				?>
 				<?php if($home_congrat->have_posts()) : while($home_congrat->have_posts()) : $home_congrat->the_post();?>
-					<div class="col-md-3">
-						
+					<div class="col-md-4 congrats-item" id="congrats-<?php the_ID();?>">
+						<a class="card" href="<?php the_permalink(); ?>">
+							<img class="card-img-top" src="<?php the_post_thumbnail_url( "congrats-thumbs" ); ?> " alt="<?php the_title();?>">
+							<div class="card-block">
+								<p class="card-text"><?php the_title(); ?></p>
+							</div>
+						</a>
 					</div>
 				<?php endwhile; else : ?>
 					<div class="col text-center">
