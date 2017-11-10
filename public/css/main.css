@@ -77,6 +77,24 @@ a:hover {
 .wp63-home #main #congratulate-block {
   background: #86af49;
   color: #fff; }
+  .wp63-home #main #congratulate-block .congrats-item {
+    margin-bottom: 1rem; }
+    .wp63-home #main #congratulate-block .congrats-item .card {
+      border-radius: 2px;
+      border: none;
+      -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 0 2px rgba(0, 0, 0, 0.2); }
+    .wp63-home #main #congratulate-block .congrats-item .card-img-top {
+      border-radius: 1px 1px 0px 0px; }
+    .wp63-home #main #congratulate-block .congrats-item .card-block {
+      padding: 0.5rem; }
+      .wp63-home #main #congratulate-block .congrats-item .card-block p {
+        text-align: center;
+        font-size: 0.9rem;
+        line-height: 1.2rem;
+        min-height: 3.6rem;
+        max-height: 3.6rem;
+        overflow: hidden; }
 
 .wp63-home #main #activity-block .gallery-item {
   margin-bottom: 1rem; }
@@ -95,6 +113,9 @@ a:hover {
       min-height: 3.6rem;
       max-height: 3.6rem;
       overflow: hidden; }
+
+.wp63-home #main #activity-block .document-list {
+  font-size: 0.8rem; }
 
 body.wp63-page #main {
   background: #f9f9f9;
@@ -120,12 +141,24 @@ body.wp63-page .widget {
     padding: 0.5rem;
     margin: 0px;
     border-bottom: 1px solid #f9f9f9; }
-  body.wp63-page .widget .widget-content {
-    padding: 0.5rem; }
-    body.wp63-page .widget .widget-content ul {
-      list-style: none;
-      padding: 0px;
-      margin: 0px; }
+  body.wp63-page .widget .widget-content ul {
+    list-style: none;
+    padding: 0px;
+    margin: 0px; }
+    body.wp63-page .widget .widget-content ul .menu-item a {
+      display: block;
+      padding: 0.5rem;
+      border-bottom: 1px solid #fafafa; }
+    body.wp63-page .widget .widget-content ul .menu-item.current-menu-item a {
+      padding-right: 0px;
+      border-right: 0.5rem solid #d5dbbc; }
+    body.wp63-page .widget .widget-content ul .cat-item a {
+      display: block;
+      padding: 0.5rem;
+      border-bottom: 1px solid #fafafa; }
+    body.wp63-page .widget .widget-content ul .cat-item.current-cat a {
+      padding-right: 0px;
+      border-right: 0.5rem solid #d5dbbc; }
 
 body.wp63-page .wp63-pagination {
   padding: 1rem; }
@@ -169,8 +202,47 @@ body.wp63-page .event-meta .event-detail {
     font-size: 0.8rem;
     margin-bottom: 0; }
 
+body.wp63-page .gallery-meta .gallery-icon {
+  font-size: 5rem;
+  text-align: right; }
+
+body.wp63-page .gallery-meta .gallery-detail {
+  color: #9c9c9c;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center; }
+  body.wp63-page .gallery-meta .gallery-detail .fa {
+    width: 1rem;
+    text-align: center; }
+  body.wp63-page .gallery-meta .gallery-detail .event-title {
+    margin-bottom: 0.5rem; }
+
 body.wp63-event .post-content {
   margin-bottom: 3rem; }
+
+body.wp63-personel .personel-list .personel-list-head {
+  background: #86af49;
+  color: #fff;
+  padding: 0.5rem; }
+
+body.wp63-personel .personel-list .personel-list-item {
+  padding: 1rem 0.5rem;
+  background: #fff;
+  border-bottom: 1px solid #f9f9f9; }
+
+body.wp63-personel .personel-list .personel-photo {
+  width: 100%;
+  height: auto; }
 
 #footer {
   color: #fff;
