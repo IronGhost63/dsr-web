@@ -12,6 +12,8 @@ function wp63_theme_setup() {
 	add_image_size( 'news-thumbs', 318, 180, true );
 	add_image_size( 'news-cover', 1200, 630, true );
 	add_image_size( 'home-slide', 1600, 680, true );
+	add_image_size( 'congrats-thumbs', 1200, 800, true );
+	add_image_size( 'personel-photo', 270, 405, true );
 }
 
 function wp63_theme_init() {
