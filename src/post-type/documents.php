@@ -40,7 +40,7 @@ function wp63_cpt_documents() {
 			'label'                 => __( 'เอกสารเผยแพร่', 'dsr' ),
 			'description'           => __( 'Public Documents', 'dsr' ),
 			'labels'                => $labels,
-			'supports'              => array( 'title', 'thumbnail', ),
+			'supports'              => array( 'title' ),
 			'hierarchical'          => false,
 			'public'                => true,
 			'show_ui'               => true,
