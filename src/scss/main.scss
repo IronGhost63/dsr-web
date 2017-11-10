@@ -130,6 +130,33 @@ a:hover {
 		#congratulate-block {
 			background: $greenery;
 			color: $white;
+
+			.congrats-item {
+				margin-bottom: 1rem;
+	
+				.card {
+					border-radius: 2px;
+					border:none;
+					box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+				}
+	
+				.card-img-top {
+					border-radius: 1px 1px 0px 0px;
+				}
+	
+				.card-block {
+					padding: 0.5rem;
+	
+					p {
+						text-align: center;
+						font-size: 0.9rem;
+						line-height: 1.2rem;
+						min-height: 3.6rem;
+						max-height: 3.6rem;
+						overflow:hidden;
+					}
+				}
+			}
 		}
 
 		#activity-block {
@@ -157,6 +184,10 @@ a:hover {
 						overflow:hidden;
 					}
 				}
+			}
+
+			.document-list {
+				font-size: 0.8rem;
 			}
 		}
 	}
@@ -197,12 +228,32 @@ body.wp63-page {
 		}
 
 		.widget-content {
-			padding: 0.5rem;
-
 			ul {
 				list-style:none;
 				padding:0px;
 				margin:0px;
+
+				.menu-item a {
+					display: block;
+					padding:0.5rem;
+					border-bottom: 1px solid #fafafa;
+				}
+
+				.menu-item.current-menu-item a {
+					padding-right:0px;
+					border-right: 0.5rem solid $littlegreen;
+				}
+
+				.cat-item a {
+					display: block;
+					padding:0.5rem;
+					border-bottom: 1px solid #fafafa;
+				}
+
+				.cat-item.current-cat a {
+					padding-right:0px;
+					border-right: 0.5rem solid $littlegreen;
+				}
 			}
 		}
 	}
@@ -259,11 +310,55 @@ body.wp63-page {
 			}
 		}
 	}
+
+	.gallery-meta {
+		.gallery-icon {
+			font-size:5rem;
+			text-align:right;
+		}
+
+		.gallery-detail {
+			color: $text-light;
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+
+			.fa {
+				width:1rem;
+				text-align: center;
+			}
+
+			.event-title {
+				margin-bottom:0.5rem;
+			}
+		}
+	}
 }
 
 body.wp63-event {
 	.post-content {
 		margin-bottom:3rem;
+	}
+}
+
+body.wp63-personel {
+	.personel-list {
+		.personel-list-head {
+			background: $greenery;
+			color: $white;
+			padding:0.5rem;
+		}
+
+		.personel-list-item {
+			padding:1rem 0.5rem;
+			background: $white;
+			border-bottom: 1px solid #f9f9f9;
+		}
+
+		.personel-photo {
+			width:100%;
+			height:auto;
+		}
 	}
 }
 
