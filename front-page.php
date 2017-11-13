@@ -205,7 +205,7 @@
 						</div>
 					</div>
 					<div class="col-md-4">
-						<h2><i class="fa fa-file-text-o" aria-hidden="true"></i> <?php _e("คำสั่งโรงเรียน", "dsr");?></h2>
+						<h2><i class="fa fa-file-text-o" aria-hidden="true"></i> <?php _e("เอกสารเผยแพร่", "dsr");?></h2>
 						<div class="row">
 						<?php
 						$home_document = new WP_Query(array(
