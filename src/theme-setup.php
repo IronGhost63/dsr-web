@@ -5,7 +5,7 @@ add_action( 'widgets_init', 'wp63_register_sidebars' );
 add_action( "wp_enqueue_scripts", "wp63_enqueue" );
 add_filter( 'image_resize_dimensions', 'image_crop_dimensions', 10, 6 );
 add_action( 'admin_menu', 'wp63_menu_label' );
-add_filter( 'post_thumbnail_html', 'wp63_default_post_thumbnail', 10, 4);
+add_filter( 'post_thumbnail_html', 'wp63_default_post_thumbnail', 10, 5);
 add_filter( 'get_search_form', 'wp63_bootstrap_search' );
 
 function wp63_menu_label() {
@@ -57,9 +57,6 @@ function wp63_enqueue(){
 function wp63_default_post_thumbnail( $html, $post_id, $post_thumbnail_id, $size, $attr = "") {
 	global $_wp_additional_image_sizes;
 	if(!$html){
-		if(!$attr){
-			$attr['class'] = "card-img-top";
-		}
 		$html = '<img src="'.get_asset_path().'/featured-image-'.$size.'.jpg" class="'.$size.' '.$attr['class'].'">';
 	}
 
