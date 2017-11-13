@@ -59,7 +59,7 @@
 						<?php if($home_news->have_posts()) : while($home_news->have_posts()) : $home_news->the_post(); ?>
 							<div class="col-md-4 news-item" id="news-<?php the_ID();?>">
 								<a class="card" href="<?php the_permalink(); ?>">
-									<img class="card-img-top" src="<?php the_post_thumbnail_url( "news-thumbs" ); ?> " alt="<?php the_title();?>">
+									<?php the_post_thumbnail( "news-thumbs", array('class'=>'card-img-top')); ?>
 									<div class="card-block">
 										<p class="card-text"><?php the_title(); ?></p>
 									</div>
@@ -184,7 +184,7 @@
 						<?php if($home_news->have_posts()) : while($home_news->have_posts()) : $home_news->the_post(); ?>
 							<div class="col-md-4 gallery-item" id="gallery-<?php the_ID();?>">
 								<a class="card" href="<?php echo gallery_link(get_the_ID()); ?>">
-									<img class="card-img-top" src="<?php the_post_thumbnail_url( "news-thumbs" ); ?> " alt="<?php the_title();?>">
+									<?php the_post_thumbnail( "news-thumbs", array('class'=>'card-img-top')); ?>
 									<div class="card-block">
 										<p class="card-text"><?php the_title(); ?></p>
 									</div>

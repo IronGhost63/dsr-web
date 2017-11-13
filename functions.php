@@ -18,6 +18,10 @@ require 'src/theme-setup.php';
 // Hooks
 add_filter( 'wp_pagenavi', __NAMESPACE__ . '\\gc_pagination', 10, 2 );
 
+function get_asset_path($asset = "img"){
+	return get_template_directory_uri() . "/public/" . $asset;
+}
+
 function asset_path($asset = "img"){
 	echo get_template_directory_uri() . "/public/" . $asset;
 }

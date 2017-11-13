@@ -54,6 +54,10 @@ a:hover {
 	.dropdown:hover>.dropdown-menu {
 		display: block;
 	}
+
+	.navbar {
+		padding: 0.5rem 0rem;
+	}
 }
 .wp63-home {
 	#home-slider {
@@ -210,6 +214,11 @@ body.wp63-page {
 	.post-container {
 		background: $white;
 		padding:1.5rem 2rem;
+
+		img {
+			max-width: 100%;
+			height: auto;
+		}
 	}
 
 	.post-container .post-meta {
@@ -254,6 +263,10 @@ body.wp63-page {
 					padding-right:0px;
 					border-right: 0.5rem solid $littlegreen;
 				}
+			}
+
+			.searchform {
+				padding:0.5rem;
 			}
 		}
 	}
@@ -372,5 +385,17 @@ body.wp63-personel {
 		max-width: 100%;
 		height: auto;
 		opacity: 0.7;
+	}
+}
+
+@media screen and (max-width: 720px) {
+	#header {
+		.nav-logo-wrapper {
+			width:50%;
+		}
+
+		.nav-link {
+			text-align: center;
+		}
 	}
 }

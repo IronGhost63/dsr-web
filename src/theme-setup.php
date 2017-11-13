@@ -4,6 +4,15 @@ add_action( 'init', 'wp63_theme_init' );
 add_action( 'widgets_init', 'wp63_register_sidebars' );
 add_action( "wp_enqueue_scripts", "wp63_enqueue" );
 add_filter( 'image_resize_dimensions', 'image_crop_dimensions', 10, 6 );
+add_action( 'admin_menu', 'wp63_menu_label' );
+add_filter( 'post_thumbnail_html', 'wp63_default_post_thumbnail', 10, 4);
+add_filter( 'get_search_form', 'wp63_bootstrap_search' );
+
+function wp63_menu_label() {
+	global $menu;
+	global $submenu;
+	$menu[5][0] = 'ข่าวสาร';
+}
 
 function wp63_theme_setup() {
 	add_theme_support( 'title-tag' );
@@ -43,5 +52,31 @@ function wp63_enqueue(){
 	wp_enqueue_script( 'popper', '//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js', array('jquery'), true );
 	wp_enqueue_script( 'bootstrap', get_template_directory_uri() . '/vendor/twbs/bootstrap/dist/js/bootstrap.min.js', array('jquery', 'popper'), true );
 	wp_enqueue_script( 'main', get_template_directory_uri() . '/public/js/main.js', array('jquery'), true );
+}
+
+function wp63_default_post_thumbnail( $html, $post_id, $post_thumbnail_id, $size, $attr = "") {
+	global $_wp_additional_image_sizes;
+	if(!$html){
+		if(!$attr){
+			$attr['class'] = "card-img-top";
+		}
+		$html = '<img src="'.get_asset_path().'/featured-image-'.$size.'.jpg" class="'.$size.' '.$attr['class'].'">';
+	}
+
+	$html = preg_replace( '/(width|height)=\"\d*\"\s/', "", $html );
+	return $html;
+}
+
+function wp63_bootstrap_search($form){
+	$form = '<form role="search" method="get" class="searchform" action="' . esc_url( home_url( '/' ) ) . '">
+		<div class="input-group">
+			<input type="text" class="form-control" placeholder="Search for..." aria-label="Search for...">
+			<span class="input-group-btn">
+			<button class="btn btn-secondary" type="button">Go!</button>
+			</span>
+		</div>
+	</form>';
+
+	return $form;
 }
 ?>

@@ -30,6 +30,8 @@ a:hover {
     min-width: 12rem; }
   #header .dropdown:hover > .dropdown-menu {
     display: block; }
+  #header .navbar {
+    padding: 0.5rem 0rem; }
 
 .wp63-home #home-slider .carousel-caption {
   text-shadow: 0 0 5px rgba(0, 0, 0, 0.8); }
@@ -129,6 +131,9 @@ body.wp63-page .post-cover img {
 body.wp63-page .post-container {
   background: #fff;
   padding: 1.5rem 2rem; }
+  body.wp63-page .post-container img {
+    max-width: 100%;
+    height: auto; }
 
 body.wp63-page .post-container .post-meta {
   font-size: 0.8rem;
@@ -159,6 +164,8 @@ body.wp63-page .widget {
     body.wp63-page .widget .widget-content ul .cat-item.current-cat a {
       padding-right: 0px;
       border-right: 0.5rem solid #d5dbbc; }
+  body.wp63-page .widget .widget-content .searchform {
+    padding: 0.5rem; }
 
 body.wp63-page .wp63-pagination {
   padding: 1rem; }
@@ -253,3 +260,9 @@ body.wp63-personel .personel-list .personel-photo {
     max-width: 100%;
     height: auto;
     opacity: 0.7; }
+
+@media screen and (max-width: 720px) {
+  #header .nav-logo-wrapper {
+    width: 50%; }
+  #header .nav-link {
+    text-align: center; } }
