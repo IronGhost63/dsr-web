@@ -24,13 +24,13 @@
 						<?php endif; ?>
 						<div class="post-container">
 							<div class="post-head">
-								<a href="<?php the_permalink(); ?>"><h2 class="post-title"><?php the_title(); ?></h2></a>
+								<a href="<?php the_permalink(); ?>"><h4 class="post-title"><?php the_title(); ?></h4></a>
 							</div>
 							<div class="post-meta">
 								<i class="fa fa-calendar-o" aria-hidden="true"></i> <span class="post-date"><?php the_time("F j, Y g:i a"); ?></span>
 							</div>
 							<div class="post-content">
-								<?php the_content(); ?>
+								<?php //the_content(); ?>
 							</div>
 						</div>
 					</div>
