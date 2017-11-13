@@ -1,5 +1,5 @@
 body {
-  background: #fff;
+  background: #f9f9f9;
   color: #5a5a5a;
   font-family: "Kanit", sans-serif;
   font-weight: 300; }
@@ -43,38 +43,41 @@ a:hover {
   padding-top: 2rem;
   padding-bottom: 2rem; }
 
-.wp63-home #main #news-block {
-  background: #f9f9f9; }
-  .wp63-home #main #news-block .news-item {
-    margin-bottom: 1rem; }
-    .wp63-home #main #news-block .news-item .card {
-      border-radius: 2px;
-      border: none;
-      -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
-      box-shadow: 0 0 2px rgba(0, 0, 0, 0.2); }
-    .wp63-home #main #news-block .news-item .card-img-top {
-      border-radius: 1px 1px 0px 0px; }
-    .wp63-home #main #news-block .news-item .card-block {
-      padding: 0.5rem; }
-      .wp63-home #main #news-block .news-item .card-block p {
-        font-size: 0.9rem;
-        line-height: 1.2rem;
-        min-height: 3.6rem;
-        max-height: 3.6rem;
-        overflow: hidden; }
-  .wp63-home #main #news-block .event-list {
-    margin-bottom: 1rem; }
-  .wp63-home #main #news-block .event-item .fa {
-    width: 1rem;
-    text-align: center; }
-  .wp63-home #main #news-block .event-item .event-title {
-    margin-bottom: 0.5rem; }
-  .wp63-home #main #news-block .event-item .event-date {
-    font-size: 0.8rem;
-    margin-bottom: 0; }
-  .wp63-home #main #news-block .event-item .event-location {
-    font-size: 0.8rem;
-    margin-bottom: 0; }
+.wp63-home #main #news-block .news-item {
+  margin-bottom: 1rem; }
+  .wp63-home #main #news-block .news-item .card {
+    border-radius: 2px;
+    border: none;
+    -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2); }
+  .wp63-home #main #news-block .news-item .card-img-top {
+    border-radius: 1px 1px 0px 0px; }
+  .wp63-home #main #news-block .news-item .card-block {
+    padding: 0.5rem; }
+    .wp63-home #main #news-block .news-item .card-block p {
+      font-size: 0.9rem;
+      line-height: 1.2rem;
+      min-height: 3.6rem;
+      max-height: 3.6rem;
+      overflow: hidden; }
+
+.wp63-home #main #news-block .event-list {
+  margin-bottom: 1rem; }
+
+.wp63-home #main #news-block .event-item .fa {
+  width: 1rem;
+  text-align: center; }
+
+.wp63-home #main #news-block .event-item .event-title {
+  margin-bottom: 0.5rem; }
+
+.wp63-home #main #news-block .event-item .event-date {
+  font-size: 0.8rem;
+  margin-bottom: 0; }
+
+.wp63-home #main #news-block .event-item .event-location {
+  font-size: 0.8rem;
+  margin-bottom: 0; }
 
 .wp63-home #main #congratulate-block {
   background: #86af49;
@@ -120,7 +123,7 @@ a:hover {
   font-size: 0.8rem; }
 
 body.wp63-page #main {
-  background: #f9f9f9;
+  background: #f0f0f0;
   padding-top: 1rem;
   padding-bottom: 1rem; }
 

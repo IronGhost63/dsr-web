@@ -5,7 +5,8 @@ $darkgreen: #24330a;
 $littlegreen: #d5dbbc;
 $white: #fff;
 $almost-white: rgba(255,255,255,0.8);
-$bg-gray: #f9f9f9;
+$bg-gray: #f0f0f0;
+$bg-gray-2: #f9f9f9;
 
 $text-color: #5a5a5a;
 $text-light: #9c9c9c;
@@ -16,7 +17,7 @@ $font-heading: 'Prompt', sans-serif;
 $font-content: 'Kanit', sans-serif;
 
 body {
-	background: $white;
+	background: $bg-gray-2;
 	color: $text-color;
 	font-family: $font-content;
 	font-weight: 300;
@@ -77,7 +78,6 @@ a:hover {
 		}
 	
 		#news-block {
-			background: $bg-gray;
 
 			.news-item {
 				margin-bottom: 1rem;
