@@ -93,7 +93,10 @@
 									'meta_value' => $today,
 									'meta_compare' => ">="
 								)
-							)
+							),
+							'meta_key' => 'event_date',
+							'orderby' => 'meta_value',
+							'order' => "ASC"
 						));
 						?>
 						<?php if($home_event->have_posts()) : ?>
@@ -105,7 +108,7 @@
 											<a href="<?php the_permalink(); ?>"><?php the_title();?></a>
 										</p>
 										<p class="event-date">
-											<i class="fa fa-calendar-o" aria-hidden="true"></i> <?php echo date("F j, Y", strtotime(get_field('event_date')));?>
+											<i class="fa fa-calendar-o" aria-hidden="true"></i> <?php echo date("F j, Y", strtotime(get_field('event_date')));?> <?php echo (get_field("event_end") ? __("ถึง", "dsr") . " " . date("F j, Y", strtotime(get_field("event_end"))) : "" );?>
 										</p>
 										<p class="event-location">
 											<i class="fa fa-map-marker" aria-hidden="true"></i> <?php the_field("event_location");?>
