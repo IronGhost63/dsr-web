@@ -120,7 +120,8 @@ a:hover {
       overflow: hidden; }
 
 .wp63-home #main #activity-block .document-list {
-  font-size: 0.8rem; }
+  font-size: 0.8rem;
+  margin-bottom: 1rem; }
 
 body.wp63-page #main {
   background: #f0f0f0;
@@ -250,9 +251,18 @@ body.wp63-personel .personel-list .personel-list-item {
   background: #fff;
   border-bottom: 1px solid #f9f9f9; }
 
+body.wp63-personel .personel-list .personel-name {
+  font-size: 0.8rem; }
+
+body.wp63-personel .personel-list .personel-photo-container {
+  text-align: center; }
+
 body.wp63-personel .personel-list .personel-photo {
-  width: 100%;
+  width: 60%;
   height: auto; }
+
+body.wp63-management .personel-list .personel-photo {
+  width: 100%; }
 
 #footer {
   color: #fff;
@@ -263,6 +273,8 @@ body.wp63-personel .personel-list .personel-photo {
     max-width: 100%;
     height: auto;
     opacity: 0.7; }
+  #footer .address {
+    padding: 0.5rem; }
 
 @media screen and (max-width: 720px) {
   #header .nav-logo-wrapper {

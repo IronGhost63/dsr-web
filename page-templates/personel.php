@@ -37,7 +37,7 @@
 						</div>
 						<div class="row personel-list-item">
 						<?php if(have_rows("officers")) : while(have_rows("officers")) : the_row(); ?>
-							<div class="col-md-3">
+							<div class="col-md-3 personel-photo-container">
 								<?php echo wp_get_attachment_image(get_sub_field("photo"), "personel-photo", false, array("class"=>"personel-photo")); ?>
 								<p class="personel-name text-center"><?php the_sub_field("name");?></p>
 							</div>

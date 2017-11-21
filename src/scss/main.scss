@@ -192,6 +192,7 @@ a:hover {
 
 			.document-list {
 				font-size: 0.8rem;
+				margin-bottom: 1rem;
 			}
 		}
 	}
@@ -368,9 +369,25 @@ body.wp63-personel {
 			border-bottom: 1px solid #f9f9f9;
 		}
 
+		.personel-name {
+			font-size:0.8rem;
+		}
+
+		.personel-photo-container {
+			text-align: center;
+		}
+
+		.personel-photo {
+			width:60%;
+			height:auto;
+		}
+	}
+}
+
+body.wp63-management {
+	.personel-list {
 		.personel-photo {
 			width:100%;
-			height:auto;
 		}
 	}
 }
@@ -385,6 +402,10 @@ body.wp63-personel {
 		max-width: 100%;
 		height: auto;
 		opacity: 0.7;
+	}
+
+	.address {
+		padding: 0.5rem;
 	}
 }
 

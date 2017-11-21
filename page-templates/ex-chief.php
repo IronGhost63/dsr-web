@@ -1,5 +1,5 @@
 <?php
-/* Template name: Management Board */
+/* Template name: ทำเนียบผุ้บริหาร */
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,27 +31,15 @@
 					<div class="personel-list container">
 						<div class="row personel-list-head">
 							<div class="col-md-9 offset-md-3">
-								<?php _e("ผู้อำนวยการ", "dsr");?>
+								<?php _e("ทำเนียบผู้บริหาร", "dsr");?>
 							</div>
 						</div>
-						<div class="row personel-list-item">
-							<div class="col-md-2 offset-md-1"><?php echo wp_get_attachment_image(get_field("photo"), "personel-photo", false, array("class"=>"personel-photo")); ?></div>
-							<div class="col-md-9">
-								<p class="personel-name"><?php the_field("name");?></p>
-								<p class="personel-position"><?php _e("ผู้อำนวยการโรงเรียนเทพศิรินทร์ร่มเกล้า"); ?></p>
-							</div>
-						</div>
-						<div class="row personel-list-head">
-							<div class="col-md-9 offset-md-3">
-								<?php _e("ผู้ช่วยผู้อำนวยการ", "dsr");?>
-							</div>
-						</div>
-						<?php if(have_rows("deputy_directors")) : while(have_rows("deputy_directors")) : the_row(); ?>
+						<?php if(have_rows("ex_chief")) : while(have_rows("ex_chief")) : the_row(); ?>
 						<div class="row personel-list-item">
 							<div class="col-md-2 offset-md-1"><?php echo wp_get_attachment_image(get_sub_field("photo"), "personel-photo", false, array("class"=>"personel-photo")); ?></div>
 							<div class="col-md-9">
 								<p class="personel-name"><?php the_sub_field("name");?></p>
-								<p class="personel-position"><?php the_sub_field("position"); ?></p>
+								<p class="personel-position"><?php the_sub_field("year"); ?></p>
 							</div>
 						</div>
 						<?php endwhile; endif; ?>
