@@ -208,7 +208,7 @@
 						</div>
 					</div>
 					<div class="col-md-4">
-						<h2><i class="fa fa-file-text-o" aria-hidden="true"></i> <?php _e("เอกสารเผยแพร่", "dsr");?></h2>
+						<h2><i class="fa fa-file-text-o" aria-hidden="true"></i> <?php _e("คำสั่งโรงเรียน", "dsr");?></h2>
 						<div class="row">
 						<?php
 						$home_document = new WP_Query(array(
@@ -229,14 +229,14 @@
 						<?php else: ?>
 							<div class="col text-center">
 								<div class="alert alert-warning" role="alert">
-									<?php _e("ไม่มีเอกสารเผยแพร่"); ?>
+									<?php _e("ไม่มีคำสั่ง"); ?>
 								</div>
 							</div>	
 						<?php endif;?>
 						</div>
 						<div class="row">
 							<div class="col text-right">
-								<a href="<?php echo get_post_type_archive_link( 'documents' ); ?>"><?php _e("เอกสารทั้งหมด"); ?> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></a>
+								<a href="<?php echo get_post_type_archive_link( 'documents' ); ?>"><?php _e("คำสั่งทั้งหมด"); ?> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></a>
 							</div>
 						</div>
 					</div>
