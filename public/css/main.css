@@ -39,6 +39,12 @@ a:hover {
     min-width: 12rem; }
   #header .dropdown:hover > .dropdown-menu {
     display: block; }
+  #header .dropdown .dropdown-menu .nav-link {
+    -webkit-transition: all 0.08s ease-in;
+    -o-transition: all 0.08s ease-in;
+    transition: all 0.08s ease-in; }
+  #header .dropdown:hover > .dropdown-menu .nav-link:hover {
+    background: #dedede; }
   #header .navbar {
     padding: 0.5rem 0rem; }
 
@@ -299,4 +305,6 @@ body.wp63-management .personel-list .personel-photo {
   #header .nav-logo-wrapper {
     width: 50%; }
   #header .nav-link {
-    text-align: center; } }
+    text-align: center; }
+  .wrapper {
+    margin: 0; } }

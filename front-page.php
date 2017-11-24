@@ -11,7 +11,7 @@
 		<?php get_template_part("template-parts/global", "header"); ?>
 		<?php if( have_rows("slides") ) : $active = "active"; ?>
 		<div id="home-slider">
-			<div id="home-slider-main" class="carousel slide" data-ride="carousel">
+			<div id="home-slider-main" class="carousel slide wow fadeIn" data-ride="carousel">
 				<div class="carousel-inner" role="listbox">
 				<?php while( have_rows("slides") ) : the_row(); ?>
 				<?php
@@ -46,7 +46,7 @@
 		<?php endif; ?>
 		<div id="main">
 			<div id="news-block" class="block">
-				<div class="container">
+				<div class="container wow fadeIn">
 					<div class="row">
 						<div class="col-md-8">
 							<h2><i class="fa fa-newspaper-o" aria-hidden="true"></i> <?php _e("ข่าวสาร", "dsr");?></h2>
@@ -80,7 +80,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-4">
+						<div class="col-md-4 slide wow fadeInRight">
 							<h2><i class="fa fa-calendar" aria-hidden="true"></i> <?php _e("ปฏิทิน", "dsr");?></h2>
 							<div class="row">
 							<?php
@@ -136,7 +136,7 @@
 				</div>
 			</div>
 			<div id="congratulate-block" class="block">
-				<div class="container">
+				<div class="container wow fadeIn">
 					<div class="row">
 						<div class="col text-center">
 							<h2><?php _e("ทำเนียบคนเก่ง", "dsr");?></h2>
@@ -150,7 +150,7 @@
 					));
 					?>
 					<?php if($home_congrat->have_posts()) : while($home_congrat->have_posts()) : $home_congrat->the_post();?>
-						<div class="col-md-4 congrats-item" id="congrats-<?php the_ID();?>">
+						<div class="col-md-4 congrats-item slide wow slideInUp" id="congrats-<?php the_ID();?>">
 							<a class="card" href="<?php the_permalink(); ?>">
 								<img class="card-img-top" src="<?php the_post_thumbnail_url( "congrats-thumbs" ); ?> " alt="<?php the_title();?>">
 								<div class="card-block">
@@ -174,7 +174,7 @@
 				</div>
 			</div>
 			<div id="activity-block" class="block">
-				<div class="container">
+				<div class="container wow fadeIn">
 					<div class="row">
 						<div class="col-md-8">
 							<h2><i class="fa fa-star-o" aria-hidden="true"></i> <?php _e("ภาพกิจกรรม", "dsr");?></h2>
@@ -208,7 +208,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-4">
+						<div class="col-md-4  slide wow fadeInRight">
 							<h2><i class="fa fa-file-text-o" aria-hidden="true"></i> <?php _e("คำสั่งโรงเรียน", "dsr");?></h2>
 							<div class="row">
 							<?php
@@ -245,7 +245,7 @@
 				</div>
 			</div>
 			<div id="link-block" class="block">
-				<div class="container">
+				<div class="container wow fadeIn">
 					<div class="row">
 						<div class="col">
 							<h2><i class="fa fa-link" aria-hidden="true"></i> <?php _e("ลิงก์น่าสนใจ", "dsr");?></h2>

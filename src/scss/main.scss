@@ -68,6 +68,14 @@ a:hover {
 		display: block;
 	}
 
+	.dropdown .dropdown-menu .nav-link {
+		transition: all 0.08s ease-in;
+	}
+
+	.dropdown:hover>.dropdown-menu .nav-link:hover {
+		background: #dedede;
+	}
+
 	.navbar {
 		padding: 0.5rem 0rem;
 	}
@@ -448,5 +456,9 @@ body.wp63-management {
 		.nav-link {
 			text-align: center;
 		}
+	}
+
+	.wrapper {
+		margin: 0;
 	}
 }
