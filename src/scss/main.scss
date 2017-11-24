@@ -17,10 +17,13 @@ $font-heading: 'Prompt', sans-serif;
 $font-content: 'Kanit', sans-serif;
 
 body {
-	background: $bg-gray-2;
+	background: -webkit-linear-gradient(top, rgba(152, 206, 71, 0.07) 0, rgba(243, 249, 234, 0.18) 500px) no-repeat, -webkit-linear-gradient(top, #A7D562 0, #E4F2CF 500px);
+
+	/*background: #44c062 url('../img/background.png');*/
 	color: $text-color;
 	font-family: $font-content;
 	font-weight: 300;
+	background-attachment: fixed;
 }
 
 a {
@@ -30,6 +33,15 @@ a {
 a:hover {
 	text-decoration: none;
 	color:$darkgreen;
+}
+
+.wrapper {
+	max-width: 1200px;
+	margin:1.5rem auto;
+}
+
+.block {
+	background: $white;
 }
 
 #header {
@@ -193,6 +205,20 @@ a:hover {
 			.document-list {
 				font-size: 0.8rem;
 				margin-bottom: 1rem;
+			}
+		}
+
+		#link-block {
+			background: $littlegreen;
+
+			.link-list{
+				ul {
+					list-style:none;
+					
+					li {
+						display: inline-block;
+					}
+				}
 			}
 		}
 	}
@@ -386,6 +412,10 @@ body.wp63-personel {
 
 body.wp63-management {
 	.personel-list {
+		.personel-name {
+			font-size:1rem;
+		}
+
 		.personel-photo {
 			width:100%;
 		}
