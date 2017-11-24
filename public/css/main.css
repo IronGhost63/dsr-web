@@ -1,8 +1,10 @@
 body {
-  background: #f9f9f9;
+  background: -webkit-linear-gradient(top, rgba(152, 206, 71, 0.07) 0, rgba(243, 249, 234, 0.18) 500px) no-repeat, -webkit-linear-gradient(top, #A7D562 0, #E4F2CF 500px);
+  /*background: #44c062 url('../img/background.png');*/
   color: #5a5a5a;
   font-family: "Kanit", sans-serif;
-  font-weight: 300; }
+  font-weight: 300;
+  background-attachment: fixed; }
 
 a {
   color: #44883d; }
@@ -10,6 +12,13 @@ a {
 a:hover {
   text-decoration: none;
   color: #24330a; }
+
+.wrapper {
+  max-width: 1200px;
+  margin: 1.5rem auto; }
+
+.block {
+  background: #fff; }
 
 #header {
   background-color: #fff; }
@@ -122,6 +131,13 @@ a:hover {
 .wp63-home #main #activity-block .document-list {
   font-size: 0.8rem;
   margin-bottom: 1rem; }
+
+.wp63-home #main #link-block {
+  background: #d5dbbc; }
+  .wp63-home #main #link-block .link-list ul {
+    list-style: none; }
+    .wp63-home #main #link-block .link-list ul li {
+      display: inline-block; }
 
 body.wp63-page #main {
   background: #f0f0f0;
@@ -260,6 +276,9 @@ body.wp63-personel .personel-list .personel-photo-container {
 body.wp63-personel .personel-list .personel-photo {
   width: 60%;
   height: auto; }
+
+body.wp63-management .personel-list .personel-name {
+  font-size: 1rem; }
 
 body.wp63-management .personel-list .personel-photo {
   width: 100%; }

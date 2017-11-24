@@ -10,6 +10,7 @@ require 'src/post-type/calendar.php';
 require 'src/post-type/gallery.php';
 require 'src/post-type/congratulate.php';
 require 'src/post-type/research.php';
+require 'src/post-type/order.php';
 
 require 'src/sidebar.php';
 

@@ -35,6 +35,7 @@ function wp63_theme_setup() {
 function wp63_theme_init() {
 	$locations = array(
 		'primary' => __( 'Main Menu', 'dsr' ),
+		'link' => __( 'ลิงก์น่าสนใจ', 'dsr' ),
 	);
 	register_nav_menus( $locations );
 
@@ -44,6 +45,7 @@ function wp63_theme_init() {
 	wp63_cpt_congratulate();
 	wp63_cpt_research();
 	wp63_cpt_documents();
+	wp63_cpt_order();
 }
 
 function wp63_enqueue(){
