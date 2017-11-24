@@ -76,11 +76,11 @@
 							</div>
 							<div class="row">
 								<div class="col text-right">
-									<a href="<?php echo get_post_type_archive_link( 'post' ); ?>"><?php _e("ข่าวสารทั้งหมด"); ?> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></a>
+									<a href="<?php echo get_post_type_archive_link( 'post' ); ?>" ><?php _e("ข่าวสารทั้งหมด"); ?> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></a>
 								</div>
 							</div>
 						</div>
-						<div class="col-md-4 slide wow fadeInRight">
+						<div class="col-md-4">
 							<h2><i class="fa fa-calendar" aria-hidden="true"></i> <?php _e("ปฏิทิน", "dsr");?></h2>
 							<div class="row">
 							<?php
@@ -99,12 +99,13 @@
 								'orderby' => 'meta_value',
 								'order' => "ASC"
 							));
+							$timer = 0;
 							?>
 							<?php if($home_event->have_posts()) : ?>
 								<div class="col">
 									<ul class="event-list list-group">
 							<?php while($home_event->have_posts()) : $home_event->the_post(); ?>
-										<li class="event-item list-group-item" id="event-<?php the_ID();?>">
+										<li class="event-item list-group-item wow fadeInUp" data-wow-delay="<?php echo $timer;?>s" id="event-<?php the_ID();?>">
 											<p class="event-title">
 												<a href="<?php the_permalink(); ?>"><?php the_title();?></a>
 											</p>
@@ -115,7 +116,7 @@
 												<i class="fa fa-map-marker" aria-hidden="true"></i> <?php the_field("event_location");?>
 											</p>
 										</li>
-							<?php endwhile; ?>
+							<?php $timer += 0.3; endwhile; ?>
 									</ul>
 								</div>
 							<?php else : ?>
@@ -148,9 +149,11 @@
 						'post_type' => 'congratulate',
 						'posts_per_page' => 3
 					));
+
+					$timer = 0;
 					?>
 					<?php if($home_congrat->have_posts()) : while($home_congrat->have_posts()) : $home_congrat->the_post();?>
-						<div class="col-md-4 congrats-item slide wow slideInUp" id="congrats-<?php the_ID();?>">
+						<div class="col-md-4 congrats-item wow fadeInUp" data-wow-delay="<?php echo $timer;?>s" id="congrats-<?php the_ID();?>">
 							<a class="card" href="<?php the_permalink(); ?>">
 								<img class="card-img-top" src="<?php the_post_thumbnail_url( "congrats-thumbs" ); ?> " alt="<?php the_title();?>">
 								<div class="card-block">
@@ -158,7 +161,7 @@
 								</div>
 							</a>
 						</div>
-					<?php endwhile; else : ?>
+					<?php $timer += 0.3; endwhile; else : ?>
 						<div class="col text-center">
 							<div class="alert alert-warning" role="alert">
 								<?php _e("ไม่พบข้อมูล"); ?>
@@ -208,7 +211,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-4  slide wow fadeInRight">
+						<div class="col-md-4">
 							<h2><i class="fa fa-file-text-o" aria-hidden="true"></i> <?php _e("คำสั่งโรงเรียน", "dsr");?></h2>
 							<div class="row">
 							<?php
@@ -216,18 +219,19 @@
 								'post_type' => "order",
 								'posts_per_page' => 5
 							));
+							$timer = 0;
 							?>
 							<?php if($home_document->have_posts()) : ?>
 								<div class="col">
 									<ul class="document-list list-group">
 									<?php while($home_document->have_posts()) : $home_document->the_post(); ?>
-										<li class="document-item list-group-item" id="document-<?php the_ID();?>">
+										<li class="document-item list-group-item wow fadeInUp" data-wow-delay="<?php echo $timer;?>s"  id="document-<?php the_ID();?>">
 											<a href="<?php echo document_link(get_the_ID()); ?>"><?php the_title(); ?></a>
 										</li>
 									<?php endwhile; ?>
 									</ul>
 								</div>
-							<?php else: ?>
+							<?php $timer += 0.3; else: ?>
 								<div class="col text-center">
 									<div class="alert alert-warning" role="alert">
 										<?php _e("ไม่มีคำสั่ง"); ?>
