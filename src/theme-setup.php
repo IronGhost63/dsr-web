@@ -7,6 +7,13 @@ add_filter( 'image_resize_dimensions', 'image_crop_dimensions', 10, 6 );
 add_action( 'admin_menu', 'wp63_menu_label' );
 add_filter( 'post_thumbnail_html', 'wp63_default_post_thumbnail', 10, 5);
 add_filter( 'get_search_form', 'wp63_bootstrap_search' );
+add_filter( 'menu_image_link_attributes', 'wp63_menu_image_bootstrap', 10, 1);
+
+function wp63_menu_image_bootstrap( $attributes_array ){
+	$attributes_array['class'] .= " nav-link";
+
+	return $attributes_array;
+}
 
 function wp63_menu_label() {
 	global $menu;
