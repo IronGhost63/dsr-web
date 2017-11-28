@@ -43,7 +43,7 @@
 						</div>
 						<div class="row personel-list-head">
 							<div class="col-md-9 offset-md-3">
-								<?php _e("ผู้ช่วยผู้อำนวยการ", "dsr");?>
+								<?php _e("รองผู้อำนวยการ", "dsr");?>
 							</div>
 						</div>
 						<?php if(have_rows("deputy_directors")) : while(have_rows("deputy_directors")) : the_row(); ?>
