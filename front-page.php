@@ -49,7 +49,7 @@
 				<div class="container wow fadeIn">
 					<div class="row">
 						<div class="col-md-8">
-							<h2><i class="fa fa-newspaper-o" aria-hidden="true"></i> <?php _e("ข่าวสาร", "dsr");?></h2>
+							<h3 class="block-heading"><span><i class="fa fa-newspaper-o" aria-hidden="true"></i> <?php _e("ข่าวสาร", "dsr");?></span></h3>
 							<div class="row news-list">
 							<?php
 							$home_news = new WP_Query(array(
@@ -81,7 +81,7 @@
 							</div>
 						</div>
 						<div class="col-md-4">
-							<h2><i class="fa fa-calendar" aria-hidden="true"></i> <?php _e("ปฏิทิน", "dsr");?></h2>
+							<h3><i class="fa fa-calendar" aria-hidden="true"></i> <?php _e("ปฏิทิน", "dsr");?></h3>
 							<div class="row">
 							<?php
 							$today = date("Ymd");
@@ -180,7 +180,7 @@
 				<div class="container wow fadeIn">
 					<div class="row">
 						<div class="col-md-8">
-							<h2><i class="fa fa-star-o" aria-hidden="true"></i> <?php _e("ภาพกิจกรรม", "dsr");?></h2>
+							<h3 class="block-heading"><span><i class="fa fa-star-o" aria-hidden="true"></i> <?php _e("ภาพกิจกรรม", "dsr");?></span></h3>
 							<div class="row gallery-list">
 							<?php
 							$home_news = new WP_Query(array(
@@ -212,7 +212,7 @@
 							</div>
 						</div>
 						<div class="col-md-4">
-							<h2><i class="fa fa-file-text-o" aria-hidden="true"></i> <?php _e("คำสั่งโรงเรียน", "dsr");?></h2>
+							<h3><i class="fa fa-file-text-o" aria-hidden="true"></i> <?php _e("คำสั่งโรงเรียน", "dsr");?></h3>
 							<div class="row">
 							<?php
 							$home_document = new WP_Query(array(
@@ -252,7 +252,7 @@
 				<div class="container wow fadeIn">
 					<div class="row">
 						<div class="col">
-							<h2><i class="fa fa-link" aria-hidden="true"></i> <?php _e("ลิงก์น่าสนใจ", "dsr");?></h2>
+							<h3 class="block-heading"><span><i class="fa fa-link" aria-hidden="true"></i> <?php _e("ลิงก์น่าสนใจ", "dsr");?></span></h3>
 							<div class="row link-list">
 								<ul>
 								<?php
