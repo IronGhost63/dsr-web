@@ -7,7 +7,7 @@
 	<?php wp_head();?>
 </head>
 <body <?php body_class("wp63-home");?>>
-	<div class="wrapper">
+
 		<?php get_template_part("template-parts/global", "header"); ?>
 		<?php if( have_rows("slides") ) : $active = "active"; ?>
 		<div id="home-slider">
@@ -336,6 +336,6 @@
 		</div>
 		<?php get_template_part("template-parts/global", "footer");?>
 		<?php wp_footer(); ?>
-	</div>
+
 </body>
 </html>
