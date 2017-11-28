@@ -76,6 +76,10 @@ a:hover {
   #header .navbar {
     padding: 0.5rem 0rem; }
 
+.wp63-home #home-slider .carousel-item img {
+  width: 100%;
+  height: auto; }
+
 .wp63-home #home-slider .carousel-caption {
   text-shadow: 0 0 5px rgba(0, 0, 0, 0.8); }
 
