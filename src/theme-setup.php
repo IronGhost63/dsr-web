@@ -36,6 +36,7 @@ function wp63_theme_init() {
 	$locations = array(
 		'primary' => __( 'Main Menu', 'dsr' ),
 		'link' => __( 'ลิงก์น่าสนใจ', 'dsr' ),
+		'dsnetwork' => __( 'เครือข่ายเทพศิรินทร์', 'dsr' ),
 	);
 	register_nav_menus( $locations );
 

@@ -314,7 +314,7 @@
 			<div id="link-block" class="block">
 				<div class="container wow fadeIn">
 					<div class="row">
-						<div class="col">
+						<div class="col-md-8">
 							<h3 class="block-heading"><span><i class="fa fa-link" aria-hidden="true"></i> <?php _e("ลิงก์น่าสนใจ", "dsr");?></span></h3>
 							<div class="row link-list">
 								<ul>
@@ -322,6 +322,22 @@
 									wp_nav_menu( array(
 										'menu'              => 'link',
 										'theme_location'    => 'link',
+										'depth'             => 1,
+										'container' => '',
+										'items_wrap' => '%3$s',
+									));
+								?>
+								</ul>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<h3><i class="fa fa-handshake-o" aria-hidden="true"></i> <?php _e("เครือข่ายเทพศิรินทร์", "dsr");?></h3>
+							<div class="row dslinks">
+								<ul>
+								<?php
+									wp_nav_menu( array(
+										'menu'              => 'dsnetwork',
+										'theme_location'    => 'dsnetwork',
 										'depth'             => 1,
 										'container' => '',
 										'items_wrap' => '%3$s',

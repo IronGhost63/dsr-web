@@ -209,15 +209,21 @@ a:hover {
     list-style: none; }
     .wp63-home #main #link-block .link-list ul li {
       display: inline-block; }
+  .wp63-home #main #link-block .dslinks ul {
+    padding-left: 3rem; }
+    .wp63-home #main #link-block .dslinks ul li .nav-link {
+      padding: 0; }
 
 body.wp63-page #main {
   background: #f0f0f0;
   padding-top: 1rem;
   padding-bottom: 1rem; }
 
-body.wp63-page .post-cover img {
-  max-width: 100%;
-  height: auto; }
+body.wp63-page .post-cover {
+  background: #fff; }
+  body.wp63-page .post-cover img {
+    width: 100%;
+    height: auto; }
 
 body.wp63-page .post-container {
   background: #fff;

@@ -114,6 +114,11 @@ a:hover {
 }
 .wp63-home {
 	#home-slider {
+		.carousel-item img {
+			width:100%;
+			height:auto;
+		}
+
 		.carousel-caption {
 			text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
 		}
@@ -294,6 +299,14 @@ a:hover {
 					}
 				}
 			}
+
+			.dslinks ul {
+				padding-left: 3rem;
+
+				li .nav-link { 
+					padding:0;
+				}
+			}
 		}
 	}
 }
@@ -306,8 +319,10 @@ body.wp63-page {
 	}
 
 	.post-cover {
+		background: $white;
+
 		img {
-			max-width:100%;
+			width:100%;
 			height: auto;
 		}
 	}
