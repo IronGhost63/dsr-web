@@ -40,6 +40,27 @@ a:hover {
 	margin:1.5rem auto;
 }
 
+.background-wrapper:before {
+	margin-top:-2rem;
+	content: "";
+	position: fixed;
+	left: -0.5rem;
+	right: 0rem;
+	z-index: -1;
+	
+	display: block;
+	background-image: url('http://666a658c624a3c03a6b2-25cda059d975d2f318c03e90bcf17c40.r92.cf1.rackcdn.com/unsplash_527bf56961712_1.JPG');
+	background-size:cover;
+	width: 110%;
+	height: 100%;
+	
+	-webkit-filter: blur(5px);
+	-moz-filter: blur(5px);
+	-o-filter: blur(5px);
+	-ms-filter: blur(5px);
+	filter: blur(5px);
+ }
+
 .block {
 	background: $white;
 }
@@ -79,6 +100,16 @@ a:hover {
 	.navbar {
 		padding: 0.5rem 0rem;
 	}
+	/*
+	#mainnavi .navbar-nav>li:last-child {
+		border:1px solid #cacaca;
+		transition: all 0.3s linear;
+	}
+
+	#mainnavi .navbar-nav>li:last-child:hover {
+		background: #ececec;
+	}
+	*/
 }
 .wp63-home {
 	#home-slider {
@@ -89,12 +120,28 @@ a:hover {
 	
 	#main {
 		h2 {
-			padding-bottom:1rem;
+			margin-bottom:1rem;
+		}
+
+		h3 {
+			margin-bottom:1rem;
 		}
 
 		.block {
 			padding-top:2rem;
 			padding-bottom:2rem;
+		}
+
+		.block-heading {
+			border-bottom: 1px solid $greenery;
+			padding-bottom: 0px;
+	
+			span {
+				display:inline-block;
+				background: $greenery;
+				color: $white;
+				padding: 0.3rem 0.7rem;
+			}
 		}
 	
 		#news-block {
@@ -106,6 +153,11 @@ a:hover {
 					border-radius: 2px;
 					border:none;
 					box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+					transition: box-shadow 0.3s ease-in-out;
+				}
+
+				.card:hover {
+					box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
 				}
 	
 				.card-img-top {
@@ -191,6 +243,11 @@ a:hover {
 					border-radius: 2px;
 					border:none;
 					box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+					transition: box-shadow 0.3s ease-in-out;
+				}
+
+				.card:hover {
+					box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
 				}
 	
 				.card-img-top {

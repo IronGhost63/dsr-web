@@ -8,10 +8,10 @@
 							<a href="<?php echo esc_url( home_url( '/' ) );?>" class="logo-link"><img src="<?php asset_path(); ?>/logo-main.jpg" alt="" class="logo"></a>
 						</li>
 					</ul>
-					<button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+					<button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#mainnavi" aria-controls="mainnavi" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
 					</button>
-					<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+					<div class="collapse navbar-collapse" id="mainnavi">
 						<ul class="navbar-nav ml-auto">
 						<?php
 							wp_nav_menu( array(
