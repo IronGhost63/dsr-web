@@ -192,7 +192,7 @@
 					<div class="row">
 						<div class="col-md-2">
 							<a class="card wow fadeIn" href="#" data-wow-delay="0s">
-								<img src="http://via.placeholder.com/480x360" alt="" class="card-img-top">
+								<img src="https://via.placeholder.com/480x360" alt="" class="card-img-top">
 								<div class="card-block">
 									<p class="card-text text-center">ผลงานนักเรียน</p>
 								</div>
@@ -200,7 +200,7 @@
 						</div>
 						<div class="col-md-2">
 							<a class="card wow fadeIn" href="#" data-wow-delay="0.3s">
-								<img src="http://via.placeholder.com/480x360" alt="" class="card-img-top">
+								<img src="https://via.placeholder.com/480x360" alt="" class="card-img-top">
 								<div class="card-block">
 									<p class="card-text text-center">ผลงานนักเรียน</p>
 								</div>
@@ -208,7 +208,7 @@
 						</div>
 						<div class="col-md-2">
 							<a class="card wow fadeIn" href="#" data-wow-delay="0.6s">
-								<img src="http://via.placeholder.com/480x360" alt="" class="card-img-top">
+								<img src="https://via.placeholder.com/480x360" alt="" class="card-img-top">
 								<div class="card-block">
 									<p class="card-text text-center">ผลงานนักเรียน</p>
 								</div>
@@ -216,7 +216,7 @@
 						</div>
 						<div class="col-md-2">
 							<a class="card wow fadeIn" href="#" data-wow-delay="0.9s">
-								<img src="http://via.placeholder.com/480x360" alt="" class="card-img-top">
+								<img src="https://via.placeholder.com/480x360" alt="" class="card-img-top">
 								<div class="card-block">
 									<p class="card-text text-center">ผลงานนักเรียน</p>
 								</div>
@@ -224,7 +224,7 @@
 						</div>
 						<div class="col-md-2">
 							<a class="card wow fadeIn" href="#" data-wow-delay="1.2s">
-								<img src="http://via.placeholder.com/480x360" alt="" class="card-img-top">
+								<img src="https://via.placeholder.com/480x360" alt="" class="card-img-top">
 								<div class="card-block">
 									<p class="card-text text-center">ผลงานนักเรียน</p>
 								</div>
@@ -232,7 +232,7 @@
 						</div>
 						<div class="col-md-2">
 							<a class="card wow fadeIn" href="#" data-wow-delay="1.5s">
-								<img src="http://via.placeholder.com/480x360" alt="" class="card-img-top">
+								<img src="https://via.placeholder.com/480x360" alt="" class="card-img-top">
 								<div class="card-block">
 									<p class="card-text text-center">ผลงานนักเรียน</p>
 								</div>
