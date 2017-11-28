@@ -11,6 +11,7 @@
     ],
     "require": {
         "twbs/bootstrap": "4.0.0-beta.2",
-        "fortawesome/font-awesome": "^4.7"
+        "fortawesome/font-awesome": "^4.7",
+        "rundiz/thai-date": "^2.0"
     }
 }

@@ -114,11 +114,13 @@
 												<a href="<?php the_permalink(); ?>"><?php the_title();?></a>
 											</p>
 											<p class="event-date">
-												<i class="fa fa-calendar-o" aria-hidden="true"></i> <?php echo date("F j, Y", strtotime(get_field('event_date')));?> <?php echo (get_field("event_end") ? __("ถึง", "dsr") . " " . date("F j, Y", strtotime(get_field("event_end"))) : "" );?>
+												<i class="fa fa-calendar-o" aria-hidden="true"></i> <?php echo thaidate("j F Y", strtotime(get_field('event_date')));?> <?php echo (get_field("event_end") ? __("ถึง", "dsr") . " " . thaidate("j F Y", strtotime(get_field("event_end"))) : "" );?>
 											</p>
+											<?php if( get_field("event_location") ) :?>
 											<p class="event-location">
 												<i class="fa fa-map-marker" aria-hidden="true"></i> <?php the_field("event_location");?>
 											</p>
+											<?php endif; ?>
 										</li>
 							<?php $timer += 0.3; endwhile; ?>
 									</ul>
