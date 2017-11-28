@@ -22,7 +22,7 @@
 								<a href="<?php the_permalink(); ?>"><h4 class="post-title"><?php the_title(); ?></h4></a>
 							</div>
 							<div class="post-meta">
-								<i class="fa fa-calendar-o" aria-hidden="true"></i> <span class="post-date"><?php the_time("F j, Y g:i a"); ?></span>
+								<i class="fa fa-calendar-o" aria-hidden="true"></i> <span class="post-date"><?php the_time("j F Y g:i a"); ?></span>
 							</div>
 						</div>
 					</div>

@@ -28,7 +28,7 @@
 								<h2 class="post-title"><?php the_title(); ?></h2>
 							</div>
 							<div class="post-meta">
-								<i class="fa fa-calendar-o" aria-hidden="true"></i> <span class="post-date"><?php the_time("F j, Y g:i a"); ?></span>
+								<i class="fa fa-calendar-o" aria-hidden="true"></i> <span class="post-date"><?php the_time("j F Y g:i a"); ?></span>
 								<i class="fa fa-folder-o" aria-hidden="true"></i> <span class="post-category"><?php the_category( ", ");?></span>
 							</div>
 							<div class="post-content">
