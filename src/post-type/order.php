@@ -54,6 +54,6 @@ function wp63_cpt_order() {
 		'rewrite'               => $rewrite,
 		'capability_type'       => 'post',
 	);
-	register_post_type( 'order', $args );
+	register_post_type( 'schoolorder', $args );
 }
 ?>
