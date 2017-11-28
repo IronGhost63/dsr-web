@@ -360,7 +360,7 @@ body.wp63-management .personel-list .personel-photo {
     height: auto;
     opacity: 0.7; }
   #footer .address {
-    padding: 0.5rem; }
+    padding: 1rem; }
 
 @media screen and (max-width: 720px) {
   #header .nav-logo-wrapper {
