@@ -87,7 +87,8 @@
 							$today = date("Ymd");
 							$home_event = new WP_Query(array(
 								'post_type' => 'calendar',
-								'posts_per_page' => 3,
+								'posts_per_page' => 4,
+								/*
 								'meta_query' => array(
 									array(
 										'meta_key' => "event_date",
@@ -95,7 +96,10 @@
 										'meta_compare' => ">="
 									)
 								),
+								*/
 								'meta_key' => 'event_date',
+								'meta_value' => $today,
+								'meta_compare' => '>=',
 								'orderby' => 'meta_value',
 								'order' => "ASC"
 							));
@@ -147,13 +151,13 @@
 					<?php
 					$home_congrat = new WP_Query(array(
 						'post_type' => 'congratulate',
-						'posts_per_page' => 3
+						'posts_per_page' => 4
 					));
 
 					$timer = 0;
 					?>
 					<?php if($home_congrat->have_posts()) : while($home_congrat->have_posts()) : $home_congrat->the_post();?>
-						<div class="col-md-4 congrats-item wow fadeInUp" data-wow-delay="<?php echo $timer;?>s" id="congrats-<?php the_ID();?>">
+						<div class="col-md-3 congrats-item wow fadeInUp" data-wow-delay="<?php echo $timer;?>s" id="congrats-<?php the_ID();?>">
 							<a class="card" href="<?php the_permalink(); ?>">
 								<img class="card-img-top" src="<?php the_post_thumbnail_url( "congrats-thumbs" ); ?> " alt="<?php the_title();?>">
 								<div class="card-block">
@@ -172,6 +176,65 @@
 					<div class="row">
 						<div class="col text-right">
 							<a href="<?php echo get_post_type_archive_link( 'calendar' ); ?>"><?php _e("คนเก่งทั้งหมด"); ?> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="student-works-block" class="block">
+				<div class="container wow fadeIn">
+					<div class="row">
+						<div class="col text-center">
+							<h2><?php _e("ผลงานนักเรียน", "dsr");?></h2>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-2">
+							<a class="card wow fadeIn" href="#" data-wow-delay="0s">
+								<img src="http://via.placeholder.com/480x360" alt="" class="card-img-top">
+								<div class="card-block">
+									<p class="card-text text-center">ผลงานนักเรียน</p>
+								</div>
+							</a>
+						</div>
+						<div class="col-md-2">
+							<a class="card wow fadeIn" href="#" data-wow-delay="0.3s">
+								<img src="http://via.placeholder.com/480x360" alt="" class="card-img-top">
+								<div class="card-block">
+									<p class="card-text text-center">ผลงานนักเรียน</p>
+								</div>
+							</a>
+						</div>
+						<div class="col-md-2">
+							<a class="card wow fadeIn" href="#" data-wow-delay="0.6s">
+								<img src="http://via.placeholder.com/480x360" alt="" class="card-img-top">
+								<div class="card-block">
+									<p class="card-text text-center">ผลงานนักเรียน</p>
+								</div>
+							</a>
+						</div>
+						<div class="col-md-2">
+							<a class="card wow fadeIn" href="#" data-wow-delay="0.9s">
+								<img src="http://via.placeholder.com/480x360" alt="" class="card-img-top">
+								<div class="card-block">
+									<p class="card-text text-center">ผลงานนักเรียน</p>
+								</div>
+							</a>
+						</div>
+						<div class="col-md-2">
+							<a class="card wow fadeIn" href="#" data-wow-delay="1.2s">
+								<img src="http://via.placeholder.com/480x360" alt="" class="card-img-top">
+								<div class="card-block">
+									<p class="card-text text-center">ผลงานนักเรียน</p>
+								</div>
+							</a>
+						</div>
+						<div class="col-md-2">
+							<a class="card wow fadeIn" href="#" data-wow-delay="1.5s">
+								<img src="http://via.placeholder.com/480x360" alt="" class="card-img-top">
+								<div class="card-block">
+									<p class="card-text text-center">ผลงานนักเรียน</p>
+								</div>
+							</a>
 						</div>
 					</div>
 				</div>
@@ -216,7 +279,7 @@
 							<div class="row">
 							<?php
 							$home_document = new WP_Query(array(
-								'post_type' => "order",
+								'post_type' => "schoolorder",
 								'posts_per_page' => 5
 							));
 							$timer = 0;

@@ -7,6 +7,7 @@ $white: #fff;
 $almost-white: rgba(255,255,255,0.8);
 $bg-gray: #f0f0f0;
 $bg-gray-2: #f9f9f9;
+$duckhead-green: #0a4900;
 
 $text-color: #5a5a5a;
 $text-light: #9c9c9c;
@@ -232,6 +233,14 @@ a:hover {
 						overflow:hidden;
 					}
 				}
+			}
+		}
+
+		#student-works-block {
+			background: $littlegreen;
+
+			h2 {
+				color: $duckhead-green;
 			}
 		}
 
