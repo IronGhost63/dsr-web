@@ -1,4 +1,6 @@
 <?php
+define("WP63_THAIDATE", TRUE);
+
 add_action( 'after_setup_theme', 'wp63_theme_setup' );
 add_action( 'init', 'wp63_theme_init' );
 add_action( 'widgets_init', 'wp63_register_sidebars' );
@@ -8,6 +10,7 @@ add_action( 'admin_menu', 'wp63_menu_label' );
 add_filter( 'post_thumbnail_html', 'wp63_default_post_thumbnail', 10, 5);
 add_filter( 'get_search_form', 'wp63_bootstrap_search' );
 add_filter( 'menu_image_link_attributes', 'wp63_menu_image_bootstrap', 10, 1);
+add_filter( 'the_time', 'wp63_thaidate', 10, 2 );
 
 function wp63_menu_image_bootstrap( $attributes_array ){
 	$attributes_array['class'] .= " nav-link";
@@ -87,5 +90,13 @@ function wp63_bootstrap_search($form){
 	</form>';
 
 	return $form;
+}
+
+function wp63_thaidate($date, $format){
+	if(WP63_THAIDATE == FALSE){
+		return $date;
+	}
+
+	return thaidate( $format, strtotime( $date ) );
 }
 ?>
