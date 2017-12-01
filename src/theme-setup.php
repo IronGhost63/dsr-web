@@ -83,7 +83,7 @@ function wp63_default_post_thumbnail( $html, $post_id, $post_thumbnail_id, $size
 function wp63_bootstrap_search($form){
 	$form = '<form role="search" method="get" class="searchform" action="' . esc_url( home_url( '/' ) ) . '">
 		<div class="input-group">
-			<input type="text" class="form-control" placeholder="Search for..." aria-label="Search for...">
+			<input type="text" class="form-control" name="s" placeholder="Search for..." aria-label="Search for...">
 			<span class="input-group-btn">
 			<button class="btn btn-secondary" type="button">Go!</button>
 			</span>
