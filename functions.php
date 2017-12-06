@@ -71,3 +71,5 @@ function gc_pagination($html) {
     $out = str_replace('</div>','',$out);
     return '<ul class="pagination justify-content-center">'.$out.'</ul>';
 }
+
+// test commit
