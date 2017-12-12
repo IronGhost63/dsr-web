@@ -93,6 +93,9 @@ a:hover {
   padding-top: 2rem;
   padding-bottom: 2rem; }
 
+.wp63-home #main .side-heading {
+  color: #0a4900; }
+
 .wp63-home #main .block-heading {
   border-bottom: 1px solid #86af49;
   padding-bottom: 0px; }

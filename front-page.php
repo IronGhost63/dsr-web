@@ -81,7 +81,7 @@
 							</div>
 						</div>
 						<div class="col-md-4">
-							<h3><i class="fa fa-calendar" aria-hidden="true"></i> <?php _e("ปฏิทิน", "dsr");?></h3>
+							<h3 class="side-heading"><i class="fa fa-calendar" aria-hidden="true"></i> <?php _e("ปฏิทิน", "dsr");?></h3>
 							<div class="row">
 							<?php
 							$today = date("Ymd");
@@ -190,54 +190,22 @@
 						</div>
 					</div>
 					<div class="row">
+					<?php 
+					$student_works = new WP_Query(array(
+						'post_type' => "studentworks",
+						'posts_per_page' => 6
+					));
+					?>
+					<?php if( $student_works->have_posts() ) : while( $student_works->have_posts() ) : $student_works->the_post(); ?>
 						<div class="col-md-2">
-							<a class="card wow fadeIn" href="#" data-wow-delay="0s">
-								<img src="https://via.placeholder.com/480x360" alt="" class="card-img-top">
+							<a class="card wow fadeIn" href="<?php the_permalink();?>" data-wow-delay="0s">
+								<?php the_post_thumbnail("news-thumbs", array('class'=>'card-img-top')); ?>
 								<div class="card-block">
-									<p class="card-text text-center">ผลงานนักเรียน</p>
+									<p class="card-text text-center"><?php the_title();?></p>
 								</div>
 							</a>
 						</div>
-						<div class="col-md-2">
-							<a class="card wow fadeIn" href="#" data-wow-delay="0.3s">
-								<img src="https://via.placeholder.com/480x360" alt="" class="card-img-top">
-								<div class="card-block">
-									<p class="card-text text-center">ผลงานนักเรียน</p>
-								</div>
-							</a>
-						</div>
-						<div class="col-md-2">
-							<a class="card wow fadeIn" href="#" data-wow-delay="0.6s">
-								<img src="https://via.placeholder.com/480x360" alt="" class="card-img-top">
-								<div class="card-block">
-									<p class="card-text text-center">ผลงานนักเรียน</p>
-								</div>
-							</a>
-						</div>
-						<div class="col-md-2">
-							<a class="card wow fadeIn" href="#" data-wow-delay="0.9s">
-								<img src="https://via.placeholder.com/480x360" alt="" class="card-img-top">
-								<div class="card-block">
-									<p class="card-text text-center">ผลงานนักเรียน</p>
-								</div>
-							</a>
-						</div>
-						<div class="col-md-2">
-							<a class="card wow fadeIn" href="#" data-wow-delay="1.2s">
-								<img src="https://via.placeholder.com/480x360" alt="" class="card-img-top">
-								<div class="card-block">
-									<p class="card-text text-center">ผลงานนักเรียน</p>
-								</div>
-							</a>
-						</div>
-						<div class="col-md-2">
-							<a class="card wow fadeIn" href="#" data-wow-delay="1.5s">
-								<img src="https://via.placeholder.com/480x360" alt="" class="card-img-top">
-								<div class="card-block">
-									<p class="card-text text-center">ผลงานนักเรียน</p>
-								</div>
-							</a>
-						</div>
+					<?php endwhile; endif; ?>
 					</div>
 				</div>
 			</div>
@@ -277,7 +245,7 @@
 							</div>
 						</div>
 						<div class="col-md-4">
-							<h3><i class="fa fa-file-text-o" aria-hidden="true"></i> <?php _e("คำสั่งโรงเรียน", "dsr");?></h3>
+							<h3 class="side-heading"><i class="fa fa-file-text-o" aria-hidden="true"></i> <?php _e("คำสั่งโรงเรียน", "dsr");?></h3>
 							<div class="row">
 							<?php
 							$home_document = new WP_Query(array(
@@ -333,7 +301,7 @@
 							</div>
 						</div>
 						<div class="col-md-4">
-							<h3><i class="fa fa-handshake-o" aria-hidden="true"></i> <?php _e("เครือข่ายเทพศิรินทร์", "dsr");?></h3>
+							<h3 class="side-heading"><i class="fa fa-handshake-o" aria-hidden="true"></i> <?php _e("เครือข่ายเทพศิรินทร์", "dsr");?></h3>
 							<div class="row dslinks">
 								<ul>
 								<?php
