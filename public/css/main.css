@@ -175,6 +175,10 @@ a:hover {
   background: #d5dbbc; }
   .wp63-home #main #student-works-block h2 {
     color: #0a4900; }
+  .wp63-home #main #student-works-block .student-work-item .card-text {
+    font-size: 0.8rem;
+    padding: 5px;
+    /*word-wrap: normal;*/ }
 
 .wp63-home #main #activity-block .gallery-item {
   margin-bottom: 1rem; }

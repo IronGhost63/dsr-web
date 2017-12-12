@@ -198,7 +198,7 @@
 					?>
 					<?php if( $student_works->have_posts() ) : while( $student_works->have_posts() ) : $student_works->the_post(); ?>
 						<div class="col-md-2">
-							<a class="card wow fadeIn" href="<?php the_permalink();?>" data-wow-delay="0s">
+							<a class="card wow fadeIn student-work-item" href="<?php the_permalink();?>" data-wow-delay="0s">
 								<?php the_post_thumbnail("news-thumbs", array('class'=>'card-img-top')); ?>
 								<div class="card-block">
 									<p class="card-text text-center"><?php the_title();?></p>
