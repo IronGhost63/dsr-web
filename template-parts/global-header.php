@@ -5,7 +5,7 @@
 				<nav id="main-nav" class="navbar navbar-expand-md navbar-light">
 					<ul class="navbar-nav nav-logo-wrapper mr-auto">
 						<li class="nav-item active">
-							<a href="<?php echo esc_url( home_url( '/' ) );?>" class="logo-link"><img src="<?php asset_path(); ?>/logo-main.jpg" alt="" class="logo"></a>
+							<a href="<?php echo esc_url( home_url( '/' ) );?>" class="logo-link"><img src="<?php asset_path(); ?>/logo-main.png" alt="" class="logo"></a>
 						</li>
 					</ul>
 					<button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#mainnavi" aria-controls="mainnavi" aria-expanded="false" aria-label="Toggle navigation">

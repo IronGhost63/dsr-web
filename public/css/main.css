@@ -39,7 +39,7 @@ a:hover {
   background: #fff; }
 
 #header {
-  background-color: #fff;
+  background-color: #156711;
   /*
 	#mainnavi .navbar-nav>li:last-child {
 		border:1px solid #cacaca;
@@ -52,7 +52,6 @@ a:hover {
 	*/ }
   #header .row {
     -webkit-box-align: center;
-    -webkit-align-items: center;
     -ms-flex-align: center;
     align-items: center; }
   #header .logo {
@@ -64,7 +63,8 @@ a:hover {
     -webkit-box-shadow: 0 0 12px rgba(0, 0, 0, 0.14);
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.14);
     margin-top: 0px;
-    min-width: 12rem; }
+    min-width: 12rem;
+    background: #328a2e; }
   #header .dropdown:hover > .dropdown-menu {
     display: block; }
   #header .dropdown .dropdown-menu .nav-link {
@@ -72,9 +72,17 @@ a:hover {
     -o-transition: all 0.08s ease-in;
     transition: all 0.08s ease-in; }
   #header .dropdown:hover > .dropdown-menu .nav-link:hover {
-    background: #dedede; }
+    background: #5aac56; }
   #header .navbar {
     padding: 0.5rem 0rem; }
+  #header #mainnavi ul.navbar-nav {
+    font-size: 1.2rem; }
+  #header #mainnavi .navbar-nav .active > .nav-link {
+    color: #fff; }
+  #header #mainnavi .navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 0.7); }
+  #header #mainnavi .navbar-nav .nav-link:hover {
+    color: #fff; }
 
 .wp63-home #home-slider .carousel-item img {
   width: 100%;
@@ -97,11 +105,11 @@ a:hover {
   color: #0a4900; }
 
 .wp63-home #main .block-heading {
-  border-bottom: 1px solid #86af49;
+  border-bottom: 1px solid #156711;
   padding-bottom: 0px; }
   .wp63-home #main .block-heading span {
     display: inline-block;
-    background: #86af49;
+    background: #156711;
     color: #fff;
     padding: 0.3rem 0.7rem; }
 
@@ -289,16 +297,13 @@ body.wp63-page .event-meta .event-icon {
 body.wp63-page .event-meta .event-detail {
   color: #9c9c9c;
   display: -webkit-box;
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
   -webkit-box-align: center;
-  -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center; }
   body.wp63-page .event-meta .event-detail .fa {
@@ -320,16 +325,13 @@ body.wp63-page .gallery-meta .gallery-icon {
 body.wp63-page .gallery-meta .gallery-detail {
   color: #9c9c9c;
   display: -webkit-box;
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
   -webkit-box-align: center;
-  -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center; }
   body.wp63-page .gallery-meta .gallery-detail .fa {
@@ -369,7 +371,7 @@ body.wp63-management .personel-list .personel-photo {
 
 #footer {
   color: #fff;
-  background: #24330a;
+  background: #156711;
   font-size: 0.8rem;
   padding-top: 1rem; }
   #footer .footer-logo {

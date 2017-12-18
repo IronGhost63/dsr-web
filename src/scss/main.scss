@@ -8,6 +8,10 @@ $almost-white: rgba(255,255,255,0.8);
 $bg-gray: #f0f0f0;
 $bg-gray-2: #f9f9f9;
 $duckhead-green: #0a4900;
+$submenu-green: #156711;
+$new-green: #156711;
+$green-3: #328a2e;
+$green-2: #5aac56;
 
 $text-color: #5a5a5a;
 $text-light: #9c9c9c;
@@ -67,7 +71,7 @@ a:hover {
 }
 
 #header {
-	background-color: $white;
+	background-color: $new-green;
 
 	.row {
 		align-items:center;
@@ -84,6 +88,7 @@ a:hover {
 		box-shadow: 0 0 12px rgba(0, 0, 0, 0.14);
 		margin-top:0px;
 		min-width: 12rem;
+		background: $green-3;
 	}
 
 	.dropdown:hover>.dropdown-menu {
@@ -95,11 +100,29 @@ a:hover {
 	}
 
 	.dropdown:hover>.dropdown-menu .nav-link:hover {
-		background: #dedede;
+		background: $green-2;
 	}
 
 	.navbar {
 		padding: 0.5rem 0rem;
+	}
+
+	#mainnavi {
+		ul.navbar-nav {
+			font-size: 1.2rem;
+		}
+
+		.navbar-nav .active>.nav-link {
+			color: #fff;
+		}
+
+		.navbar-nav .nav-link {
+			color: rgba(255, 255, 255, 0.7);
+		}
+
+		.navbar-nav .nav-link:hover {
+			color: #fff;
+		}
 	}
 	/*
 	#mainnavi .navbar-nav>li:last-child {
@@ -143,12 +166,12 @@ a:hover {
 		}
 
 		.block-heading {
-			border-bottom: 1px solid $greenery;
+			border-bottom: 1px solid $new-green;
 			padding-bottom: 0px;
 	
 			span {
 				display:inline-block;
-				background: $greenery;
+				background: $new-green;
 				color: $white;
 				padding: 0.3rem 0.7rem;
 			}
@@ -523,7 +546,7 @@ body.wp63-management {
 
 #footer {
 	color:$white;
-	background: $darkgreen;
+	background: $new-green;
 	font-size:0.8rem;
 	padding-top:1rem;
 
