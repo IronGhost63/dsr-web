@@ -2,10 +2,10 @@
 function wp63_cpt_research() {
 	
 		$labels = array(
-			'name'                  => _x( 'ผลงานวิจัย', 'Post Type General Name', 'dsr' ),
-			'singular_name'         => _x( 'ผลงานวิจัย', 'Post Type Singular Name', 'dsr' ),
-			'menu_name'             => __( 'ผลงานวิจัย', 'dsr' ),
-			'name_admin_bar'        => __( 'ผลงานวิจัย', 'dsr' ),
+			'name'                  => _x( 'ผลงานเผยแพร่', 'Post Type General Name', 'dsr' ),
+			'singular_name'         => _x( 'ผลงานเผยแพร่', 'Post Type Singular Name', 'dsr' ),
+			'menu_name'             => __( 'ผลงานเผยแพร่', 'dsr' ),
+			'name_admin_bar'        => __( 'ผลงานเผยแพร่', 'dsr' ),
 			'archives'              => __( 'Item Archives', 'dsr' ),
 			'attributes'            => __( 'Item Attributes', 'dsr' ),
 			'parent_item_colon'     => __( 'Parent Item:', 'dsr' ),
@@ -37,8 +37,8 @@ function wp63_cpt_research() {
 			'feeds'                 => true,
 		);
 		$args = array(
-			'label'                 => __( 'ผลงานวิจัย', 'dsr' ),
-			'description'           => __( 'ผลงานวิจัย', 'dsr' ),
+			'label'                 => __( 'ผลงานเผยแพร่', 'dsr' ),
+			'description'           => __( 'ผลงานเผยแพร่', 'dsr' ),
 			'labels'                => $labels,
 			'supports'              => array( 'title', 'editor', 'thumbnail', ),
 			'hierarchical'          => false,

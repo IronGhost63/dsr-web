@@ -11,9 +11,11 @@ require 'src/post-type/gallery.php';
 require 'src/post-type/congratulate.php';
 require 'src/post-type/student-works.php';
 require 'src/post-type/research.php';
+require 'src/post-type/instruction-media.php';
 require 'src/post-type/order.php';
 
 require 'src/sidebar.php';
+require 'src/acf.php';
 
 require 'src/theme-setup.php';
 
@@ -39,7 +41,7 @@ function document_link($doc_id) {
 	}elseif($type == "link"){
 		return get_field("document_url", $doc_id);
 	}else{
-		return false;
+		return get_permalink($doc_id);
 	}
 }
 

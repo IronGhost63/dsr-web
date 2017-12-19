@@ -19,7 +19,7 @@
 					<div class="post-item">
 						<div class="post-container">
 							<div class="post-head">
-								<a href="<?php the_permalink(); ?>"><h4 class="post-title"><?php the_title(); ?></h4></a>
+								<a href="<?php echo document_link(get_the_ID()); ?>"><h4 class="post-title"><?php the_title(); ?></h4></a>
 							</div>
 							<div class="post-meta">
 								<i class="fa fa-calendar-o" aria-hidden="true"></i> <span class="post-date"><?php the_time("j F Y g:i a"); ?></span>

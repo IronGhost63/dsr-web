@@ -48,6 +48,7 @@ function wp63_theme_init() {
 	wp63_cpt_gallery();	
 	wp63_cpt_congratulate();
 	wp53_cpt_studentworks();
+	wp63_cpt_media();
 	wp63_cpt_research();
 	wp63_cpt_documents();
 	wp63_cpt_order();

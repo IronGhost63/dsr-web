@@ -30,8 +30,8 @@ function wp63_cpt_order() {
 		'filter_items_list'     => __( 'Filter items list', 'dsr' ),
 	);
 	$rewrite = array(
-		'slug'                  => 'order',
-		'with_front'            => true,
+		'slug'                  => 'school-order',
+		'with_front'            => false,
 		'pages'                 => true,
 		'feeds'                 => true,
 	);

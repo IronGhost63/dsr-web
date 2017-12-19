@@ -62,7 +62,7 @@
 									<a class="card" href="<?php the_permalink(); ?>">
 										<?php the_post_thumbnail( "news-thumbs", array('class'=>'card-img-top')); ?>
 										<div class="card-block">
-											<p class="card-text"><?php the_title(); ?></p>
+											<p class="card-text text-center"><?php the_title(); ?></p>
 										</div>
 									</a>
 								</div>
@@ -207,6 +207,11 @@
 						</div>
 					<?php endwhile; endif; ?>
 					</div>
+					<div class="row">
+						<div class="col text-right">
+							<a href="<?php echo get_post_type_archive_link( 'studentworks' ); ?>"><?php _e("ผลงานทั้งหมด"); ?> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></a>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div id="activity-block" class="block">
@@ -226,7 +231,7 @@
 									<a class="card" href="<?php echo gallery_link(get_the_ID()); ?>">
 										<?php the_post_thumbnail( "news-thumbs", array('class'=>'card-img-top')); ?>
 										<div class="card-block">
-											<p class="card-text"><?php the_title(); ?></p>
+											<p class="card-text text-center"><?php the_title(); ?></p>
 										</div>
 									</a>
 								</div>
@@ -274,7 +279,7 @@
 							</div>
 							<div class="row">
 								<div class="col text-right">
-									<a href="<?php echo get_post_type_archive_link( 'order' ); ?>"><?php _e("คำสั่งทั้งหมด"); ?> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></a>
+									<a href="<?php echo get_post_type_archive_link( 'schoolorder' ); ?>"><?php _e("คำสั่งทั้งหมด"); ?> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></a>
 								</div>
 							</div>
 						</div>

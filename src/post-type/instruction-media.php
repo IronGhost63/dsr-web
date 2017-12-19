@@ -1,11 +1,11 @@
 <?php
-function wp63_cpt_documents() {
+function wp63_cpt_media() {
 	
 		$labels = array(
-			'name'                  => _x( 'เอกสารดาวน์โหลด', 'Post Type General Name', 'dsr' ),
-			'singular_name'         => _x( 'เอกสารดาวน์โหลด', 'Post Type Singular Name', 'dsr' ),
-			'menu_name'             => __( 'เอกสารดาวน์โหลด', 'dsr' ),
-			'name_admin_bar'        => __( 'เอกสารดาวน์โหลด', 'dsr' ),
+			'name'                  => _x( 'สื่อการสอน', 'Post Type General Name', 'dsr' ),
+			'singular_name'         => _x( 'สื่อการสอน', 'Post Type Singular Name', 'dsr' ),
+			'menu_name'             => __( 'สื่อการสอน', 'dsr' ),
+			'name_admin_bar'        => __( 'สื่อการสอน', 'dsr' ),
 			'archives'              => __( 'Item Archives', 'dsr' ),
 			'attributes'            => __( 'Item Attributes', 'dsr' ),
 			'parent_item_colon'     => __( 'Parent Item:', 'dsr' ),
@@ -31,16 +31,16 @@ function wp63_cpt_documents() {
 			'filter_items_list'     => __( 'Filter items list', 'dsr' ),
 		);
 		$rewrite = array(
-			'slug'                  => 'document',
+			'slug'                  => 'instruction-media',
 			'with_front'            => false,
 			'pages'                 => true,
 			'feeds'                 => true,
 		);
 		$args = array(
-			'label'                 => __( 'เอกสารดาวน์โหลด', 'dsr' ),
-			'description'           => __( 'Public Documents', 'dsr' ),
+			'label'                 => __( 'สื่อการสอน', 'dsr' ),
+			'description'           => __( 'สื่อการสอน', 'dsr' ),
 			'labels'                => $labels,
-			'supports'              => array( 'title' ),
+			'supports'              => array( 'title', 'editor', 'thumbnail', ),
 			'hierarchical'          => false,
 			'public'                => true,
 			'show_ui'               => true,
@@ -55,6 +55,7 @@ function wp63_cpt_documents() {
 			'rewrite'               => $rewrite,
 			'capability_type'       => 'page',
 		);
-		register_post_type( 'documents', $args );
+		register_post_type( 'instuction-media', $args );
 	
 	}
+?>
