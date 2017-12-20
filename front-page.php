@@ -177,7 +177,7 @@
 					</div>
 					<div class="row">
 						<div class="col text-right">
-							<a href="<?php echo get_post_type_archive_link( 'calendar' ); ?>"><?php _e("คนเก่งทั้งหมด"); ?> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></a>
+							<a href="<?php echo get_post_type_archive_link( 'congratulate' ); ?>"><?php _e("คนเก่งทั้งหมด"); ?> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></a>
 						</div>
 					</div>
 				</div>
