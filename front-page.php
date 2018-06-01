@@ -71,7 +71,7 @@
 									<div class="alert alert-warning" role="alert">
 										<?php _e("ไม่พบข้อมูล"); ?>
 									</div>
-								</div>	
+								</div>
 							<?php endif;?>
 							</div>
 							<div class="row">
@@ -130,7 +130,7 @@
 									<div class="alert alert-warning" role="alert">
 										<?php _e("ไม่มีกิจกรรม"); ?>
 									</div>
-								</div>	
+								</div>
 							<?php endif;?>
 							</div>
 							<div class="row">
@@ -172,7 +172,7 @@
 							<div class="alert alert-warning" role="alert">
 								<?php _e("ไม่พบข้อมูล"); ?>
 							</div>
-						</div>	
+						</div>
 					<?php endif;?>
 					</div>
 					<div class="row">
@@ -190,7 +190,7 @@
 						</div>
 					</div>
 					<div class="row">
-					<?php 
+					<?php
 					$student_works = new WP_Query(array(
 						'post_type' => "studentworks",
 						'posts_per_page' => 6
@@ -240,7 +240,7 @@
 									<div class="alert alert-warning" role="alert">
 										<?php _e("ไม่พบข้อมูล"); ?>
 									</div>
-								</div>	
+								</div>
 							<?php endif;?>
 							</div>
 							<div class="row">
@@ -274,7 +274,7 @@
 									<div class="alert alert-warning" role="alert">
 										<?php _e("ไม่มีคำสั่ง"); ?>
 									</div>
-								</div>	
+								</div>
 							<?php endif;?>
 							</div>
 							<div class="row">
@@ -292,7 +292,7 @@
 						<div class="col-md-8">
 							<h3 class="block-heading"><span><i class="fa fa-link" aria-hidden="true"></i> <?php _e("ลิงก์น่าสนใจ", "dsr");?></span></h3>
 							<div class="row link-list">
-								<ul>
+								<ul class="link-list__container">
 								<?php
 									wp_nav_menu( array(
 										'menu'              => 'link',

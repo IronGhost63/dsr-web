@@ -5,7 +5,7 @@ add_action( 'after_setup_theme', 'wp63_theme_setup' );
 add_action( 'init', 'wp63_theme_init' );
 add_action( 'widgets_init', 'wp63_register_sidebars' );
 add_action( "wp_enqueue_scripts", "wp63_enqueue" );
-add_filter( 'image_resize_dimensions', 'image_crop_dimensions', 10, 6 );
+//add_filter( 'image_resize_dimensions', 'image_crop_dimensions', 10, 6 );
 add_action( 'admin_menu', 'wp63_menu_label' );
 add_filter( 'post_thumbnail_html', 'wp63_default_post_thumbnail', 10, 5);
 add_filter( 'get_search_form', 'wp63_bootstrap_search' );
@@ -31,7 +31,7 @@ function wp63_theme_setup() {
 	add_image_size( 'news-thumbs', 318, 180, true );
 	add_image_size( 'news-cover', 1200, 630, true );
 	add_image_size( 'home-slide', 1600, 680, true );
-	add_image_size( 'congrats-thumbs', 1200, 800, true );
+	add_image_size( 'congrats-thumbs', 600, 400, true );
 	add_image_size( 'personel-photo', 270, 405, true );
 }
 
@@ -45,7 +45,7 @@ function wp63_theme_init() {
 
 	// Register Custom Post Types
 	wp63_cpt_calendar();
-	wp63_cpt_gallery();	
+	wp63_cpt_gallery();
 	wp63_cpt_congratulate();
 	wp53_cpt_studentworks();
 	wp63_cpt_media();

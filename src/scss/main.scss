@@ -52,13 +52,13 @@ a:hover {
 	left: -0.5rem;
 	right: 0rem;
 	z-index: -1;
-	
+
 	display: block;
 	background-image: url('http://666a658c624a3c03a6b2-25cda059d975d2f318c03e90bcf17c40.r92.cf1.rackcdn.com/unsplash_527bf56961712_1.JPG');
 	background-size:cover;
 	width: 110%;
 	height: 100%;
-	
+
 	-webkit-filter: blur(5px);
 	-moz-filter: blur(5px);
 	-o-filter: blur(5px);
@@ -146,7 +146,7 @@ a:hover {
 			text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
 		}
 	}
-	
+
 	#main {
 		h2 {
 			margin-bottom:1rem;
@@ -168,7 +168,7 @@ a:hover {
 		.block-heading {
 			border-bottom: 1px solid $new-green;
 			padding-bottom: 0px;
-	
+
 			span {
 				display:inline-block;
 				background: $new-green;
@@ -176,12 +176,12 @@ a:hover {
 				padding: 0.3rem 0.7rem;
 			}
 		}
-	
+
 		#news-block {
 
 			.news-item {
 				margin-bottom: 1rem;
-	
+
 				.card {
 					border-radius: 2px;
 					border:none;
@@ -192,14 +192,14 @@ a:hover {
 				.card:hover {
 					box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
 				}
-	
+
 				.card-img-top {
 					border-radius: 1px 1px 0px 0px;
 				}
-	
+
 				.card-block {
 					padding: 0.5rem;
-	
+
 					p {
 						font-size: 0.9rem;
 						line-height: 1.2rem;
@@ -209,26 +209,26 @@ a:hover {
 					}
 				}
 			}
-			
+
 			.event-list {
 				margin-bottom: 1rem;
 			}
-	
+
 			.event-item {
 				.fa {
 					width:1rem;
 					text-align: center;
 				}
-	
+
 				.event-title {
 					margin-bottom:0.5rem;
 				}
-	
+
 				.event-date {
 					font-size: 0.8rem;
 					margin-bottom: 0;
 				}
-	
+
 				.event-location {
 					font-size: 0.8rem;
 					margin-bottom: 0;
@@ -242,20 +242,20 @@ a:hover {
 
 			.congrats-item {
 				margin-bottom: 1rem;
-	
+
 				.card {
 					border-radius: 2px;
 					border:none;
 					box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
 				}
-	
+
 				.card-img-top {
 					border-radius: 1px 1px 0px 0px;
 				}
-	
+
 				.card-block {
 					padding: 0.5rem;
-	
+
 					p {
 						text-align: center;
 						font-size: 0.9rem;
@@ -289,7 +289,7 @@ a:hover {
 		#activity-block {
 			.gallery-item {
 				margin-bottom: 1rem;
-	
+
 				.card {
 					border-radius: 2px;
 					border:none;
@@ -300,14 +300,14 @@ a:hover {
 				.card:hover {
 					box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
 				}
-	
+
 				.card-img-top {
 					border-radius: 1px 1px 0px 0px;
 				}
-	
+
 				.card-block {
 					padding: 0.5rem;
-	
+
 					p {
 						font-size: 0.9rem;
 						line-height: 1.2rem;
@@ -330,9 +330,10 @@ a:hover {
 			.link-list{
 				ul {
 					list-style:none;
-					
+
 					li {
 						display: inline-block;
+						margin-bottom: 5px;
 					}
 				}
 			}
@@ -340,7 +341,7 @@ a:hover {
 			.dslinks ul {
 				padding-left: 3rem;
 
-				li .nav-link { 
+				li .nav-link {
 					padding:0;
 				}
 			}
@@ -581,18 +582,18 @@ body.wp63-management {
 	}
 }
 
-.embed-container { 
-	position: relative; 
+.embed-container {
+	position: relative;
 	padding-bottom: 56.25%;
 	height: 0;
 	overflow: hidden;
 	max-width: 100%;
 	height: auto;
-} 
+}
 
 .embed-container iframe,
 .embed-container object,
-.embed-container embed { 
+.embed-container embed {
 	position: absolute;
 	top: 0;
 	left: 0;

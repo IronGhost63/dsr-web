@@ -225,7 +225,8 @@ a:hover {
   .wp63-home #main #link-block .link-list ul {
     list-style: none; }
     .wp63-home #main #link-block .link-list ul li {
-      display: inline-block; }
+      display: inline-block;
+      margin-bottom: 5px; }
   .wp63-home #main #link-block .dslinks ul {
     padding-left: 3rem; }
     .wp63-home #main #link-block .dslinks ul li .nav-link {
