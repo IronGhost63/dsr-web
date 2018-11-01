@@ -53,6 +53,9 @@ function wp63_theme_init() {
 	wp63_cpt_documents();
 	wp63_cpt_order();
 	wp63_cpt_documents();
+
+	// Register Taxonomies
+	wp63_tax_document_type();
 }
 
 function wp63_enqueue(){
