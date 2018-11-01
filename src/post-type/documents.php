@@ -1,6 +1,6 @@
 <?php
 function wp63_cpt_documents() {
-	
+
 		$labels = array(
 			'name'                  => _x( 'เอกสารดาวน์โหลด', 'Post Type General Name', 'dsr' ),
 			'singular_name'         => _x( 'เอกสารดาวน์โหลด', 'Post Type Singular Name', 'dsr' ),
@@ -49,12 +49,13 @@ function wp63_cpt_documents() {
 			'show_in_admin_bar'     => true,
 			'show_in_nav_menus'     => true,
 			'can_export'            => true,
-			'has_archive'           => true,		
+			'has_archive'           => true,
 			'exclude_from_search'   => false,
 			'publicly_queryable'    => true,
 			'rewrite'               => $rewrite,
 			'capability_type'       => 'page',
+			'taxonomies'            => array( 'doctype' ),
 		);
 		register_post_type( 'documents', $args );
-	
+
 	}
