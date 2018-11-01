@@ -52,6 +52,7 @@ function wp63_theme_init() {
 	wp63_cpt_research();
 	wp63_cpt_documents();
 	wp63_cpt_order();
+	wp63_cpt_documents();
 }
 
 function wp63_enqueue(){
