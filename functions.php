@@ -13,6 +13,7 @@ require 'src/post-type/student-works.php';
 require 'src/post-type/research.php';
 require 'src/post-type/instruction-media.php';
 require 'src/post-type/order.php';
+require 'src/taxonomy/document-type.php';
 
 require 'src/sidebar.php';
 require 'src/acf.php';
@@ -54,7 +55,7 @@ function gallery_link($gallery_id) {
 	if($type == "upload"){
 		return get_permalink($gallery_id);
 	}elseif($type == "link"){
-		return get_field("gallery_url", $gallery_id); 
+		return get_field("gallery_url", $gallery_id);
 	}else{
 		return false;
 	}
@@ -68,7 +69,7 @@ function gc_pagination($html) {
     $out = str_replace('</a>','</a></li>',$out);
     $out = str_replace('<span class=\'current\'','<li class="page-item active"><span class="page-link current"',$out);
     $out = str_replace('<span class=\'pages\'','<li class="page-item"><span class="page-link pages"',$out);
-    $out = str_replace('<span class=\'extend\'','<li class="page-item"><span class="page-link extend"',$out);  
+    $out = str_replace('<span class=\'extend\'','<li class="page-item"><span class="page-link extend"',$out);
     $out = str_replace('</span>','</span></li>',$out);
     $out = str_replace('</div>','',$out);
     return '<ul class="pagination justify-content-center">'.$out.'</ul>';
