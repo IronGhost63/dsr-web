@@ -1,0 +1,17 @@
+{
+    "name": "wp63/wpdsr",
+    "description": "Debsirinromklao WordPress Theme",
+    "type": "project",
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "Jirayu Yingthawornsuk",
+            "email": "me@jirayu.in.th"
+        }
+    ],
+    "require": {
+        "twbs/bootstrap": "4.0.0-beta.2",
+        "fortawesome/font-awesome": "^4.7",
+        "rundiz/thai-date": "^2.0"
+    }
+}
