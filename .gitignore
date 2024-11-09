@@ -74,6 +74,7 @@ setupfiles/*
 wp-content/uploads/cache
 css-compiled/*
 **/uploads/**/cache/*
+wp-content/themes/wpdsr/dist
 
 # ignore vscode settings
 .vscode

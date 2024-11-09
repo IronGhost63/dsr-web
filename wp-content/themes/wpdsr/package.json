@@ -1,0 +1,16 @@
+{
+  "type": "module",
+  "scripts": {
+    "build": "yarn bud build",
+    "dev": "yarn bud dev"
+  },
+  "dependencies": {
+    "@roots/bud": "^6.23.3",
+    "@roots/bud-postcss": "^6.23.3",
+    "@roots/bud-sass": "^6.23.3",
+    "animate.css": "3.5.2",
+    "bootstrap": "4.1",
+    "font-awesome": "^4.7.0",
+    "wow.js": "1.1.3"
+  }
+}
