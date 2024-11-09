@@ -4,6 +4,10 @@ namespace Elementor;
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
+
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
+
 /**
  * Elementor star rating widget.
  *
@@ -38,7 +42,7 @@ class Widget_Star_Rating extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return __( 'Star Rating', 'elementor' );
+		return esc_html__( 'Star Rating', 'elementor' );
 	}
 
 	/**
@@ -74,21 +78,21 @@ class Widget_Star_Rating extends Widget_Base {
 	 *
 	 * Adds different input fields to allow the user to change and customize the widget settings.
 	 *
-	 * @since 2.3.0
+	 * @since 3.1.0
 	 * @access protected
 	 */
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->start_controls_section(
 			'section_rating',
 			[
-				'label' => __( 'Rating', 'elementor' ),
+				'label' => esc_html__( 'Rating', 'elementor' ),
 			]
 		);
 
 		$this->add_control(
 			'rating_scale',
 			[
-				'label' => __( 'Rating Scale', 'elementor' ),
+				'label' => esc_html__( 'Rating Scale', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'5' => '0-5',
@@ -101,19 +105,22 @@ class Widget_Star_Rating extends Widget_Base {
 		$this->add_control(
 			'rating',
 			[
-				'label' => __( 'Rating', 'elementor' ),
+				'label' => esc_html__( 'Rating', 'elementor' ),
 				'type' => Controls_Manager::NUMBER,
 				'min' => 0,
 				'max' => 10,
 				'step' => 0.1,
 				'default' => 5,
+				'dynamic' => [
+					'active' => true,
+				],
 			]
 		);
 
 		$this->add_control(
 			'star_style',
 			[
-				'label' => __( 'Icon', 'elementor' ),
+				'label' => esc_html__( 'Icon', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'star_fontawesome' => 'Font Awesome',
@@ -129,16 +136,15 @@ class Widget_Star_Rating extends Widget_Base {
 		$this->add_control(
 			'unmarked_star_style',
 			[
-				'label' => __( 'Unmarked Style', 'elementor' ),
+				'label' => esc_html__( 'Unmarked Style', 'elementor' ),
 				'type' => Controls_Manager::CHOOSE,
-				'label_block' => false,
 				'options' => [
 					'solid' => [
-						'title' => __( 'Solid', 'elementor' ),
+						'title' => esc_html__( 'Solid', 'elementor' ),
 						'icon' => 'eicon-star',
 					],
 					'outline' => [
-						'title' => __( 'Outline', 'elementor' ),
+						'title' => esc_html__( 'Outline', 'elementor' ),
 						'icon' => 'eicon-star-o',
 					],
 				],
@@ -149,32 +155,35 @@ class Widget_Star_Rating extends Widget_Base {
 		$this->add_control(
 			'title',
 			[
-				'label' => __( 'Title', 'elementor' ),
+				'label' => esc_html__( 'Title', 'elementor' ),
 				'type' => Controls_Manager::TEXT,
 				'separator' => 'before',
+				'dynamic' => [
+					'active' => true,
+				],
 			]
 		);
 
 		$this->add_responsive_control(
 			'align',
 			[
-				'label' => __( 'Alignment', 'elementor' ),
+				'label' => esc_html__( 'Alignment', 'elementor' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'left' => [
-						'title' => __( 'Left', 'elementor' ),
+						'title' => esc_html__( 'Left', 'elementor' ),
 						'icon' => 'eicon-text-align-left',
 					],
 					'center' => [
-						'title' => __( 'Center', 'elementor' ),
+						'title' => esc_html__( 'Center', 'elementor' ),
 						'icon' => 'eicon-text-align-center',
 					],
 					'right' => [
-						'title' => __( 'Right', 'elementor' ),
+						'title' => esc_html__( 'Right', 'elementor' ),
 						'icon' => 'eicon-text-align-right',
 					],
 					'justify' => [
-						'title' => __( 'Justified', 'elementor' ),
+						'title' => esc_html__( 'Justified', 'elementor' ),
 						'icon' => 'eicon-text-align-justify',
 					],
 				],
@@ -190,7 +199,7 @@ class Widget_Star_Rating extends Widget_Base {
 		$this->start_controls_section(
 			'section_title_style',
 			[
-				'label' => __( 'Title', 'elementor' ),
+				'label' => esc_html__( 'Title', 'elementor' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'title!' => '',
@@ -201,11 +210,10 @@ class Widget_Star_Rating extends Widget_Base {
 		$this->add_control(
 			'title_color',
 			[
-				'label' => __( 'Text Color', 'elementor' ),
+				'label' => esc_html__( 'Text Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => Scheme_Color::get_type(),
-					'value' => Scheme_Color::COLOR_3,
+				'global' => [
+					'default' => Global_Colors::COLOR_TEXT,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-star-rating__title' => 'color: {{VALUE}}',
@@ -218,14 +226,24 @@ class Widget_Star_Rating extends Widget_Base {
 			[
 				'name' => 'title_typography',
 				'selector' => '{{WRAPPER}} .elementor-star-rating__title',
-				'scheme' => Scheme_Typography::TYPOGRAPHY_3,
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_TEXT,
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Text_Shadow::get_type(),
+			[
+				'name' => 'title_shadow',
+				'selector' => '{{WRAPPER}} .elementor-star-rating__title',
 			]
 		);
 
 		$this->add_responsive_control(
 			'title_gap',
 			[
-				'label' => __( 'Gap', 'elementor' ),
+				'label' => esc_html__( 'Gap', 'elementor' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -245,7 +263,7 @@ class Widget_Star_Rating extends Widget_Base {
 		$this->start_controls_section(
 			'section_stars_style',
 			[
-				'label' => __( 'Stars', 'elementor' ),
+				'label' => esc_html__( 'Stars', 'elementor' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -253,7 +271,7 @@ class Widget_Star_Rating extends Widget_Base {
 		$this->add_responsive_control(
 			'icon_size',
 			[
-				'label' => __( 'Size', 'elementor' ),
+				'label' => esc_html__( 'Size', 'elementor' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -270,7 +288,7 @@ class Widget_Star_Rating extends Widget_Base {
 		$this->add_responsive_control(
 			'icon_space',
 			[
-				'label' => __( 'Spacing', 'elementor' ),
+				'label' => esc_html__( 'Spacing', 'elementor' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -288,7 +306,7 @@ class Widget_Star_Rating extends Widget_Base {
 		$this->add_control(
 			'stars_color',
 			[
-				'label' => __( 'Color', 'elementor' ),
+				'label' => esc_html__( 'Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-star-rating i:before' => 'color: {{VALUE}}',
@@ -300,7 +318,7 @@ class Widget_Star_Rating extends Widget_Base {
 		$this->add_control(
 			'stars_unmarked_color',
 			[
-				'label' => __( 'Unmarked Color', 'elementor' ),
+				'label' => esc_html__( 'Unmarked Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-star-rating i' => 'color: {{VALUE}}',
@@ -324,16 +342,22 @@ class Widget_Star_Rating extends Widget_Base {
 	}
 
 	/**
+	 * Print the actual stars and calculate their filling.
+	 *
+	 * Rating type is float to allow stars-count to be a fraction.
+	 * Floored-rating type is int, to represent the rounded-down stars count.
+	 * In the `for` loop, the index type is float to allow comparing with the rating value.
+	 *
 	 * @since 2.3.0
 	 * @access protected
 	 */
 	protected function render_stars( $icon ) {
 		$rating_data = $this->get_rating();
-		$rating = $rating_data[0];
-		$floored_rating = (int) $rating;
+		$rating = (float) $rating_data[0];
+		$floored_rating = floor( $rating );
 		$stars_html = '';
 
-		for ( $stars = 1; $stars <= $rating_data[1]; $stars++ ) {
+		for ( $stars = 1.0; $stars <= $rating_data[1]; $stars++ ) {
 			if ( $stars <= $floored_rating ) {
 				$stars_html .= '<i class="elementor-star-full">' . $icon . '</i>';
 			} elseif ( $floored_rating + 1 === $stars && $rating !== $floored_rating ) {
@@ -381,19 +405,20 @@ class Widget_Star_Rating extends Widget_Base {
 		?>
 
 		<div class="elementor-star-rating__wrapper">
-			<?php if ( ! empty( $settings['title'] ) ) : ?>
-				<div class="elementor-star-rating__title"><?php echo $settings['title']; ?></div>
-			<?php endif; ?>
-			<?php echo $stars_element; ?>
+			<?php if ( ! Utils::is_empty( $settings['title'] ) ) : ?>
+				<div class="elementor-star-rating__title"><?php echo esc_html( $settings['title'] ); ?></div>
+			<?php endif;
+			// PHPCS - $stars_element contains an HTML string that cannot be escaped. ?>
+			<?php echo $stars_element; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		</div>
 		<?php
 	}
 
 	/**
-	 * @since 2.3.0
+	 * @since 2.9.0
 	 * @access protected
 	 */
-	protected function _content_template() {
+	protected function content_template() {
 		?>
 		<#
 			var getRating = function() {

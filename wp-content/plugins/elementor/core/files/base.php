@@ -1,6 +1,7 @@
 <?php
-
 namespace Elementor\Core\Files;
+
+use Elementor\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -65,6 +66,15 @@ abstract class Base {
 	}
 
 	/**
+	 * Use a create function for PhpDoc (@return static).
+	 *
+	 * @return static
+	 */
+	public static function create() {
+		return Plugin::$instance->files_manager->get( get_called_class(), func_get_args() );
+	}
+
+	/**
 	 * @since 2.1.0
 	 * @access public
 	 */
@@ -120,6 +130,20 @@ abstract class Base {
 		$url = set_url_scheme( self::get_base_uploads_url() . $this->files_dir . $this->file_name );
 
 		return add_query_arg( [ 'ver' => $this->get_meta( 'time' ) ], $url );
+	}
+
+	/**
+	 * Get Path
+	 *
+	 * Returns the local path of the generated file.
+	 *
+	 * @since 3.5.0
+	 * @access public
+	 *
+	 * @return string
+	 */
+	public function get_path() {
+		return set_url_scheme( self::get_base_uploads_dir() . $this->files_dir . $this->file_name );
 	}
 
 	/**
@@ -200,9 +224,7 @@ abstract class Base {
 	 *                    the property does not exist.
 	 */
 	public function get_meta( $property = null ) {
-		$default_meta = $this->get_default_meta();
-
-		$meta = array_merge( $default_meta, (array) $this->load_meta() );
+		$meta = array_merge( $this->get_default_meta(), (array) $this->load_meta() );
 
 		if ( $property ) {
 			return isset( $meta[ $property ] ) ? $meta[ $property ] : null;

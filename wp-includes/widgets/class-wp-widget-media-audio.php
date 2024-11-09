@@ -12,6 +12,7 @@
  *
  * @since 4.8.0
  *
+ * @see WP_Widget_Media
  * @see WP_Widget
  */
 class WP_Widget_Media_Audio extends WP_Widget_Media {
@@ -39,14 +40,14 @@ class WP_Widget_Media_Audio extends WP_Widget_Media {
 				'replace_media'              => _x( 'Replace Audio', 'label for button in the audio widget; should preferably not be longer than ~13 characters long' ),
 				'edit_media'                 => _x( 'Edit Audio', 'label for button in the audio widget; should preferably not be longer than ~13 characters long' ),
 				'missing_attachment'         => sprintf(
-					/* translators: %s: URL to media library */
-					__( 'We can&#8217;t find that audio file. Check your <a href="%s">media library</a> and make sure it wasn&#8217;t deleted.' ),
+					/* translators: %s: URL to media library. */
+					__( 'That audio file cannot be found. Check your <a href="%s">media library</a> and make sure it was not deleted.' ),
 					esc_url( admin_url( 'upload.php' ) )
 				),
-				/* translators: %d: widget count */
+				/* translators: %d: Widget count. */
 				'media_library_state_multi'  => _n_noop( 'Audio Widget (%d)', 'Audio Widget (%d)' ),
 				'media_library_state_single' => __( 'Audio Widget' ),
-				'unsupported_file_type'      => __( 'Looks like this isn&#8217;t the correct kind of file. Please link to an audio file instead.' ),
+				'unsupported_file_type'      => __( 'Looks like this is not the correct kind of file. Please link to an audio file instead.' ),
 			)
 		);
 	}
@@ -59,6 +60,7 @@ class WP_Widget_Media_Audio extends WP_Widget_Media {
 	 * @see WP_REST_Controller::get_item_schema()
 	 * @see WP_REST_Controller::get_additional_fields()
 	 * @link https://core.trac.wordpress.org/ticket/35574
+	 *
 	 * @return array Schema for properties.
 	 */
 	public function get_instance_schema() {
@@ -81,7 +83,7 @@ class WP_Widget_Media_Audio extends WP_Widget_Media {
 				'type'        => 'string',
 				'default'     => '',
 				'format'      => 'uri',
-				/* translators: %s: audio extension */
+				/* translators: %s: Audio extension. */
 				'description' => sprintf( __( 'URL to the %s audio source file' ), $audio_extension ),
 			);
 		}
@@ -95,7 +97,6 @@ class WP_Widget_Media_Audio extends WP_Widget_Media {
 	 * @since 4.8.0
 	 *
 	 * @param array $instance Widget instance props.
-	 * @return void
 	 */
 	public function render_media( $instance ) {
 		$instance   = array_merge( wp_list_pluck( $this->get_instance_schema(), 'default' ), $instance );
@@ -188,13 +189,25 @@ class WP_Widget_Media_Audio extends WP_Widget_Media {
 		?>
 		<script type="text/html" id="tmpl-wp-media-widget-audio-preview">
 			<# if ( data.error && 'missing_attachment' === data.error ) { #>
-				<div class="notice notice-error notice-alt notice-missing-attachment">
-					<p><?php echo $this->l10n['missing_attachment']; ?></p>
-				</div>
+				<?php
+				wp_admin_notice(
+					$this->l10n['missing_attachment'],
+					array(
+						'type'               => 'error',
+						'additional_classes' => array( 'notice-alt', 'notice-missing-attachment' ),
+					)
+				);
+				?>
 			<# } else if ( data.error ) { #>
-				<div class="notice notice-error notice-alt">
-					<p><?php _e( 'Unable to preview media due to an unknown error.' ); ?></p>
-				</div>
+				<?php
+				wp_admin_notice(
+					__( 'Unable to preview media due to an unknown error.' ),
+					array(
+						'type'               => 'error',
+						'additional_classes' => array( 'notice-alt' ),
+					)
+				);
+				?>
 			<# } else if ( data.model && data.model.src ) { #>
 				<?php wp_underscore_audio_template(); ?>
 			<# } #>

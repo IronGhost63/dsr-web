@@ -8,64 +8,51 @@
 /**
  * Renders the `core/tag-cloud` block on server.
  *
+ * @since 5.2.0
+ *
  * @param array $attributes The block attributes.
  *
  * @return string Returns the tag cloud for selected taxonomy.
  */
 function render_block_core_tag_cloud( $attributes ) {
-	$class = isset( $attributes['align'] ) ?
-		"wp-block-tag-cloud align{$attributes['align']}" :
-		'wp-block-tag-cloud';
+	$smallest_font_size = $attributes['smallestFontSize'];
+	$unit               = ( preg_match( '/^[0-9.]+(?P<unit>[a-z%]+)$/i', $smallest_font_size, $m ) ? $m['unit'] : 'pt' );
 
-	if ( isset( $attributes['className'] ) ) {
-		$class .= ' ' . $attributes['className'];
-	}
-
-	$args = array(
+	$args      = array(
 		'echo'       => false,
+		'unit'       => $unit,
 		'taxonomy'   => $attributes['taxonomy'],
 		'show_count' => $attributes['showTagCounts'],
+		'number'     => $attributes['numberOfTags'],
+		'smallest'   => floatVal( $attributes['smallestFontSize'] ),
+		'largest'    => floatVal( $attributes['largestFontSize'] ),
 	);
-
 	$tag_cloud = wp_tag_cloud( $args );
 
 	if ( ! $tag_cloud ) {
-		$tag_cloud = esc_html( __( 'No terms to show.' ) );
+		$tag_cloud = __( 'There&#8217;s no content to show here yet.' );
 	}
 
+	$wrapper_attributes = get_block_wrapper_attributes();
+
 	return sprintf(
-		'<p class="%1$s">%2$s</p>',
-		esc_attr( $class ),
+		'<p %1$s>%2$s</p>',
+		$wrapper_attributes,
 		$tag_cloud
 	);
 }
 
 /**
  * Registers the `core/tag-cloud` block on server.
+ *
+ * @since 5.2.0
  */
 function register_block_core_tag_cloud() {
-	register_block_type(
-		'core/tag-cloud',
+	register_block_type_from_metadata(
+		__DIR__ . '/tag-cloud',
 		array(
-			'attributes'      => array(
-				'taxonomy'      => array(
-					'type'    => 'string',
-					'default' => 'post_tag',
-				),
-				'className'     => array(
-					'type' => 'string',
-				),
-				'showTagCounts' => array(
-					'type'    => 'boolean',
-					'default' => false,
-				),
-				'align'         => array(
-					'type' => 'string',
-				),
-			),
 			'render_callback' => 'render_block_core_tag_cloud',
 		)
 	);
 }
-
 add_action( 'init', 'register_block_core_tag_cloud' );

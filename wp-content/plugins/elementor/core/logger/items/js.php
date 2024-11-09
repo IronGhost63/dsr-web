@@ -15,9 +15,10 @@ class JS extends File {
 		parent::__construct( $args );
 		$this->column = $args['column'];
 		$this->file = $args['url'];
-		$this->date = date( 'Y-m-d H:i:s', $args['timestamp'] );
+		$this->date = gmdate( 'Y-m-d H:i:s', $args['timestamp'] );
 	}
 
+	#[\ReturnTypeWillChange]
 	public function jsonSerialize() {
 		$json_arr = parent::jsonSerialize();
 		$json_arr['column'] = $this->column;

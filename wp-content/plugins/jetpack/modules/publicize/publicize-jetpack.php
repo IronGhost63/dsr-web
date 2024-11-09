@@ -1,5 +1,7 @@
 <?php
 
+use Automattic\Jetpack\Redirect;
+
 class Publicize extends Publicize_Base {
 
 	function __construct() {
@@ -250,7 +252,6 @@ class Publicize extends Publicize_Base {
 	}
 
 	function globalize_connection( $connection_id ) {
-		Jetpack::load_xml_rpc_client();
 		$xml = new Jetpack_IXR_Client();
 		$xml->query( 'jetpack.globalizePublicizeConnection', $connection_id, 'globalize' );
 
@@ -261,7 +262,6 @@ class Publicize extends Publicize_Base {
 	}
 
 	function unglobalize_connection( $connection_id ) {
-		Jetpack::load_xml_rpc_client();
 		$xml = new Jetpack_IXR_Client();
 		$xml->query( 'jetpack.globalizePublicizeConnection', $connection_id, 'unglobalize' );
 
@@ -349,7 +349,6 @@ class Publicize extends Publicize_Base {
 
 		$id = $this->get_connection_id( $connection );
 
-		Jetpack::load_xml_rpc_client();
 		$xml = new Jetpack_IXR_Client();
 		$xml->query( 'jetpack.testPublicizeConnection', $id );
 
@@ -493,7 +492,7 @@ class Publicize extends Publicize_Base {
 			}
 			$page_info_message = sprintf(
 				__( 'Facebook supports Publicize connections to Facebook Pages, but not to Facebook Profiles. <a href="%s">Learn More about Publicize for Facebook</a>', 'jetpack' ),
-				'https://jetpack.com/support/publicize/facebook'
+				esc_url( Redirect::get_url( 'jetpack-support-publicize-facebook' ) )
 			);
 
 			if ( $pages ) : ?>
@@ -642,7 +641,7 @@ class Publicize extends Publicize_Base {
 	}
 
 	function get_basehostname( $url ) {
-		return parse_url( $url, PHP_URL_HOST );
+		return wp_parse_url( $url, PHP_URL_HOST );
 	}
 
 	function options_save_tumblr() {
@@ -655,7 +654,6 @@ class Publicize extends Publicize_Base {
 	}
 
 	function set_remote_publicize_options( $id, $options ) {
-		Jetpack::load_xml_rpc_client();
 		$xml = new Jetpack_IXR_Client();
 		$xml->query( 'jetpack.setPublicizeOptions', $id, $options );
 

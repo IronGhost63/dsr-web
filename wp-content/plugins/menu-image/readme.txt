@@ -3,8 +3,8 @@ Contributors: takanakui, freemius
 Tags: menu, navigation, image, icons, nav menu
 Donate link: https://www.buymeacoffee.com/ruiguerreiro
 Requires at least: 4.4.0
-Tested up to: 5.2
-Stable tag: 2.9.2
+Tested up to: 5.5
+Stable tag: 2.9.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,7 +29,7 @@ With Menu Image plugin you can do more, check some of the features:
 It's compatible with WPML and no coding knowledge is required.
 
 = Related Plugins =
-* [Mobile Menu](https://wordpress.org/plugins/mobile-menu/): WP Mobile Menu is the best WordPress responsive mobile menu. Provide to your mobile visitor an easy access to your site content using any device smartphone/tablet/desktop.
+* [Mobile Menu](https://www.wpmobilemenu.com/?utm_source=wordpressorg&utm_medium=menu-image&utm_campaign=plugin-description): WP Mobile Menu is the best WordPress responsive mobile menu. Provide to your mobile visitor an easy access to your site content using any device smartphone/tablet/desktop.
 
 
 ###I need help or I have a doubt, check our Support
@@ -108,6 +108,28 @@ add_filter( 'wp_calculate_image_srcset', '__return_false' );
 2. Menu preview in standard twenty-thirteen theme
 
 == Changelog ==
+
+### 2.9.7 ###
+* Fix - Fix Issue with display title above and below
+* Improvment - Update Freemius SDK to 2.4.0.1
+
+### 2.9.6 ###
+* Fix - Fix compatibility issue with WordPress 5.4.
+
+### 2.9.5 ###
+* Fix - Remove unnecessary filter.
+* Fix - Adjust the CSS for title below.
+
+### 2.9.4 ###
+* Fix - Bug of the duplicated images.
+
+### 2.9.3 ###
+* New - Add compatibility with Max Megamenu.
+* New - Add new filter to change the markup of the image
+* Fix - Lower the Menu Image options to be below the WordPress Settings.
+* Fix - Update Mobile Menu Link.
+* Fix - Relocate CSS and JS resources.
+
 ### 2.9.2 ###
 * New - Include Freemius framework.
 * New - Settings panel.

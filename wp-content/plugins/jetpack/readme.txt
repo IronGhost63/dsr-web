@@ -1,10 +1,10 @@
 === Jetpack by WordPress.com ===
-Contributors: automattic, adamkheckler, aduth, akirk, allendav, alternatekev, andy, annezazu, apeatling, azaozz, batmoo, barry, beaulebens, blobaugh, cainm, cena, cfinke, chaselivingston, chellycat, clickysteve, csonnek, danielbachhuber, davoraltman, daniloercoli, designsimply, dllh, drawmyface, dsmart, dzver, ebinnion, eliorivero, enej, eoigal, erania-pinnera, ethitter, gcorne, georgestephanis, gibrown, goldsounds, hew, hugobaeta, hypertextranch, iammattthomas, iandunn, jblz, jasmussen, jeffgolenski, jeherve, jenhooks, jenia, jessefriedman, jgs, jkudish, jmdodd, joanrho, johnjamesjacoby, jshreve, keoshi, koke, kraftbj, lancewillett, lschuyler, macmanx, martinremy, matt, matveb, mattwiebe, maverick3x6, mcsf, mdawaffe, MichaelArestad, migueluy, mikeyarce, mkaz, nancythanki, nickmomrik, obenland, oskosk, pento, professor44, rachelsquirrel, rdcoll, ryancowles, richardmuscat, richardmtl, roccotripaldi, samhotchkiss, scarstocea, sdquirk, stephdau, tmoorewp, tyxla, Viper007Bond, westi, yoavf, zinigor
+Contributors: automattic, adamkheckler, aduth, akirk, allendav, alternatekev, andy, annezazu, apeatling, azaozz, batmoo, barry, beaulebens, biskobe, blobaugh, brbrr, cainm, cena, cfinke, chaselivingston, chellycat, clickysteve, csonnek, danielbachhuber, davoraltman, daniloercoli, delawski, designsimply, dllh, drawmyface, dsmart, dzver, ebinnion, egregor, eliorivero, enej, eoigal, erania-pinnera, ethitter, fgiannar, gcorne, georgestephanis, gibrown, goldsounds, hew, hugobaeta, hypertextranch, iammattthomas, iandunn, jblz, jasmussen, jeffgolenski, jeherve, jenhooks, jenia, jessefriedman, jgs, jkudish, jmdodd, joanrho, johnjamesjacoby, jshreve, kbrownkd, keoshi, koke, kraftbj, lancewillett, leogermani, lschuyler, macmanx, martinremy, matt, matveb, mattwiebe, maverick3x6, mcsf, mdawaffe, mdbitz, MichaelArestad, migueluy, mikeyarce, mkaz, nancythanki, nickmomrik, obenland, oskosk, pento, professor44, rachelsquirrel, rdcoll, ryancowles, richardmuscat, richardmtl, roccotripaldi, samhotchkiss, scarstocea, scottsweb, sdquirk, sermitr, simison, stephdau, tmoorewp, tyxla, Viper007Bond, westi, yoavf, zinigor
 Tags: Jetpack, WordPress.com, backup, security, related posts, CDN, speed, anti-spam, social sharing, SEO, video, stats
-Stable tag: 7.6
-Requires at least: 5.1
+Stable tag: 8.9.4
+Requires at least: 5.4
 Requires PHP: 5.6
-Tested up to: 5.2
+Tested up to: 5.5
 
 The ideal plugin for stats, related posts, search engine optimization, social sharing, protection, backups, security, and more.
 
@@ -27,7 +27,7 @@ Activate site accelerator tools and watch your page load times decrease -- we'll
 
 * Images and static files, like CSS and JavaScript, served from our servers, not yours.
 * Elasticsearch-powered related content and site search, for relevant results with no drain on your servers.
-* Lazy image loading for a faster mobile experience.
+* Lazy load images for a faster mobile experience.
 * Unlimited and high-speed video via our content delivery network.
 
 = Effortless Site Management =
@@ -96,47 +96,101 @@ There are opportunities for developers at all levels to contribute. [Learn more 
 
 == Changelog ==
 
-= 7.6 =
+= 8.9.4 =
+Release date: October 14, 2024
 
-* Release date: August 6, 2019
-* Release post: https://wp.me/p1moTy-ljs
+Security:
+
+* Contact Form: ensure that submitted forms can only be accessed by logged in users allowed to view form submissions.
+
+= 8.9.3 =
+Release date: May 30, 2023
+
+Security:
+
+* WordPress.com REST API: Ensure that files uploaded via the API are properly validated.
+
+= 8.9.2 =
+Release date: June 2, 2021
+
+Security:
+
+* Carousel: prevent fetching comments from posts, and from attachments of private posts.
+
+= 8.9.1 =
+
+* Release date: September 16, 2020
 
 **Enhancements**
 
-* Backups: add ability to send SSH credentials.
-* Blocks: allow the insertion and preview of any Jetpack block in the editor, even when the block is only available via a Paid plan.
-* Carousel: use a pointer cursor when hovering over galleries that utilise the Carousel feature.
-* Dashboard: improve the display of the feature cards in the main Jetpack dashboard.
-* General: hide edit post link on your site when viewing it via the WordPress mobile app.
-* oEmbeds: add support for Song.link service.
-* Stats: improve performance of the Stats tracking pixel by eliminating blocking JavaScript.
-* Stats: improve Cache performance by switching from the WordPress Options API to the WordPress Transient API.
-* Support links: use the Beta support form when on a development version.
-* Sync: add a term taxonomy blacklist option, and start blacklisting taxonomies that do not need to be synchronized with WordPress.com.
-* Sync: improve reliability of the synchronization of taxonomies.
-* Videos: ensure any deprecations added in the core video block are not overwritten.
-* Widgets: allow the customization of avatar image options in the Top Posts Widget, via a filter.
-* Widgets: add option to open Flickr gallery images in a new tab.
-* WordPress.com Activity Log: avoid display issues with WooCommerce Product Reviews.
-
-**Improved compatibility**
-
-* AMP: ensure CSS compatibility with the Sharing buttons.
-* AMP: ensure full compatibility with Jetpack's Image CDN.
-* Dashboard: fix layout issues when viewing the dashboard on WordPress.com Business sites.
-* Compatibility suite for shared libraries: fix PHP notice when running suite.
-* Contact Form: ensure the Date picker field does not cause any AMP validation errors.
+* Jetpack Dashboard: add support for new Jetpack plans.
 
 **Bug fixes**
 
-* Admin Page: fix the behaviour of the Jetpack Videos button in the "My Plan" tab.
-* Admin Page: fix a typo in the Magic Links modal.
-* Connection process: bring back the ability to connect to WordPress.com via XML-RPC or REST API.
-* Custom CSS: fix Media Width label layout issue in Firefox.
-* Dashboard Notices: fix layout issues on sites using an RTL language.
-* Simple Payments: fix security vulnerability in the Simple Payments description output.
-* Sync: fix home and Site URL synchronization issues on sites with custom Cron implementations.
-* WordPress.com Activity Log: add Action Scheduler to the list of blacklisted post types
+* General: avoid deprecation PHP notices when used with WooCommerce 4.4+.
+* Image CDN: avoid PHP warning when replacing URLs by their image CDN equivalent.
+* REST API: avoid authentication issues when using a third-party plugin also using the REST API.
+* Search: fix a bug where no results appear when using Jetpack's Instant Search interface.
+* Site Health Tools: skip a connection status test when in offline mode.
+
+= 8.9 =
+
+* Release date: September 1, 2020
+* Release post: https://wp.me/p1moTy-rAs
+
+**Major Enhancements**
+
+* The new Donations Block allows you to easily accept and process donations on your site.
+* You can now preview how your posts will look on Facebook, Twitter, and Google Search Results even before you hit the Publish button.
+
+
+**Enhancements**
+
+* Blocks: add "Edit" button to the Calendly block toolbar.
+* Blocks: add new "Consent" field option to the Form block.
+* Connection: improve the reconnection process when your site is not properly connected to WordPress.com anymore.
+* Connection: improve messaging offered and displayed in the dashboard when there are connection issues between your site and WordPress.com.
+* Contact Form: put feedback that matches the disallowed list in trash.
+* Dashboard: improved legibility across all Jetpack interfaces.
+* External Media: improve keyboard navigation in the media modal.
+* External Media: offer a way to disconnect Google Photos accounts from within the media modal.
+* Sharing: add spacing around customization link.
+* Search: improve styling of expanded results in the Instant Search interface.
+* Shortcodes: remove jQuery dependency from Gist shortcode.
+
+**Improved compatibility**
+
+* Anti-Spam: better handle globally-configured Akismet API keys in the Jetpack dashboard.
+* Blocks: update to use latest colors defined by WordPress.
+* Blocks: ensure our External Media option is compatible with other plugins that also make changes to the Media Library options in the block editor.
+* Connection: ensure better compatibility of the Monitor, Protect, Secure Sign In, Stats, and Subscription features with your site's connection to WordPress.com.
+* General: remove references to pre-PHP 5.6 code.
+* Sharing: improve accessibility of the sharing butttons in AMP views.
+* Shortcode Embeds: ensure compatibility of the Instagram embeds with upcoming Instagram API changes.
+* Third-party plugin compatibility: add new compatibility file for the Creative Mail plugin.
+* Third-party plugin compatibility: add Slim SEO to the list of plugins compatible with Jetpack's Open Graph and Twitter Cards Meta tags.
+
+**Bug fixes**
+
+* Autoloader: avoid issues when updating plugins using the Autoloader in environments using OPCache.
+* Autoloader: remove the map regeneration that occurs after a plugin update.
+* Activity Log: ensure that theme changes are mentioned in the Activity Log.
+* Blocks: ensure alignment options are respected for the Video block in the editor.
+* Blocks: avoid accidental disconnections of the Payments block in the editor.
+* Blocks: bug fixes and improvement of consistency of block style implementation in the OpenTable block.
+* Blocks: avoid duplicate navigation arrows in the Slideshow block.
+* CLI tools: avoid notices when using Synchronization CLI tools.
+* Connection: ensure that secondary users can connect their own account to their WordPress.com account.
+* Dashboard: fix missing card for Backups in some error cases.
+* Protect: avoid displaying HTML markup on blocked login screen.
+* Protect: avoid Fatal errors when trying to update Protect options from the REST API.
+* Search: ensure that Instant Search options are properly saved in the Customizer.
+* Search: avoid errors when searching for a term and including the "%" symbol.
+* Shortcodes: avoid Fatal errors when receiving unexpected response from Flickr.
+* Theme Tools: resolve a PHP notice in PHP 7.4.
+* Video: ensure that videos uploaded with Jetpack Videos are assigned to the correct author.
+* Widgets: ensure that the Instagram Widget is properly styled when previewed in the customizer.
+* Widgets: do not hide accepted cookie widget to allow visual customization in the Customizer.
 
 --------
 

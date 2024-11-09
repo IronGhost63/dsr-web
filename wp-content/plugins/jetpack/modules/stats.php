@@ -16,6 +16,8 @@
 
 use Automattic\Jetpack\Tracking;
 use Automattic\Jetpack\Connection\Client;
+use Automattic\Jetpack\Connection\XMLRPC_Async_Call;
+use Automattic\Jetpack\Redirect;
 
 if ( defined( 'STATS_VERSION' ) ) {
 	return;
@@ -41,6 +43,7 @@ function stats_load() {
 	add_action( 'wp_head', 'stats_admin_bar_head', 100 );
 
 	add_action( 'wp_head', 'stats_hide_smile_css' );
+	add_action( 'embed_head', 'stats_hide_smile_css' );
 
 	add_action( 'jetpack_admin_menu', 'stats_admin_menu' );
 
@@ -169,7 +172,7 @@ function stats_map_meta_caps( $caps, $cap, $user_id ) {
  * @return void
  */
 function stats_template_redirect() {
-	global $current_user, $rendered_stats_footer;
+	global $current_user;
 
 	if ( is_feed() || is_robots() || is_trackback() || is_preview() || jetpack_is_dnt_enabled() ) {
 		return;
@@ -184,9 +187,7 @@ function stats_template_redirect() {
 	}
 
 	add_action( 'wp_footer', 'stats_footer', 101 );
-	add_action( 'wp_head', 'stats_add_shutdown_action' );
 
-	$rendered_stats_footer = false;
 }
 
 
@@ -225,16 +226,6 @@ function stats_build_view_data() {
 	return compact( 'v', 'j', 'blog', 'post', 'tz', 'srv' );
 }
 
-/**
- * Stats Add Shutdown Action.
- *
- * @access public
- * @return void
- */
-function stats_add_shutdown_action() {
-	// Just in case wp_footer isn't in your theme.
-	add_action( 'shutdown',  'stats_footer', 101 );
-}
 
 /**
  * Stats Footer.
@@ -243,17 +234,13 @@ function stats_add_shutdown_action() {
  * @return void
  */
 function stats_footer() {
-	global $rendered_stats_footer;
-
-	if ( ! $rendered_stats_footer ) {
-		$data = stats_build_view_data();
-		if ( Jetpack_AMP_Support::is_amp_request() ) {
-			stats_render_amp_footer( $data );
-		} else {
-			stats_render_footer( $data );
-		}
-		$rendered_stats_footer = true;
+	$data = stats_build_view_data();
+	if ( Jetpack_AMP_Support::is_amp_request() ) {
+		stats_render_amp_footer( $data );
+	} else {
+		stats_render_footer( $data );
 	}
+
 }
 
 function stats_render_footer( $data ) {
@@ -566,8 +553,8 @@ function stats_reports_page( $main_chart_only = false ) {
 		return stats_dashboard_widget_content();
 	}
 
-	$blog_id = stats_get_option( 'blog_id' );
-	$domain = Jetpack::build_raw_urls( get_home_url() );
+	$blog_id   = stats_get_option( 'blog_id' );
+	$stats_url = Redirect::get_url( 'calypso-stats' );
 
 	$jetpack_admin_url = admin_url() . 'admin.php?page=jetpack';
 
@@ -609,7 +596,7 @@ function stats_reports_page( $main_chart_only = false ) {
 					 */
 					apply_filters( 'jetpack_static_url', "{$http}://en.wordpress.com/i/loading/loading-64.gif" )
 				); ?>" /></p>
-		<p style="font-size: 11pt; margin: 0;"><a href="https://wordpress.com/stats/<?php echo esc_attr( $domain ); ?>" target="_blank"><?php esc_html_e( 'View stats on WordPress.com right now', 'jetpack' ); ?></a></p>
+		<p style="font-size: 11pt; margin: 0;"><a href="<?php echo esc_url( $stats_url ); ?>" rel="noopener noreferrer" target="_blank"><?php esc_html_e( 'View stats on WordPress.com right now', 'jetpack' ); ?></a></p>
 		<p class="hide-if-js"><?php esc_html_e( 'Your Site Stats work better with JavaScript enabled.', 'jetpack' ); ?><br />
 		<a href="<?php echo esc_url( $nojs_url ); ?>"><?php esc_html_e( 'View Site Stats without JavaScript', 'jetpack' ); ?></a>.</p>
 		</div>
@@ -683,7 +670,7 @@ function stats_reports_page( $main_chart_only = false ) {
 	$url = add_query_arg( $q, $url );
 	$method = 'GET';
 	$timeout = 90;
-	$user_id = JETPACK_MASTER_USER; // means send the wp.com user_id
+	$user_id = 0; // Means use the blog token.
 
 	$get = Client::remote_request( compact( 'url', 'method', 'timeout', 'user_id' ) );
 	$get_code = wp_remote_retrieve_response_code( $get );
@@ -848,7 +835,7 @@ function stats_admin_bar_head() {
 	add_action( 'admin_bar_menu', 'stats_admin_bar_menu', 100 );
 ?>
 
-<style type='text/css'>
+<style data-ampdevmode type='text/css'>
 #wpadminbar .quicklinks li#wp-admin-bar-stats {
 	height: 32px;
 }
@@ -894,14 +881,10 @@ function stats_admin_bar_menu( &$wp_admin_bar ) {
 	$title = esc_attr( __( 'Views over 48 hours. Click for more Site Stats.', 'jetpack' ) );
 
 	$menu = array(
-		'id'   => 'stats',
-		'href' => $url,
+		'id'    => 'stats',
+		'href'  => $url,
+		'title' => "<div><img src='$img_src' srcset='$img_src 1x, $img_src_2x 2x' width='112' height='24' alt='$alt' title='$title'></div>",
 	);
-	if ( Jetpack_AMP_Support::is_amp_request() ) {
-		$menu['title'] = "<amp-img src='$img_src_2x' width=112 height=24 layout=fixed alt='$alt' title='$title'></amp-img>";
-	} else {
-		$menu['title'] = "<div><img src='$img_src' srcset='$img_src 1x, $img_src_2x 2x' width='112' height='24' alt='$alt' title='$title'></div>";
-	}
 
 	$wp_admin_bar->add_menu( $menu );
 }
@@ -913,7 +896,7 @@ function stats_admin_bar_menu( &$wp_admin_bar ) {
  * @return void
  */
 function stats_update_blog() {
-	Jetpack::xmlrpc_async_call( 'jetpack.updateBlog', stats_get_blog() );
+	XMLRPC_Async_Call::add_call( 'jetpack.updateBlog', 0, stats_get_blog() );
 }
 
 /**
@@ -923,7 +906,7 @@ function stats_update_blog() {
  * @return string
  */
 function stats_get_blog() {
-	$home = parse_url( trailingslashit( get_option( 'home' ) ) );
+	$home = wp_parse_url( trailingslashit( get_option( 'home' ) ) );
 	$blog = array(
 		'host'                => $home['host'],
 		'path'                => $home['path'],
@@ -1325,7 +1308,7 @@ function stats_dashboard_widget_content() {
 	$url = add_query_arg( $q, $url );
 	$method = 'GET';
 	$timeout = 90;
-	$user_id = JETPACK_MASTER_USER;
+	$user_id = 0; // Means use the blog token.
 
 	$get = Client::remote_request( compact( 'url', 'method', 'timeout', 'user_id' ) );
 	$get_code = wp_remote_retrieve_response_code( $get );
@@ -1414,9 +1397,10 @@ function stats_dashboard_widget_content() {
 <div class="clear"></div>
 <div class="stats-view-all">
 <?php
+	$stats_day_url = Redirect::get_url( 'calypso-stats-day' );
 	printf(
 		'<a class="button" target="_blank" rel="noopener noreferrer" href="%1$s">%2$s</a>',
-		esc_url( "https://wordpress.com/stats/day/" . Jetpack::build_raw_urls( get_home_url() ) ),
+		esc_url( $stats_day_url ),
 		esc_html__( 'View all stats', 'jetpack' )
 	);
 ?>
@@ -1579,7 +1563,7 @@ function stats_get_csv( $table, $args = null ) {
 function stats_get_remote_csv( $url ) {
 	$method = 'GET';
 	$timeout = 90;
-	$user_id = JETPACK_MASTER_USER;
+	$user_id = 0; // Blog token.
 
 	$get = Client::remote_request( compact( 'url', 'method', 'timeout', 'user_id' ) );
 	$get_code = wp_remote_retrieve_response_code( $get );
@@ -1737,9 +1721,15 @@ function jetpack_stats_post_table_cell( $column, $post_id ) {
 				esc_html__( 'No stats', 'jetpack' )
 			);
 		} else {
+			$stats_post_url = Redirect::get_url(
+				'calypso-stats-post',
+				array(
+					'path' => $post_id,
+				)
+			);
 			printf(
 				'<a href="%s" title="%s" class="dashicons dashicons-chart-bar" target="_blank"></a>',
-				esc_url( "https://wordpress.com/stats/post/$post_id/" . Jetpack::build_raw_urls( get_home_url() ) ),
+				esc_url( $stats_post_url ),
 				esc_html__( 'View stats for this post in WordPress.com', 'jetpack' )
 			);
 		}

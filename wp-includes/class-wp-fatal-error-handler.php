@@ -3,7 +3,7 @@
  * Error Protection API: WP_Fatal_Error_Handler class
  *
  * @package WordPress
- * @since   5.2.0
+ * @since 5.2.0
  */
 
 /**
@@ -16,6 +16,7 @@
  *
  * @since 5.2.0
  */
+#[AllowDynamicProperties]
 class WP_Fatal_Error_Handler {
 
 	/**
@@ -24,9 +25,16 @@ class WP_Fatal_Error_Handler {
 	 * This method is registered via `register_shutdown_function()`.
 	 *
 	 * @since 5.2.0
+	 *
+	 * @global WP_Locale $wp_locale WordPress date and time locale object.
 	 */
 	public function handle() {
 		if ( defined( 'WP_SANDBOX_SCRAPING' ) && WP_SANDBOX_SCRAPING ) {
+			return;
+		}
+
+		// Do not trigger the fatal error handler while updates are being installed.
+		if ( wp_is_maintenance_mode() ) {
 			return;
 		}
 
@@ -41,13 +49,15 @@ class WP_Fatal_Error_Handler {
 				load_default_textdomain();
 			}
 
+			$handled = false;
+
 			if ( ! is_multisite() && wp_recovery_mode()->is_initialized() ) {
-				wp_recovery_mode()->handle_error( $error );
+				$handled = wp_recovery_mode()->handle_error( $error );
 			}
 
 			// Display the PHP error template if headers not sent.
 			if ( is_admin() || ! headers_sent() ) {
-				$this->display_error_template( $error );
+				$this->display_error_template( $error, $handled );
 			}
 		} catch ( Exception $e ) {
 			// Catch exceptions and remain silent.
@@ -59,7 +69,8 @@ class WP_Fatal_Error_Handler {
 	 *
 	 * @since 5.2.0
 	 *
-	 * @return array|null Error that was triggered, or null if no error received or if the error should not be handled.
+	 * @return array|null Error information returned by `error_get_last()`, or null
+	 *                    if none was recorded or the error should not be handled.
 	 */
 	protected function detect_error() {
 		$error = error_get_last();
@@ -83,7 +94,7 @@ class WP_Fatal_Error_Handler {
 	 *
 	 * @since 5.2.0
 	 *
-	 * @param array $error Error information retrieved from error_get_last().
+	 * @param array $error Error information retrieved from `error_get_last()`.
 	 * @return bool Whether WordPress should handle this error.
 	 */
 	protected function should_handle_error( $error ) {
@@ -109,7 +120,7 @@ class WP_Fatal_Error_Handler {
 		 * @since 5.2.0
 		 *
 		 * @param bool  $should_handle_error Whether the error should be handled by the fatal error handler.
-		 * @param array $error               Error information retrieved from error_get_last().
+		 * @param array $error               Error information retrieved from `error_get_last()`.
 		 */
 		return (bool) apply_filters( 'wp_should_handle_php_error', false, $error );
 	}
@@ -125,10 +136,12 @@ class WP_Fatal_Error_Handler {
 	 * If no such drop-in is available, this will call {@see WP_Fatal_Error_Handler::display_default_error_template()}.
 	 *
 	 * @since 5.2.0
+	 * @since 5.3.0 The `$handled` parameter was added.
 	 *
-	 * @param array $error Error information retrieved from `error_get_last()`.
+	 * @param array         $error   Error information retrieved from `error_get_last()`.
+	 * @param true|WP_Error $handled Whether Recovery Mode handled the fatal error.
 	 */
-	protected function display_error_template( $error ) {
+	protected function display_error_template( $error, $handled ) {
 		if ( defined( 'WP_CONTENT_DIR' ) ) {
 			// Load custom PHP error template, if present.
 			$php_error_pluggable = WP_CONTENT_DIR . '/php-error.php';
@@ -140,7 +153,7 @@ class WP_Fatal_Error_Handler {
 		}
 
 		// Otherwise, display the default error template.
-		$this->display_default_error_template( $error );
+		$this->display_default_error_template( $error, $handled );
 	}
 
 	/**
@@ -153,10 +166,12 @@ class WP_Fatal_Error_Handler {
 	 * be used to modify these parameters.
 	 *
 	 * @since 5.2.0
+	 * @since 5.3.0 The `$handled` parameter was added.
 	 *
-	 * @param array $error Error information retrieved from `error_get_last()`.
+	 * @param array         $error   Error information retrieved from `error_get_last()`.
+	 * @param true|WP_Error $handled Whether Recovery Mode handled the fatal error.
 	 */
-	protected function display_default_error_template( $error ) {
+	protected function display_default_error_template( $error, $handled ) {
 		if ( ! function_exists( '__' ) ) {
 			wp_load_translations_early();
 		}
@@ -169,11 +184,25 @@ class WP_Fatal_Error_Handler {
 			require_once ABSPATH . WPINC . '/class-wp-error.php';
 		}
 
-		if ( is_protected_endpoint() ) {
-			$message = __( 'The site is experiencing technical difficulties. Please check your site admin email inbox for instructions.' );
+		if ( true === $handled && wp_is_recovery_mode() ) {
+			$message = __( 'There has been a critical error on this website, putting it in recovery mode. Please check the Themes and Plugins screens for more details. If you just installed or updated a theme or plugin, check the relevant page for that first.' );
+		} elseif ( is_protected_endpoint() && wp_recovery_mode()->is_initialized() ) {
+			if ( is_multisite() ) {
+				$message = __( 'There has been a critical error on this website. Please reach out to your site administrator, and inform them of this error for further assistance.' );
+			} else {
+				$message = __( 'There has been a critical error on this website. Please check your site admin email inbox for instructions.' );
+			}
 		} else {
-			$message = __( 'The site is experiencing technical difficulties.' );
+			$message = __( 'There has been a critical error on this website.' );
 		}
+
+		$message = sprintf(
+			'<p>%s</p><p><a href="%s">%s</a></p>',
+			$message,
+			/* translators: Documentation about troubleshooting. */
+			__( 'https://wordpress.org/documentation/article/faq-troubleshooting/' ),
+			__( 'Learn more about troubleshooting WordPress.' )
+		);
 
 		$args = array(
 			'response' => 500,

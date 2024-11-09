@@ -1,7 +1,4 @@
 <?php
-
-use Automattic\Jetpack\Assets;
-
 /**
  * Instagram Embeds.
  *
@@ -15,6 +12,10 @@ use Automattic\Jetpack\Assets;
  *
  * @package Jetpack
  */
+
+use Automattic\Jetpack\Assets;
+use Automattic\Jetpack\Connection\Client;
+use Automattic\Jetpack\Constants;
 
 /**
  * Embed Reversal for Instagram
@@ -110,7 +111,7 @@ function jetpack_instagram_handler( $matches, $atts, $url ) {
 	if ( is_feed() ) {
 		// Instagram offers direct links to images, but not to videos.
 		if ( 'p' === $matches[1] ) {
-			$media_url = sprintf( 'http://instagr.am/p/%1$s/media/?size=l', $matches[2] );
+			$media_url = sprintf( 'https://instagr.am/p/%1$s/media/?size=l', $matches[2] );
 			return sprintf(
 				'<a href="%1$s" title="%2$s" target="_blank"><img src="%3$s" alt="%4$s" /></a>',
 				esc_url( $url ),
@@ -162,8 +163,65 @@ function jetpack_instagram_handler( $matches, $atts, $url ) {
 		$url_args['hidecaption'] = 'true';
 	}
 
-	$url = esc_url_raw( add_query_arg( $url_args, 'https://api.instagram.com/oembed/' ) );
+	$use_cache     = jetpack_instagram_use_cache( $matches, $atts, $passed_url );
+	$cache_key     = 'oembed_response_body_' . md5( add_query_arg( $url_args, 'https://api.instagram.com/oembed/' ) );
+	$response_body = $use_cache
+		? wp_cache_get( $cache_key, 'instagram_embeds' )
+		: false;
 
+	if ( ! $response_body ) {
+		$response_body = jetpack_instagram_fetch_embed( $url_args );
+	}
+
+	if ( is_wp_error( $response_body ) || empty( $response_body->html ) ) {
+		return jetpack_instagram_output_errored_embed( $url );
+	}
+
+	if ( $use_cache ) {
+		wp_cache_set(
+			$cache_key,
+			$response_body,
+			'instagram_embeds',
+			HOUR_IN_SECONDS + wp_rand( 0, HOUR_IN_SECONDS )
+		);
+	}
+
+	wp_enqueue_script(
+		'jetpack-instagram-embed',
+		Assets::get_file_url_for_environment( '_inc/build/shortcodes/js/instagram.min.js', 'modules/shortcodes/js/instagram.js' ),
+		array( 'jquery' ),
+		JETPACK__VERSION,
+		true
+	);
+
+	return $response_body->html;
+}
+
+/**
+ * Given a URL, will output an HTML comment and the linked URL.
+ *
+ * @param string $url The URL that was attempted to embed.
+ *
+ * @return string The linked URL to the Instagram item.
+ */
+function jetpack_instagram_output_errored_embed( $url ) {
+	return sprintf(
+		'<a href="%s">%s</a>',
+		esc_url( $url ),
+		esc_url_raw( $url )
+	);
+}
+
+/**
+ * Should the request to fetch embed information be cached?
+ *
+ * @param array  $matches    Array of matches from the regex.
+ * @param array  $atts       The original unmodified attributes.
+ * @param string $passed_url The original URL that was matched by the regex.
+ *
+ * @return bool
+ */
+function jetpack_instagram_use_cache( $matches, $atts, $passed_url ) {
 	/**
 	 * Filter Object Caching for response from Instagram.
 	 *
@@ -178,47 +236,56 @@ function jetpack_instagram_handler( $matches, $atts, $url ) {
 	 * @param array  $atts       Instagram Shortcode attributes.
 	 * @param string $passed_url Instagram API URL.
 	 */
-	$response_body_use_cache = apply_filters( 'instagram_cache_oembed_api_response_body', false, $matches, $atts, $passed_url );
-	$response_body           = false;
-	if ( $response_body_use_cache ) {
-		$cache_key     = 'oembed_response_body_' . md5( $url );
-		$response_body = wp_cache_get( $cache_key, 'instagram_embeds' );
-	}
+	return apply_filters( 'instagram_cache_oembed_api_response_body', false, $matches, $atts, $passed_url );
+}
 
-	if ( ! $response_body ) {
-		// Not using cache (default case) or cache miss.
-		$instagram_response = wp_remote_get( $url, array( 'redirection' => 0 ) );
-		if (
-			is_wp_error( $instagram_response )
-			|| 200 !== $instagram_response['response']['code']
-			|| empty( $instagram_response['body'] ) ) {
-			return '<!-- instagram error: invalid instagram resource -->';
-		}
-
-		$response_body = json_decode( $instagram_response['body'] );
-		if ( $response_body_use_cache ) {
-			// if caching it is short-lived since this is a "Cache-Control: no-cache" resource.
-			wp_cache_set(
-				$cache_key,
-				$response_body,
-				'instagram_embeds',
-				HOUR_IN_SECONDS + wp_rand( 0, HOUR_IN_SECONDS )
+/**
+ * Handles the logic for actually fetching information for an Instagram embed, conditionally proxying the
+ * request through the WordPress.com API if this is not a WordPress.com site.
+ *
+ * @param array $args An array of arguments to pass to the embed API.
+ *
+ * @return mixed An object if successful or a WP_Error object
+ */
+function jetpack_instagram_fetch_embed( $args ) {
+	if ( Constants::is_defined( 'IS_WPCOM' ) && Constants::get_constant( 'IS_WPCOM' ) ) {
+		$url      = esc_url_raw(
+			add_query_arg(
+				$args,
+				'https://api.instagram.com/oembed/'
+			)
+		);
+		$response = wp_remote_get( $url, array( 'redirection' => 0 ) );
+	} else {
+		if ( ! Jetpack::is_active_and_not_offline_mode() ) {
+			return new WP_Error(
+				'jetpack_not_active',
+				esc_html__( 'Jetpack must be active to fetch Instagram embed', 'jetpack' )
 			);
 		}
-	}
 
-	if ( ! empty( $response_body->html ) ) {
-		wp_enqueue_script(
-			'jetpack-instagram-embed',
-			Assets::get_file_url_for_environment( '_inc/build/shortcodes/js/instagram.min.js', 'modules/shortcodes/js/instagram.js' ),
-			array( 'jquery' ),
-			JETPACK__VERSION,
-			true
+		$response = Client::wpcom_json_api_request_as_blog(
+			'/oembed-proxy/instagram?' . http_build_query( $args ),
+			'2',
+			array(),
+			null,
+			'wpcom'
 		);
-		return $response_body->html;
 	}
 
-	return '<!-- instagram error: no embed found -->';
+	$response_body = json_decode( wp_remote_retrieve_body( $response ) );
+	if (
+		is_wp_error( $response )
+		|| 200 !== wp_remote_retrieve_response_code( $response )
+		|| empty( $response_body )
+	) {
+		return new WP_Error(
+			'instagram_error',
+			esc_html__( 'Invalid Instagram resource', 'jetpack' )
+		);
+	}
+
+	return $response_body;
 }
 
 /**
@@ -261,6 +328,27 @@ function jetpack_shortcode_instagram( $atts ) {
 
 	if ( empty( $atts['url'] ) ) {
 		return '';
+	}
+
+	if ( class_exists( 'Jetpack_AMP_Support' ) && Jetpack_AMP_Support::is_amp_request() ) {
+		$url_pattern = '#http(s?)://(www\.)?instagr(\.am|am\.com)/p/([^/?]+)#i';
+		preg_match( $url_pattern, $atts['url'], $matches );
+		if ( ! $matches ) {
+			return sprintf(
+				'<a href="%1$s" class="amp-wp-embed-fallback">%1$s</a>',
+				esc_url( $atts['url'] )
+			);
+		}
+
+		$shortcode_id = end( $matches );
+		$width        = ! empty( $atts['width'] ) ? $atts['width'] : 600;
+		$height       = ! empty( $atts['height'] ) ? $atts['height'] : 600;
+		return sprintf(
+			'<amp-instagram data-shortcode="%1$s" layout="responsive" width="%2$d" height="%3$d" data-captioned></amp-instagram>',
+			esc_attr( $shortcode_id ),
+			absint( $width ),
+			absint( $height )
+		);
 	}
 
 	return $wp_embed->shortcode( $atts, $atts['url'] );

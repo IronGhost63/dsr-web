@@ -22,6 +22,12 @@ class Language_Pack_Upgrader_Skin extends WP_Upgrader_Skin {
 	public $display_footer_actions = true;
 
 	/**
+	 * Constructor.
+	 *
+	 * Sets up the language pack upgrader skin.
+	 *
+	 * @since 3.7.0
+	 *
 	 * @param array $args
 	 */
 	public function __construct( $args = array() ) {
@@ -41,37 +47,57 @@ class Language_Pack_Upgrader_Skin extends WP_Upgrader_Skin {
 	}
 
 	/**
+	 * Performs an action before a language pack update.
+	 *
+	 * @since 3.7.0
 	 */
 	public function before() {
 		$name = $this->upgrader->get_name_for_update( $this->language_update );
 
 		echo '<div class="update-messages lp-show-latest">';
 
-		/* translators: 1: name of project, 2: language */
+		/* translators: 1: Project name (plugin, theme, or WordPress), 2: Language. */
 		printf( '<h2>' . __( 'Updating translations for %1$s (%2$s)&#8230;' ) . '</h2>', $name, $this->language_update->language );
 	}
 
 	/**
-	 * @param string|WP_Error $error
+	 * Displays an error message about the update.
+	 *
+	 * @since 3.7.0
+	 * @since 5.9.0 Renamed `$error` to `$errors` for PHP 8 named parameter support.
+	 *
+	 * @param string|WP_Error $errors Errors.
 	 */
-	public function error( $error ) {
+	public function error( $errors ) {
 		echo '<div class="lp-error">';
-		parent::error( $error );
+		parent::error( $errors );
 		echo '</div>';
 	}
 
 	/**
+	 * Performs an action following a language pack update.
+	 *
+	 * @since 3.7.0
 	 */
 	public function after() {
 		echo '</div>';
 	}
 
 	/**
+	 * Displays the footer following the bulk update process.
+	 *
+	 * @since 3.7.0
 	 */
 	public function bulk_footer() {
 		$this->decrement_update_count( 'translation' );
-		$update_actions                 = array();
-		$update_actions['updates_page'] = '<a href="' . self_admin_url( 'update-core.php' ) . '" target="_parent">' . __( 'Return to WordPress Updates page' ) . '</a>';
+
+		$update_actions = array(
+			'updates_page' => sprintf(
+				'<a href="%s" target="_parent">%s</a>',
+				self_admin_url( 'update-core.php' ),
+				__( 'Go to WordPress Updates page' )
+			),
+		);
 
 		/**
 		 * Filters the list of action links available following a translations update.

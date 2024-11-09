@@ -1,6 +1,6 @@
 <?php
 /**
- *  @copyright 2017  Cloudways  https://www.cloudways.com
+ * @copyright 2017  Cloudways  https://www.cloudways.com
  *
  *  Original development of this plugin by JoomUnited https://www.joomunited.com/
  *
@@ -18,236 +18,411 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-defined('ABSPATH') || die('No direct script access allowed!');
+defined( 'ABSPATH' ) || die( 'No direct script access allowed!' );
 
 class Breeze_Minify {
 
-    public function __construct()
-    {
-        //check disable cache for page
-        $domain = (((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS']!=='off') || (!empty($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT']==443)) ? 'https://':'http://' ).$_SERVER['HTTP_HOST'];
-        $current_url = $domain.$_SERVER['REQUEST_URI'];
+	public function __construct() {
+		//check disable cache for page
+		$domain      = ( ( ( ! empty( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] !== 'off' ) || ( ! empty( $_SERVER['SERVER_PORT'] ) && $_SERVER['SERVER_PORT'] == 443 ) ) ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'];
+		$current_url = $domain . $_SERVER['REQUEST_URI'];
 
-        $check_url = $this->check_exclude_url($current_url);
+		$check_url = $this->check_exclude_url( $current_url );
 
-        //load config file when redirect template
-        if (!$check_url) {
-            //cache html
-            //cache minification
-            if (Breeze_MinificationCache::create_cache_minification_folder()) {
-                $conf = get_option('breeze_basic_settings');
-                if ( !empty($conf['breeze-minify-html']) || !empty($conf['breeze-minify-css']) || !empty($conf['breeze-minify-js']) ) {
-                    if (defined('breeze_INIT_EARLIER')) {
-                        add_action('init', array($this,'breeze_start_buffering'), -1);
-                    } else {
-                        add_action('template_redirect',  array($this,'breeze_start_buffering'), 2);
-                    }
-                }
-            }
-        }
+		//load config file when redirect template
+		if ( ! $check_url && self::should_cache() ) {
+			//cache html
+			//cache minification
+			if ( Breeze_MinificationCache::create_cache_minification_folder() ) {
+				$conf            = breeze_get_option( 'basic_settings' );
+				$config_advanced = breeze_get_option( 'advanced_settings' );
 
-    }
-    /*
-     * Start buffer
-     */
-    public function breeze_start_buffering(){
-        $ao_noptimize = false;
+				if ( ! isset( $config_advanced['breeze-enable-js-delay'] ) ) {
+					$config_advanced['breeze-enable-js-delay'] = '0';
+				}
 
-        // check for DONOTMINIFY constant as used by e.g. WooCommerce POS
-        if (defined('DONOTMINIFY') && (constant('DONOTMINIFY') === true || constant('DONOTMINIFY') === "true")) {
-            $ao_noptimize = true;
-        }
-        // filter you can use to block autoptimization on your own terms
-        $ao_noptimize = (bool) apply_filters('breeze_filter_noptimize', $ao_noptimize);
-        if (!is_feed() && !$ao_noptimize && !is_admin()) {
-            // Config element
-            $conf = get_option('breeze_basic_settings');
-            // Load our base class
-            include_once(BREEZE_PLUGIN_DIR . 'inc/minification/breeze-minification-base.php');
+				if (
+					! empty( $conf['breeze-minify-html'] ) ||
+					! empty( $conf['breeze-minify-css'] ) ||
+					! empty( $conf['breeze-minify-js'] ) ||
+					! empty( $config_advanced['breeze-defer-js'] ) ||
+					! empty( $config_advanced['breeze-move-to-footer-js'] ) ||
+					( ! empty( $config_advanced['breeze-delay-js-scripts'] ) && true === filter_var( $config_advanced['breeze-enable-js-delay'], FILTER_VALIDATE_BOOLEAN ) )
+				) {
 
-            // Load extra classes and set some vars
-            if (!empty($conf['breeze-minify-html'])) {
-                include_once(BREEZE_PLUGIN_DIR . 'inc/minification/breeze-minification-html.php');
-                // BUG: new minify-html does not support keeping HTML comments, skipping for now
-                if(!class_exists('Minify_HTML')){
-                    @include(BREEZE_PLUGIN_DIR . 'inc/minification/minify/minify-html.php');
-                }
-            }
+					if ( defined( 'breeze_INIT_EARLIER' ) ) {
+						add_action( 'init', array( $this, 'breeze_start_buffering' ), - 1 );
+					} else {
+						add_action( 'wp_loaded', array( $this, 'breeze_start_buffering' ), 2 );
+					}
+				}
+			}
+		}
 
-            if (!empty($conf['breeze-minify-js'])) {
-                include_once(BREEZE_PLUGIN_DIR . 'inc/minification/breeze-minification-scripts.php');
-                if (!class_exists('JSMin')) {
-                    if (defined('breeze_LEGACY_MINIFIERS')) {
-                        @include(BREEZE_PLUGIN_DIR . 'inc/minification/minify/jsmin-1.1.1.php');
-                    } else {
-                        @include(BREEZE_PLUGIN_DIR . 'inc/minification/minify/minify-2.1.7-jsmin.php');
-                    }
-                }
-                if (!defined('CONCATENATE_SCRIPTS')) {
-                    define('CONCATENATE_SCRIPTS', false);
-                }
-                if (!defined('COMPRESS_SCRIPTS')) {
-                    define('COMPRESS_SCRIPTS', false);
-                }
-            }
-            if (!empty($conf['breeze-minify-css'])) {
-                include_once(BREEZE_PLUGIN_DIR . 'inc/minification/breeze-minification-styles.php');
-                if (defined('breeze_LEGACY_MINIFIERS')) {
-                    if (!class_exists('Minify_CSS_Compressor')) {
-                        @include(BREEZE_PLUGIN_DIR . 'inc/minification/minify/minify-css-compressor.php');
-                    }
-                } else {
-                    if (!class_exists('CSSmin')) {
-                        @include(BREEZE_PLUGIN_DIR . 'inc/minification/minify/yui-php-cssmin-2.4.8-4_fgo.php');
-                    }
-                }
-                if (!defined('COMPRESS_CSS')) {
-                    define('COMPRESS_CSS', false);
-                }
-            }
-            // Now, start the real thing!
-            add_filter('breeze_minify_content_return',array($this,'breeze_end_buffering'));
-        }
-    }
+	}
 
-    /*
-     * Minify css , js and optimize html when start
-     */
+	/**
+	 * Check whether to execute caching functions or not.
+	 * Will not execute for purge cache or heartbeat actions.
+	 */
+	public static function should_cache() {
+		if ( isset( $_GET['breeze_purge'] ) || ( isset( $_POST['action'] ) && 'heartbeat' === $_POST['action'] ) ) {
+			return false;
+		}
 
-    public function breeze_end_buffering($content) {
-        if (stripos($content, "<html") === false || stripos($content, "<html amp") !== false || stripos($content, "<html ⚡") !== false || stripos($content, "<xsl:stylesheet") !== false) {
-            return $content;
-        }
-        // load URL constants as late as possible to allow domain mapper to kick in
-        if (function_exists("domain_mapping_siteurl")) {
-            define('breeze_WP_SITE_URL', domain_mapping_siteurl(get_current_blog_id()));
-            define('breeze_WP_CONTENT_URL', str_replace(get_original_url(breeze_WP_SITE_URL), breeze_WP_SITE_URL, content_url()));
-        } else {
-            define('breeze_WP_SITE_URL', site_url());
-            define('breeze_WP_CONTENT_URL', content_url());
-        }
-        if (is_multisite() && apply_filters('breeze_separate_blog_caches', true)) {
-            $blog_id = get_current_blog_id();
-            define('breeze_CACHE_URL', breeze_WP_CONTENT_URL . BREEZE_CACHE_CHILD_DIR . $blog_id . '/');
-        } else {
-            define('breeze_CACHE_URL', breeze_WP_CONTENT_URL . BREEZE_CACHE_CHILD_DIR);
-        }
-        define('breeze_WP_ROOT_URL', str_replace(BREEZE_WP_CONTENT_NAME, '', breeze_WP_CONTENT_URL));
+		return true;
+	}
 
-        define('breeze_HASH',wp_hash(breeze_CACHE_URL));
-        // Config element
-        $conf = get_option('breeze_basic_settings');
-        $minify = get_option('breeze_advanced_settings');
+	/*
+	 * Start buffer
+	 */
+	public function breeze_start_buffering() {
+		$ao_noptimize = false;
 
-        // Choose the classes
-        $classes = array();
-        $js_include_inline = $css_include_inline = false;
-        if (!empty($conf['breeze-minify-js']))
-            $classes[] = 'Breeze_MinificationScripts';
-        if (!empty($conf['breeze-minify-css']))
-            $classes[] = 'Breeze_MinificationStyles';
-        if (!empty($conf['breeze-minify-html']))
-            $classes[] = 'Breeze_MinificationHtml';
-        if (!empty($conf['breeze-include-inline-js']))
-            $js_include_inline = true;
-        if (!empty($conf['breeze-include-inline-css']))
-            $css_include_inline = true;
-        $groupcss = false;
-        $groupjs = false;
-        if (!empty($minify['breeze-group-css'])){
-            $groupcss = true;
-        }
-        if (!empty($minify['breeze-group-js'])){
-            $groupjs = true;
-        }
+		// check for DONOTMINIFY constant as used by e.g. WooCommerce POS
+		if ( defined( 'DONOTMINIFY' ) && ( constant( 'DONOTMINIFY' ) === true || constant( 'DONOTMINIFY' ) === 'true' ) ) {
+			$ao_noptimize = true;
+		}
+		// filter you can use to block autoptimization on your own terms
+		$ao_noptimize = (bool) apply_filters( 'breeze_filter_noptimize', $ao_noptimize );
+		if ( ! is_feed() && ! $ao_noptimize && ! is_admin() ) {
+			// Config element
+			$conf            = breeze_get_option( 'basic_settings' );
+			$config_advanced = breeze_get_option( 'advanced_settings' );
 
-        // Set some options
-        $classoptions = array(
-            'Breeze_MinificationScripts' => array(
-                'justhead' => false,
-                'forcehead' => false,
-                'trycatch' => false,
-                'js_exclude' => "s_sid, smowtion_size, sc_project, WAU_, wau_add, comment-form-quicktags, edToolbar, ch_client, seal.js",
-                'cdn_url' => "",
-                'include_inline' => $js_include_inline,
-                'group_js' => $groupjs,
-                'custom_js_exclude' => $minify['breeze-exclude-js'],
-                'move_to_footer_js' => $minify['breeze-move-to-footer-js'],
-                'defer_js' => $minify['breeze-defer-js']
-            ),
-            'Breeze_MinificationStyles' => array(
-                'justhead' => false,
-                'datauris' => false,
-                'defer' => false,
-                'defer_inline' => false,
-                'inline' => false,
-                'css_exclude' => "admin-bar.min.css, dashicons.min.css",
-                'cdn_url' => "",
-                'include_inline' => $css_include_inline,
-                'nogooglefont' => false,
-                'groupcss' => $groupcss,
-                'custom_css_exclude' => $minify['breeze-exclude-css']
-            ),
-            'Breeze_MinificationHtml' => array(
-                'keepcomments' => false
-            )
-        );
+			if ( ! isset( $config_advanced['breeze-enable-js-delay'] ) ) {
+				$config_advanced['breeze-enable-js-delay'] = '0';
+			}
 
-        $content = apply_filters('breeze_filter_html_before_minify', $content);
+			// Load our base class
+			include_once( BREEZE_PLUGIN_DIR . 'inc/minification/breeze-minification-base.php' );
 
-        if (!empty($conf) && $conf['breeze-disable-admin'] && current_user_can('manage_options')) {
-            $content = apply_filters('breeze_html_after_minify', $content);
-        }else{
-            // Run the classes
-            foreach ($classes as $name) {
-                $instance = new $name($content);
+			// Load extra classes and set some vars
+			if ( ! empty( $conf['breeze-minify-html'] ) ) {
+				include_once( BREEZE_PLUGIN_DIR . 'inc/minification/breeze-minification-html.php' );
+				// BUG: new minify-html does not support keeping HTML comments, skipping for now
+				if ( ! class_exists( 'Minify_HTML' ) ) {
+					@include( BREEZE_PLUGIN_DIR . 'inc/minification/minify/minify-html.php' );
+				}
+			}
 
-                if ($instance->read($classoptions[$name])) {
-                    $instance->minify();
-                    $instance->cache();
-                    $content = $instance->getcontent();
-                }
-                unset($instance);
-            }
-            $content = apply_filters('breeze_html_after_minify', $content);
-        }
-        return $content;
-    }
-    /*
-     * check url from Never cache the following pages area
-     */
-    public function check_exclude_url($current_url){
-        $opts_config = get_option('breeze_advanced_settings');
-	    //check disable cache for page
-	    if (!empty($opts_config['breeze-exclude-urls'])) {
-		    foreach ($opts_config['breeze-exclude-urls'] as $v) {
-			    // Clear blank character
-			    $v = trim($v);
-			    if( preg_match( '/(\&?\/?\(\.?\*\)|\/\*|\*)$/', $v , $matches)){
-				    // End of rules is *, /*, [&][/](*) , [&][/](.*)
-				    $pattent = substr($v , 0, strpos($v,$matches[0]));
-				    if($v[0] == '/'){
-					    // A path of exclude url with regex
-					    if((@preg_match( '@'.$pattent.'@', $current_url, $matches ) > 0)){
-						    return true;
-					    }
-				    }else{
-					    // Full exclude url with regex
-					    if(strpos( $current_url,$pattent) !== false){
-						    return true;
-					    }
-				    }
+			if ( ! empty( $conf['breeze-minify-js'] ) ) {
 
-			    }else{
-				    // Whole path
-				    if($v == $current_url){
-					    return true;
-				    }
-			    }
-		    }
-	    }
+				include_once( BREEZE_PLUGIN_DIR . 'inc/minification/breeze-minification-scripts.php' );
 
-	    return false;
+				// JS/CSS minifier library
+				include_once( BREEZE_PLUGIN_DIR . 'vendor/autoload.php' );
 
-    }
+				if ( ! defined( 'CONCATENATE_SCRIPTS' ) ) {
+					define( 'CONCATENATE_SCRIPTS', false );
+				}
+				if ( ! defined( 'COMPRESS_SCRIPTS' ) ) {
+					define( 'COMPRESS_SCRIPTS', false );
+				}
+			} elseif (
+				! empty( $config_advanced['breeze-defer-js'] ) ||
+				! empty( $config_advanced['breeze-move-to-footer-js'] ) ||
+				( ! empty( $config_advanced['breeze-delay-js-scripts'] ) && true === filter_var( $config_advanced['breeze-enable-js-delay'], FILTER_VALIDATE_BOOLEAN ) )
+			) {
+				// If we have defer scripts to handle, load only the script for this action.
+				include_once( BREEZE_PLUGIN_DIR . 'inc/minification/breeze-js-deferred-loading.php' );
+			}
+
+			if ( ! empty( $conf['breeze-minify-css'] ) ) {
+				include_once( BREEZE_PLUGIN_DIR . 'inc/minification/breeze-minification-styles.php' );
+				if ( defined( 'breeze_LEGACY_MINIFIERS' ) ) {
+					if ( ! class_exists( 'Minify_CSS_Compressor' ) ) {
+						@include( BREEZE_PLUGIN_DIR . 'inc/minification/minify/minify-css-compressor.php' );
+					}
+				} else {
+					if ( ! class_exists( 'CSSmin' ) ) {
+						@include( BREEZE_PLUGIN_DIR . 'inc/minification/minify/yui-php-cssmin-2.4.8-4_fgo.php' );
+					}
+				}
+				if ( ! defined( 'COMPRESS_CSS' ) ) {
+					define( 'COMPRESS_CSS', false );
+				}
+			}
+			// Now, start the real thing!
+			add_filter( 'breeze_minify_content_return', array( $this, 'breeze_end_buffering' ) );
+		}
+	}
+
+	/*
+	 * Minify css , js and optimize html when start
+	 */
+
+	public function breeze_end_buffering( $content ) {
+
+		if ( stripos( $content, '<html' ) === false || stripos( $content, '<html amp' ) !== false || stripos( $content, '<html ⚡' ) !== false || stripos( $content, '<xsl:stylesheet' ) !== false ) {
+			return $content;
+		}
+		// load URL constants as late as possible to allow domain mapper to kick in
+		if ( function_exists( 'domain_mapping_siteurl' ) ) {
+			define( 'breeze_WP_SITE_URL', domain_mapping_siteurl( get_current_blog_id() ) );
+			define( 'breeze_WP_CONTENT_URL', str_replace( get_original_url( breeze_WP_SITE_URL ), breeze_WP_SITE_URL, content_url() ) );
+		} else {
+			define( 'breeze_WP_SITE_URL', site_url() );
+			define( 'breeze_WP_CONTENT_URL', content_url() );
+		}
+		if ( is_multisite() && apply_filters( 'breeze_separate_blog_caches', true ) ) {
+			$blog_id = get_current_blog_id();
+			define( 'breeze_CACHE_URL', breeze_WP_CONTENT_URL . BREEZE_CACHE_CHILD_DIR . $blog_id . '/' );
+		} else {
+			define( 'breeze_CACHE_URL', breeze_WP_CONTENT_URL . BREEZE_CACHE_CHILD_DIR );
+		}
+		define( 'breeze_WP_ROOT_URL', str_replace( BREEZE_WP_CONTENT_NAME, '', breeze_WP_CONTENT_URL ) );
+
+		define( 'breeze_HASH', wp_hash( breeze_CACHE_URL ) );
+		// Config element
+		$conf     = breeze_get_option( 'basic_settings' );
+		$minify   = breeze_get_option( 'advanced_settings' );
+		$cdn_data = breeze_get_option( 'cdn_integration' );
+
+		if ( ! isset( $minify['breeze-enable-js-delay'] ) ) {
+			$minify['breeze-enable-js-delay'] = '0';
+		}
+
+		$cdn_url  = '';
+		if ( $cdn_data ) {
+			if ( '1' === $cdn_data['cdn-active'] ) {
+				$cdn_url = $cdn_data['cdn-url'];
+			}
+		}
+		// Choose the classes
+		$classes           = array();
+		$js_include_inline = $css_include_inline = false;
+		if ( ! empty( $conf['breeze-minify-js'] ) ) {
+			$classes[] = 'Breeze_MinificationScripts';
+		} elseif (
+			! empty( $minify['breeze-defer-js'] ) ||
+			! empty( $minify['breeze-move-to-footer-js'] ) ||
+			( ! empty( $minify['breeze-delay-js-scripts'] ) && true === filter_var( $minify['breeze-enable-js-delay'], FILTER_VALIDATE_BOOLEAN ) )
+		) {
+			$classes[] = 'Breeze_Js_Deferred_Loading';
+		}
+
+		if ( ! empty( $conf['breeze-minify-css'] ) ) {
+			$classes[] = 'Breeze_MinificationStyles';
+		}
+		if ( ! empty( $conf['breeze-minify-html'] ) ) {
+			$classes[] = 'Breeze_MinificationHtml';
+		}
+		if ( ! empty( $conf['breeze-include-inline-js'] ) ) {
+			$js_include_inline = true;
+		}
+		if ( ! empty( $conf['breeze-include-inline-css'] ) ) {
+			$css_include_inline = true;
+		}
+		$groupcss = false;
+		$groupjs  = false;
+		if ( ! empty( $minify['breeze-group-css'] ) ) {
+			$groupcss = true;
+		}
+		if ( ! empty( $minify['breeze-group-js'] ) ) {
+			$groupjs = true;
+		}
+
+		$font_swap = false;
+		if ( isset( $conf['breeze-font-display-swap'] ) ) {
+			$font_swap = filter_var( $conf['breeze-font-display-swap'], FILTER_VALIDATE_BOOLEAN );
+		}
+
+		// Set some options
+		$classoptions = array(
+			'Breeze_MinificationScripts' => array(
+				'justhead'          => false,
+				'forcehead'         => false,
+				'trycatch'          => false,
+				'js_exclude'        => 's_sid, smowtion_size, sc_project, WAU_, wau_add, comment-form-quicktags, edToolbar, ch_client, seal.js',
+				'cdn_url'           => '',
+				'include_inline'    => $js_include_inline,
+				'group_js'          => $groupjs,
+				'custom_js_exclude' => $minify['breeze-exclude-js'],
+				'move_to_footer_js' => $minify['breeze-move-to-footer-js'],
+				'defer_js'          => $minify['breeze-defer-js'],
+				'delay_inline_js'   => $minify['breeze-delay-js-scripts'],
+			),
+			'Breeze_MinificationStyles'  => array(
+				'justhead'             => false,
+				'datauris'             => false,
+				'defer'                => false,
+				'defer_inline'         => false,
+				'inline'               => false,
+				'css_exclude'          => 'admin-bar.min.css, dashicons.min.css',
+				'cdn_url'              => '',
+				'include_inline'       => $css_include_inline,
+				'font_swap'            => $font_swap,
+				'nogooglefont'         => false,
+				'groupcss'             => $groupcss,
+				'custom_css_exclude'   => $minify['breeze-exclude-css'],
+				'include_imported_css' => false,
+			),
+			'Breeze_MinificationHtml'    => array(
+				'keepcomments' => false,
+			),
+			'Breeze_Js_Deferred_Loading' => array(
+				'move_to_footer_js' => $minify['breeze-move-to-footer-js'],
+				'defer_js'          => $minify['breeze-defer-js'],
+				'delay_inline_js'   => $minify['breeze-delay-js-scripts'],
+				'cdn_url'           => $cdn_url,
+			),
+		);
+
+		$content = apply_filters( 'breeze_filter_html_before_minify', $content );
+
+		if ( ! empty( $conf ) && $conf['breeze-disable-admin'] && ( current_user_can( 'administrator' ) || current_user_can( 'editor' ) || current_user_can( 'author' ) || current_user_can( 'contributor' ) ) ) {
+			$content = apply_filters( 'breeze_html_after_minify', $content );
+
+		} else {
+			// Run the classes
+			foreach ( $classes as $name ) {
+
+				$do_process = false;
+				$instance   = new $name( $content );
+				if ( 'Breeze_MinificationStyles' === $name ) {
+					$this_path_url = $instance->get_cache_file_url( 'css' );
+					$do_process    = breeze_is_process_locked( $this_path_url );
+				}
+
+				if ( 'Breeze_MinificationScripts' === $name ) {
+					$this_path_url = $instance->get_cache_file_url( 'js' );
+					$do_process    = breeze_is_process_locked( $this_path_url );
+				}
+
+				if ( 'Breeze_MinificationHtml' === $name ) {
+					$this_path_url = $instance->get_cache_file_url( '' );
+					$do_process    = breeze_is_process_locked( $this_path_url );
+				}
+
+				if ( false === $do_process ) {
+
+					if ( $instance->read( $classoptions[ $name ] ) ) {
+						$instance->minify();
+						$instance->cache();
+						$content = $instance->getcontent();
+					}
+					unset( $instance );
+				}
+			}
+			$content = apply_filters( 'breeze_html_after_minify', $content );
+		}
+
+		return $content;
+	}
+
+	/*
+	 * Remove '/' chacracter of end url
+	 */
+	public function rtrim_urls( $url ) {
+		return rtrim( $url, '/' );
+	}
+
+	/*
+	 * check url from Never cache the following pages area
+	 */
+	public function check_exclude_url( $current_url ) {
+		$opts_config = breeze_get_option( 'advanced_settings' );
+
+		$config_options = $this->read_the_config_file();
+		if ( ! empty( $config_options ) ) {
+
+			if ( empty( $opts_config ) || ! is_array( $opts_config ) ) {
+				$opts_config = array();
+			}
+
+			if ( ! isset( $opts_config['breeze-exclude-urls'] ) || ! is_array( $opts_config['breeze-exclude-urls'] ) ) {
+				$opts_config['breeze-exclude-urls'] = array();
+			}
+
+			$opts_config['breeze-exclude-urls'] = array_merge( $opts_config['breeze-exclude-urls'], $config_options );
+			$urls                               = array_unique( $opts_config['breeze-exclude-urls'] );
+			$opts_config['breeze-exclude-urls'] = array_map( array( $this, 'rtrim_urls' ), $urls );
+		}
+
+		$is_exclude = breeze_check_for_exclude_values( $current_url, $opts_config['breeze-exclude-urls'] );
+		if ( ! empty( $is_exclude ) ) {
+
+			return true;
+		}
+		//check disable cache for page
+		if ( ! empty( $opts_config['breeze-exclude-urls'] ) ) {
+			foreach ( $opts_config['breeze-exclude-urls'] as $v ) {
+				// Clear blank character
+				$v = trim( $v );
+				if ( preg_match( '/(\&?\/?\(\.?\*\)|\/\*|\*)$/', $v, $matches ) ) {
+					// End of rules is *, /*, [&][/](*) , [&][/](.*)
+					$pattent = substr( $v, 0, strpos( $v, $matches[0] ) );
+					if ( $v[0] == '/' ) {
+						// A path of exclude url with regex
+						if ( ( @preg_match( '@' . $pattent . '@', $current_url, $matches ) > 0 ) ) {
+							return true;
+						}
+					} else {
+						// Full exclude url with regex
+						if ( strpos( $current_url, $pattent ) !== false ) {
+							return true;
+						}
+					}
+				} else {
+
+					$test_url    = rtrim( $v, '/' );
+					$current_url = rtrim( $current_url, '/' );
+					$test_url    = ltrim( $test_url, 'https:' );
+					$current_url = ltrim( $current_url, 'https:' );
+
+					// Whole path
+					if ( $test_url == $current_url ) {
+						return true;
+					} else {
+						$test_url = $str = strtok( $test_url, '?' );
+						$test_url = rtrim( $test_url, '/' );
+
+						$current_url = $str = strtok( $current_url, '?' );
+						$current_url = rtrim( $current_url, '/' );
+
+						if ( $test_url == $current_url ) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+
+		return false;
+
+	}
+
+	/*
+	 * Will Return the options for the current website
+	 *
+	 * @since 1.1.8
+	 * @access public
+	 */
+	public function read_the_config_file() {
+		global $wpdb;
+		$config_dir = trailingslashit( WP_CONTENT_DIR ) . 'breeze-config';
+		$filename   = 'breeze-config';
+		if ( is_multisite() && ! is_network_admin() ) {
+
+			$blog_id_requested = isset( $GLOBALS['breeze_config']['blog_id'] ) ? $GLOBALS['breeze_config']['blog_id'] : 0;
+			if ( empty( $blog_id_requested ) ) {
+				$blog_id_requested = get_current_blog_id();
+			}
+			$filename .= '-' . $blog_id_requested;
+		}
+
+		$config_file = $config_dir . DIRECTORY_SEPARATOR . $filename . '.php';
+		if ( file_exists( $config_file ) ) {
+			$config = include $config_file;
+			if ( empty( $config ) || ! isset( $config['exclude_url'] ) || empty( $config['exclude_url'] ) ) {
+				return false;
+			}
+
+			return $config['exclude_url'];
+		} else {
+			return false;
+		}
+
+	}
 }

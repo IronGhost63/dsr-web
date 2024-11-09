@@ -15,8 +15,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Autoloader {
 
-	const ALIASES_DEPRECATION_RANGE = 0.2;
-
 	/**
 	 * Classes map.
 	 *
@@ -44,15 +42,43 @@ class Autoloader {
 	private static $classes_aliases;
 
 	/**
+	 * Default path for autoloader.
+	 *
+	 * @var string
+	 */
+	private static $default_path;
+
+	/**
+	 * Default namespace for autoloader.
+	 *
+	 * @var string
+	 */
+	private static $default_namespace;
+
+	/**
 	 * Run autoloader.
 	 *
 	 * Register a function as `__autoload()` implementation.
+	 *
+	 * @param string $default_path
+	 * @param string $default_namespace
 	 *
 	 * @since 1.6.0
 	 * @access public
 	 * @static
 	 */
-	public static function run() {
+	public static function run( $default_path = '', $default_namespace = '' ) {
+		if ( '' === $default_path ) {
+			$default_path = ELEMENTOR_PATH;
+		}
+
+		if ( '' === $default_namespace ) {
+			$default_namespace = __NAMESPACE__;
+		}
+
+		self::$default_path = $default_path;
+		self::$default_namespace = $default_namespace;
+
 		spl_autoload_register( [ __CLASS__, 'autoload' ] );
 	}
 
@@ -85,7 +111,6 @@ class Autoloader {
 
 	private static function init_classes_map() {
 		self::$classes_map = [
-			'Admin' => 'includes/admin.php',
 			'Api' => 'includes/api.php',
 			'Base_Control' => 'includes/controls/base.php',
 			'Base_Data_Control' => 'includes/controls/base-data.php',
@@ -95,8 +120,8 @@ class Autoloader {
 			'Conditions' => 'includes/conditions.php',
 			'Controls_Manager' => 'includes/managers/controls.php',
 			'Controls_Stack' => 'includes/base/controls-stack.php',
+			'Sub_Controls_Stack' => 'includes/base/sub-controls-stack.php',
 			'DB' => 'includes/db.php',
-			'Debug\Debug' => 'includes/debug/debug.php',
 			'Elements_Manager' => 'includes/managers/elements.php',
 			'Embed' => 'includes/embed.php',
 			'Fonts' => 'includes/fonts.php',
@@ -107,15 +132,8 @@ class Autoloader {
 			'Images_Manager' => 'includes/managers/image.php',
 			'Maintenance' => 'includes/maintenance.php',
 			'Maintenance_Mode' => 'includes/maintenance-mode.php',
-			'Posts_CSS_Manager' => 'includes/managers/css-files.php',
 			'Preview' => 'includes/preview.php',
 			'Rollback' => 'includes/rollback.php',
-			'Scheme_Base' => 'includes/schemes/base.php',
-			'Scheme_Color' => 'includes/schemes/color.php',
-			'Scheme_Color_Picker' => 'includes/schemes/color-picker.php',
-			'Scheme_Typography' => 'includes/schemes/typography.php',
-			'Scheme_Interface' => 'includes/interfaces/scheme.php',
-			'Schemes_Manager' => 'includes/managers/schemes.php',
 			'Settings' => 'includes/settings/settings.php',
 			'Settings_Controls' => 'includes/settings/controls.php',
 			'Settings_Validations' => 'includes/settings/validations.php',
@@ -126,13 +144,13 @@ class Autoloader {
 			'Stylesheet' => 'includes/stylesheet.php',
 			'System_Info\Main' => 'includes/settings/system-info/main.php',
 			'TemplateLibrary\Classes\Import_Images' => 'includes/template-library/classes/class-import-images.php',
+			'TemplateLibrary\Forms\New_Template_Form' => 'includes/template-library/forms/new-template-form.php',
 			'TemplateLibrary\Manager' => 'includes/template-library/manager.php',
 			'TemplateLibrary\Source_Base' => 'includes/template-library/sources/base.php',
 			'TemplateLibrary\Source_Local' => 'includes/template-library/sources/local.php',
 			'TemplateLibrary\Source_Remote' => 'includes/template-library/sources/remote.php',
 			'Tools' => 'includes/settings/tools.php',
 			'Tracker' => 'includes/tracker.php',
-			'Upgrades' => 'includes/upgrades.php',
 			'User' => 'includes/user.php',
 			'Utils' => 'includes/utils.php',
 			'Widget_WordPress' => 'includes/widgets/wordpress.php',
@@ -156,7 +174,7 @@ class Autoloader {
 		$controls_groups_names = Controls_Manager::get_groups_names();
 
 		foreach ( $controls_groups_names as $group_name ) {
-			$class_name = 'Group_Control_' . self::normalize_class_name( str_replace( '-', '_', $group_name ), '_' );
+			$class_name = 'Group_Control_' . self::normalize_class_name( $group_name, '_' );
 
 			self::$classes_map[ $class_name ] = 'includes/controls/groups/' . $group_name . '.php';
 		}
@@ -165,57 +183,81 @@ class Autoloader {
 	/**
 	 * Normalize Class Name
 	 *
-	 * Used to convert control names to class name,
-	 * a ucwords polyfill for php versions not supporting delimiter parameter
-	 * reference : https://github.com/elementor/elementor/issues/7310#issuecomment-469593385
+	 * Used to convert control names to class names.
 	 *
 	 * @param $string
 	 * @param string $delimiter
 	 *
-	 * @todo Remove once we bump minimum php version to 5.6
 	 * @return mixed
 	 */
 	private static function normalize_class_name( $string, $delimiter = ' ' ) {
-		return str_replace( ' ', $delimiter, ucwords( str_replace( $delimiter, ' ', $string ) ) );
+		return ucwords( str_replace( '-', '_', $string ), $delimiter );
 	}
 
+	/**
+	 * Init classes aliases.
+	 *
+	 * When Elementor classes renamed or moved to different folders, developers
+	 * can still use the old names by setting an aliase.
+	 *
+	 * While in deprecation period both classes will work. When the deprecation
+	 * period ends, the alies should be removed from the list of aliases.
+	 *
+	 * Usage:
+	 *
+	 *  self::$classes_aliases = [
+	 *    'Namespace\OldClassName' => [
+	 *      'replacement' => 'Namespace\NewClassName',
+	 *      'version' => '3.0.0',
+	 *    ],
+	 *    'Namespace\OldModule\ClassName' => [
+	 *      'replacement' => 'Namespace\NewModule\ClassName',
+	 *      'version' => '3.5.0',
+	 *    ],
+	 *  ];
+	 *
+	 * @access private
+	 * @static
+	 *
+	 * @return void
+	 */
 	private static function init_classes_aliases() {
 		self::$classes_aliases = [
-			'CSS_File' => [
-				'replacement' => 'Core\Files\CSS\Base',
-				'version' => '2.1.0',
+			'System_Info\Main' => [
+				'replacement' => 'Modules\System_Info\Module',
+				'version' => '2.9.0',
 			],
-			'Global_CSS_File' => [
-				'replacement' => 'Core\Files\CSS\Global_CSS',
-				'version' => '2.1.0',
+			'System_Info\Classes\Abstracts\Base_Reporter' => [
+				'replacement' => 'Modules\System_Info\Reporters\Base',
+				'version' => '2.9.0',
 			],
-			'Post_CSS_File' => [
-				'replacement' => 'Core\Files\CSS\Post',
-				'version' => '2.1.0',
+			'System_Info\Classes\Server_Reporter' => [
+				'replacement' => 'Modules\System_Info\Reporters\Server',
+				'version' => '2.9.0',
 			],
-			'Posts_CSS_Manager' => [
-				'replacement' => 'Core\Files\Manager',
-				'version' => '2.1.0',
+			'System_Info\Classes\MU_Plugins_Reporter' => [
+				'replacement' => 'Modules\System_Info\Reporters\MU_Plugins',
+				'version' => '2.9.0',
 			],
-			'Post_Preview_CSS' => [
-				'replacement' => 'Core\Files\CSS\Post_Preview',
-				'version' => '2.1.0',
+			'System_Info\Classes\Network_Plugins_Reporter' => [
+				'replacement' => 'Modules\System_Info\Reporters\Network_Plugins',
+				'version' => '2.9.0',
 			],
-			'Responsive' => [
-				'replacement' => 'Core\Responsive\Responsive',
-				'version' => '2.1.0',
+			'System_Info\Classes\Plugins_Reporter' => [
+				'replacement' => 'Modules\System_Info\Reporters\Plugins',
+				'version' => '2.9.0',
 			],
-			'Admin' => [
-				'replacement' => 'Core\Admin\Admin',
-				'version' => '2.2.0',
+			'System_Info\Classes\Theme_Reporter' => [
+				'replacement' => 'Modules\System_Info\Reporters\Theme',
+				'version' => '2.9.0',
 			],
-			'Core\Ajax' => [
-				'replacement' => 'Core\Common\Modules\Ajax\Module',
-				'version' => '2.3.0',
+			'System_Info\Classes\User_Reporter' => [
+				'replacement' => 'Modules\System_Info\Reporters\User',
+				'version' => '2.9.0',
 			],
-			'Editor' => [
-				'replacement' => 'Core\Editor\Editor',
-				'version' => '2.6.0',
+			'System_Info\Helpers\Model_Helper' => [
+				'replacement' => 'Modules\System_Info\Helpers\Model_Helper',
+				'version' => '2.9.0',
 			],
 		];
 	}
@@ -235,7 +277,7 @@ class Autoloader {
 		$classes_map = self::get_classes_map();
 
 		if ( isset( $classes_map[ $relative_class_name ] ) ) {
-			$filename = ELEMENTOR_PATH . '/' . $classes_map[ $relative_class_name ];
+			$filename = self::$default_path . '/' . $classes_map[ $relative_class_name ];
 		} else {
 			$filename = strtolower(
 				preg_replace(
@@ -245,7 +287,7 @@ class Autoloader {
 				)
 			);
 
-			$filename = ELEMENTOR_PATH . $filename . '.php';
+			$filename = self::$default_path . $filename . '.php';
 		}
 
 		if ( is_readable( $filename ) ) {
@@ -265,11 +307,11 @@ class Autoloader {
 	 * @param string $class Class name.
 	 */
 	private static function autoload( $class ) {
-		if ( 0 !== strpos( $class, __NAMESPACE__ . '\\' ) ) {
+		if ( 0 !== strpos( $class, self::$default_namespace . '\\' ) ) {
 			return;
 		}
 
-		$relative_class_name = preg_replace( '/^' . __NAMESPACE__ . '\\\/', '', $class );
+		$relative_class_name = preg_replace( '/^' . self::$default_namespace . '\\\/', '', $class );
 
 		$classes_aliases = self::get_classes_aliases();
 
@@ -282,7 +324,7 @@ class Autoloader {
 			$relative_class_name = $alias_data['replacement'];
 		}
 
-		$final_class_name = __NAMESPACE__ . '\\' . $relative_class_name;
+		$final_class_name = self::$default_namespace . '\\' . $relative_class_name;
 
 		if ( ! class_exists( $final_class_name ) ) {
 			self::load_class( $relative_class_name );
@@ -291,17 +333,7 @@ class Autoloader {
 		if ( $has_class_alias ) {
 			class_alias( $final_class_name, $class );
 
-			preg_match( '/^[0-9]+\.[0-9]+/', ELEMENTOR_VERSION, $current_version );
-
-			$current_version_as_float = (float) $current_version[0];
-
-			preg_match( '/^[0-9]+\.[0-9]+/', $alias_data['version'], $alias_version );
-
-			$alias_version_as_float = (float) $alias_version[0];
-
-			if ( $current_version_as_float - $alias_version_as_float >= self::ALIASES_DEPRECATION_RANGE ) {
-				_deprecated_file( $class, $alias_data['version'], $final_class_name );
-			}
+			Utils::handle_deprecation( $class, $alias_data['version'], $final_class_name );
 		}
 	}
 }
